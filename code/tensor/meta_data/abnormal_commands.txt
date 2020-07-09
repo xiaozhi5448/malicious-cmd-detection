@@ -1,0 +1,234 @@
+/bin/sh -c ifconfig eth0 hw ether MACADDR
+/bin/sh -c ifconfig eth0 192.168.2.1/24
+/bin/sh -c cat /var/log/
+/bin/sh -c yum deplist package
+/bin/sh -c ifconfig
+/bin/sh -c md5sum test
+/bin/rmsave -rf /opt/httpd/workspaces/common/tomcat/timerfile
+grep tomcat_cas
+grep distribute=
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200331151853.log.0.current
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_timer.log
+/bin/sh -c cat /etc/hostname
+sed -r s@/*:|([^\\]):@\1\n@g;H;x;s@/\n@\n@
+sh /opt/webserver/webapps/hardware/script_shell/get_hwminfo.sh 127.0.0.1 8651
+/bin/sh -c ls /boot
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200320181211.log.0.current
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200331153653.log.0.current
+awk -F ; {print $2}
+/bin/sh -c df -h /
+/bin/sh -c cat /etc/shadow
+grep /opt/webserver/programs/jre/bin/java
+/bin/sh -c python -c 'import pty;pty.spawn("/bin/bash")'
+/bin/sh -c mount
+/bin/sh -c yum info httpd
+/bin/sh -c yum provides httpd
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200326202258.log.0.current
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_checkLogin_ant.log
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat.log.old
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200320180530.log.0.current
+/bin/sh -c yum remove package
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_catalina.log
+/bin/bash /opt/httpd/script/setup/tools/httpd_tomcat_timer.sh
+/bin/sh -c ls /dev
+awk {print $2}
+/opt/webserver/programs/jdk8/bin/java -Djava.util.logging.config.file=/opt/webserver/programs/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Dopenas.catalina.out.log.file.control=off -Dopenas.accesslog.control=on -Dopenas.permit.invalid.characters=off -Dopenas.tomcat.flow.control=false -Dopenas.tomcat.flow.control.socket.reuseaddr=true -Dopenas.tomcat.flow.control.reject.timeout=1000 -server -XX:+UseParallelGC -XX:ParallelGCThreads=16 -XX:+UseAdaptiveSizePolicy -Xms2048m -Xmx8192m -XX:NewRatio=4 -XX:PermSize=512m -XX:MaxPermSize=1024m -Xloggc:/var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_gc.log -XX:+PrintGCDetails -XX:ErrorFile=/var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_error_200425113000.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10M -Djava.security.egd=file:/dev/./urandom -Dsun.rmi.dgc.server.gcInterval=0x7FFFFFFFFFFFFFE -Dsun.rmi.dgc.client.gcInterval=0x7FFFFFFFFFFFFFE -Dopenas.log.close.interval=3600000 -Dopenas.log.debug.level=error -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Dfile.encoding=UTF-8 -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Djava.awt.headless=true -Dignore.endorsed.dirs= -classpath /opt/webserver/programs/tomcat/bin/bootstrap.jar:/opt/webserver/programs/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/opt/webserver/programs/tomcat -Dcatalina.home=/opt/webserver/programs/tomcat -Djava.io.tmpdir=/opt/webserver/programs/tomcat/temp org.apache.catalina.startup.Bootstrap start
+/bin/sh -c ls /etc/passwd
+/opt/webserver/programs/jdk8/bin/java -Djava.util.logging.config.file=/opt/webserver/programs/tomcat_15/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Dopenas.catalina.out.log.file.control=off -Dopenas.accesslog.control=on -Dopenas.permit.invalid.characters=off -Dopenas.tomcat.flow.control=false -Dopenas.tomcat.flow.control.socket.reuseaddr=true -Dopenas.tomcat.flow.control.reject.timeout=1000 -server -XX:+UseParallelGC -XX:ParallelGCThreads=16 -XX:+UseAdaptiveSizePolicy -Xms2048m -Xmx8192m -XX:NewRatio=4 -XX:PermSize=512m -XX:MaxPermSize=1024m -Xloggc:/var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_gc.log -XX:+PrintGCDetails -XX:ErrorFile=/var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_error_200425113000.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10M -Djava.security.egd=file:/dev/./urandom -Dsun.rmi.dgc.server.gcInterval=0x7FFFFFFFFFFFFFE -Dsun.rmi.dgc.client.gcInterval=0x7FFFFFFFFFFFFFE -Dopenas.log.close.interval=3600000 -Dopenas.log.debug.level=error -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Dfile.encoding=UTF-8 -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Djava.awt.headless=true -Dignore.endorsed.dirs= -classpath /opt/webserver/programs/tomcat_15/bin/bootstrap.jar:/opt/webserver/programs/tomcat_15/bin/tomcat-juli.jar -Dcatalina.base=/opt/webserver/programs/tomcat_15 -Dcatalina.home=/opt/webserver/programs/tomcat_15 -Djava.io.tmpdir=/opt/webserver/programs/tomcat_15/temp org.apache.catalina.startup.Bootstrap start
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200316093430.log.0.current
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_timer.log
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200326200006.log.0.current
+cat /proc/cpuinfo
+awk {print$1}
+/bin/sh -c echo "user:passwd" | chpasswd
+/bin/sh -c tar xf test.zip
+awk -F ; {print $5}
+ls /var/log/runlog/ecm/tomcatdump/tomcat_ecm
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_checkLogin_ant.log
+/bin/sh -c ls /net
+/bin/sh -c whoami
+/bin/sh -c yum install package
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200317095810.log.0.current
+/bin/sh -c rpm -qa
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_checkLogin.log
+/bin/sh -c cat /etc/passwd
+who
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat.log.old
+cat /opt/webserver/workspaces/common/config/tomcat_config.config
+/bin/sh -c yum update httpd
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200326200617.log.0.current
+/bin/sh -c host 192.168.1.1
+sh -c readlink -f /var/log/runlog/ecm/tomcatdump/dump_*.tar.gz
+grep /opt/webserver/programs/tomcat_15
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_gc.log.0.current
+sort -r
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200326145400.log.0.current
+/bin/sh -c echo os.system('/bin/bash')
+/bin/sh -c echo 'start command injection'
+/bin/sh -c dpkg -l
+grep dump_
+grep distribute
+grep ^tomcat_15;
+/bin/sh -c nmap -V
+/bin/sh -c gcc -o output.c input.c
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat.log
+awk {print $3 "," $2}
+/usr/bin/tty
+dirname /opt/webserver/programs/bin/timer/_tool_collectTomcatInfo.sh
+/bin/bash /opt/webserver/programs/bin/_checkTomcat tomcat_ecm
+/bin/sh -c cat /var/log/httpd/access.log
+expr 0 + 1
+/bin/sh -c nbtstat -A x.x.x.x
+/bin/sh -c zgrep 'aa' /var/log/maillog*.gz
+/bin/sh -c yum erase package
+/bin/sh -c cat /etc/group
+/bin/sh -c yum list package
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200318101219.log.0.current
+sleep 3
+/bin/sh -c tcpkill -9 host google.com
+wc -l
+/bin/sh -c host -l domain.com nameserver
+/bin/sh -c tar xf test.tar
+chmod 750 /var/log/runlog/ecm/tomcatdump/tomcat_15
+grep -E /opt/webserver/programs.*/bin/java .* start$
+/bin/sh -c ls /opt
+/usr/bin/perl /bin/rm -rf /opt/httpd/workspaces/common/tomcat/timerfile
+/bin/sh -c cat /etc/resolv.conf
+/bin/sh -c sudo su
+ls -1 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/dump_20200415184804_13646.tar.gz
+/bin/sh -c awk -F: '{ if($3 >= 1000) print $1}' passwd >> users
+ls -1 /var/log/runlog/ecm/tomcatdump/tomcat_15/dump_*.tar.gz
+/bin/bash /opt/webserver/programs/bin/_checkTomcat tomcat_15
+readlink /proc/43906/exe
+grep
+grep ^360
+/bin/sh -c /bin/sh -i
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_checkLogin_ant.log.old
+chmod 750 /var/log/runlog/ecm/tomcatdump/tomcat_ecm
+/bin/sh -c rm -rf ./test.tar
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200320185957.log.0.current
+awk -F ; {print $1}
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200320191616.log.0.current
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_checkLogin.log.old
+/usr/bin/perl /bin/rm -f /var/log/runlog/ecm/tomcatdump/dump_*.tar.gz
+grep -v grep
+/bin/sh -c gzip -d test.tar
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_timer.log.old
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_checkLogin.log.old
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_checkLogin.log.old
+cat /opt/webserver/workspaces/common/config/distribute.properties
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_timer.log.old
+/bin/sh -c lscat test
+/bin/sh -c PATH=$PATH:/my/new-path
+/usr/bin/dircolors -b /etc/DIR_COLORS
+grep tomcat_ecm
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200313100942.log.0.current
+/bin/sh -c echo '1111' > test
+/bin/sh -c ls /home
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat.log
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200331160427.log.0.current
+/bin/sh -c uname -ar
+chmod 750 /var/log/runlog/ecm/tomcatdump/tomcat_cas
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200326151200.log.0.current
+/bin/rmsave -rf /opt/webserver/workspaces/common/tomcat/tomcat_ecm/timerfile
+grep ^tomcat_cas;
+grep -w tomcat_15
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat.log
+sed s#/dev/##g
+awk {print $1}
+/bin/sh -c touch kitsun3sec&#160;&&&#160;find kitsun3sec -exec whoami \;
+/usr/bin/awk {print $1}
+/bin/sh -c unset HISTORYFILE
+sed s/ \{2,\}/ /g
+/bin/sh -c cat /var/adm/*
+ps -fww -u webserver
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_checkLogin.log
+/bin/sh -c ps aux
+/bin/sh -c dig -x 192.168.1.1
+/bin/sh -c cat /var/log/apache2/access.log
+/bin/sh -c zgrep 'blah' /var/log/maillog*.gz
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_timer.log.old
+chmod 750 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/dump_20200415184804_13646.tar.gz
+/bin/sh -c history
+/bin/uname -n
+su - httpd -c /opt/httpd/script/setup/tools/httpd_tomcat_timer.sh
+sed -e s/^\s*//g -e s/\s*$//g
+/bin/bash /opt/webserver/programs/bin/timer/_tool_collectTomcatInfo.sh tomcat_ecm 1
+/bin/bash /opt/webserver/programs/bin/timer/_tool_collectTomcatInfo.sh tomcat_15 1
+chmod 440 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/dump_20200415184804_13646.tar.gz
+awk -F = {print $2}
+du -sh -B 1m /var/log/runlog/ecm/tomcatdump/
+grep processor
+/bin/sh -c cat test
+/bin/uname -m
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc.log.0.current
+/bin/sh -c ls
+/bin/sh -c cat /etc/*-release
+readlink -f /opt/webserver/workspaces/common/tomcat/tomcat_ecm/timerfile
+du -sm /opt/httpd/script/setup/tools/logs/tomcat_timer.log
+/bin/sh -c last
+/bin/sh -c ifconfig eth0 mtu 1500
+
+/bin/sh -c yum localinstall blah.rpm
+/bin/sh -c macchanger -m MACADDR INTR
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200316103238.log.0.current
+/bin/sh -c echo "8.8.8.8" > /tmp/etc/resolv.conf
+/bin/sh -c ifconfig eth0:1 192.168.2.3/24
+/bin/sh -c cat /var/log/*
+/bin/sh -c cat ~/.ssh/
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat.log.old
+/bin/sh -c ls /root
+/bin/sh -c searchsploit centos 6
+/bin/sh -c diff test.tar test
+/bin/sh -c yum --exclude=package kernel* update
+/bin/sh -c ls /tmp
+/bin/sh -c zgrep 'x' /var/log/maillog*.gz
+date +%Y-%m-%d %T
+/bin/bash -c /opt/webserver/programs/bin/getJdbcInfo.sh
+/bin/sh -c ls /bin
+grep tomcat_15
+/bin/sh -c lsof -i
+id -u webserver
+/bin/bash /opt/webserver/webapps/hardware/script_shell/get_tomcat_name.sh
+/bin/sh -c find / -user root -perm -4000 -exec ls -ldb {} \;
+-bash -c /opt/httpd/script/setup/tools/httpd_tomcat_timer.sh
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_catalina.log
+/bin/sh -c cat /etc/issue
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_15/tomcat_catalina.log
+/bin/sh -c bash -p
+/bin/bash /opt/webserver/programs/bin/_checkTomcat tomcat_cas
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_gc.log.0.current
+/opt/httpd/programs/jre/bin/java -Djava.util.logging.config.file=/opt/httpd/programs/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Dopenas.catalina.out.log.file.control=off -Dopenas.accesslog.control=on -Dopenas.permit.invalid.characters=off -Dopenas.tomcat.flow.control=false -Dopenas.tomcat.flow.control.socket.reuseaddr=true -Dopenas.tomcat.flow.control.reject.timeout=1000 -Djava.security.egd=file:/dev/./urandom -Dsun.rmi.dgc.server.gcInterval=0x7FFFFFFFFFFFFFE -Dsun.rmi.dgc.client.gcInterval=0x7FFFFFFFFFFFFFE -Dopenas.log.close.interval=3600000 -Dopenas.log.debug.level=error -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Dfile.encoding=UTF-8 -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Dignore.endorsed.dirs= -classpath /opt/httpd/programs/tomcat/bin/bootstrap.jar:/opt/httpd/programs/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/opt/httpd/programs/tomcat -Dcatalina.home=/opt/httpd/programs/tomcat -Djava.io.tmpdir=/opt/httpd/programs/tomcat/temp org.apache.catalina.startup.Bootstrap start
+/bin/sh -c cat /etc/network/interfaces
+/bin/sh -c less /etc/passwd
+grep -w tomcat_ecm
+/bin/sh -c gcc -m32 -o output.c input.c
+/bin/sh -c yum list installed | more
+/bin/sh -c ls /media
+/bin/rmsave -f /var/log/runlog/ecm/tomcatdump/dump_*.tar.gz
+ls /var/log/runlog/ecm/tomcatdump/tomcat_15
+/bin/sh -c cat /etc/fstab
+grep /opt/webserver/programs/tomcat
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200326154012.log.0.current
+/bin/sh -c echo 'end command injection'
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_gc_200316093124.log.0.current
+grep -w tomcat_cas
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_checkLogin.log
+grep /opt/webserver/programs/tomcat_cas
+dirname /opt/webserver/programs/bin/_checkTomcat
+/usr/bin/whoami
+readlink -f /opt/httpd/workspaces/common/tomcat/timerfile
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_ecm/tomcat_checkLogin_ant.log.old
+/bin/sh -c ls /var
+/bin/sh -c ifconfig eth0
+sh /opt/webserver/webapps/hardware/script_shell/create_gmetadcfg.sh -C 10.185.205.64:8661 -n OSCA64
+/bin/sh -c ps xaf
+dirname /opt/httpd/script/setup/tools/httpd_tomcat_timer.sh
+ps aux
+grep ^tomcat_ecm;
+/bin/sh -c ip addr add 192.168.2.22/24 dev eth0
+/bin/sh -c netstat -tulpn
+/bin/sh -c ls /lost+found
+chmod 640 /var/log/runlog/ecm/tomcatdump/tomcat_cas/tomcat_timer.log
+/bin/sh -c cat ~/.bash_history
+/bin/sh -c ls /proc
