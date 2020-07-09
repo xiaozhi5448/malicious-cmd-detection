@@ -26,7 +26,8 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s  %(filename)s %(lineno)d: %(levelname)s  %(message)s')
 data_dirs = ['../data/normal_all', '../data/abnormal_all']
-
+meta_data_dir = '../data/meta_data/'
+dataset_bin = 'dataset_clean.pkl'
 plt.figure(figsize=(10, 20))
 def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None, n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):
     plt.title(title)
@@ -127,9 +128,9 @@ def generate_model():
 
 def load_data():
     dataset = None
-    if os.path.exists('meta_data/dataset.pkl'):
-        with open('meta_data/dataset.pkl', 'rb') as infp:
-            logging.info("loading data from file: meta_data/dataset.pkl")
+    if os.path.exists(os.path.join(meta_data_dir, dataset_bin)):
+        with open(os.path.join(meta_data_dir, dataset_bin), 'rb') as infp:
+            logging.info("loading data from file:{}".format(os.path.join(meta_data_dir, dataset_bin)))
             dataset = pickle.load(infp)
     if not dataset:
         dataset = get_dataset()
@@ -197,9 +198,9 @@ def test_svm(X, Y):
     y_pred = clf.predict(X_test)
     logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
     print(classification_report(Y_test, y_pred))
+    plt.subplot(3, 1, 2)
+    plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
     return clf
-    # plt.subplot(3, 1, 2)
-    # plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
 
 def test_decision_tree(X, Y):
     logging.info("test decision tree:")
@@ -224,8 +225,8 @@ def test_decision_tree(X, Y):
     logging.info("decision tree score: {}".format(clf.score(X_test, Y_test)))
     print(classification_report(Y_test, y_pred))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
-    # plt.subplot(3, 1, 2)
-    # plot_learning_curve(clf, "decision tree", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+    plt.subplot(3, 1, 3)
+    plot_learning_curve(clf, "decision tree", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
     return estimator
 
 def final_svm(X, Y):
@@ -251,7 +252,7 @@ def test_kmeans():
     X = vectorizer.transform(normal_data_set)
     Y = vectorizer.transform(abnormal_data)
     # clf = GridSearchCV(KMeans(), param_grid={'n_clusters':list(range(1, 13))}, cv=5)
-    clf = KMeans(n_clusters=5)
+    clf = KMeans(n_clusters=1)
     clf.fit(X)
     # print("best param: {}; best score: {};".format(clf.best_params_, clf.best_score_))
     # classifier = clf.best_estimator_
@@ -283,11 +284,21 @@ def test_kmeans():
         results.append((PrecisionP, RecallP, PrecisionN, RecallN, bound))
     x_index = [item[4] for item in results]
     precision_P = [item[0] for item in results]
+    recal_P = [item[1] for item in results]
     precision_N = [item[2] for item in results]
-    plt.figure(figsize=(10, 8))
-    plt.title("kmeans 准确性结果")
-    plt.plot(x_index, precision_N, color="blue", linewidth=2.0)
-    plt.plot(x_index, precision_P, color="red", linewidth=2.0)
+    recal_N = [item[3] for item in results]
+    plt.figure(figsize=(10, 12))
+    plt.subplot(2, 1, 1)
+    plt.title("kmeans percision")
+    plt.plot(x_index, precision_N, color="blue", linewidth=2.0,label="abnormal cmd percision")
+    plt.plot(x_index, precision_P, color="red", linewidth=2.0, label="normal cmd percision")
+    plt.legend()
+    plt.subplot(2, 1, 2)
+    plt.title("kmeans recall")
+    plt.plot(x_index, recal_P, color="red", linewidth=1.0, label="normal cmd recall")
+    plt.plot(x_index, recal_N, color="blue", linewidth=1.0, label="abnormal cmd recall")
+    plt.legend()
+
     plt.show()
 
 
@@ -303,7 +314,7 @@ def final_decision_tree():
 
     data = []
     data.extend(abnormal_data)
-    data.extend(normal_data_set)
+    data.extend(normal_data)
     random.shuffle(data)
     commands = [item[0] for item in data]
     labels = [item[1] for item in data]
@@ -341,6 +352,6 @@ def final_decision_tree():
 if __name__ == '__main__':
     # test()
     # plt.show()
-    # test_kmeans()
+    test_kmeans()
     # final_decision_tree()
-    test()
+

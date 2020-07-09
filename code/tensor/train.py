@@ -15,7 +15,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s  %(filename)s %(lineno)d: %(levelname)s  %(message)s')
 data_dirs = ['../data/normal_all', '../data/abnormal_all']
-meta_data_dir = 'data/meta_data'
+meta_data_dir = '../data/meta_data'
 def get_dataset():
     normal_commands = set()
     abnormal_commands = set()
@@ -60,9 +60,9 @@ def get_dataset():
 
 def load_data():
     dataset = None
-    if os.path.exists('meta_data/dataset.pkl'):
-        with open('meta_data/dataset.pkl', 'rb') as infp:
-            logging.info("loading data from file: meta_data/dataset.pkl")
+    if os.path.exists(os.path.join(meta_data_dir, 'dataset_clean.pkl')):
+        with open(os.path.join(meta_data_dir, 'dataset_clean.pkl'), 'rb') as infp:
+            logging.info("loading data from file: meta_data/dataset_clean.pkl")
             dataset = pickle.load(infp)
     if not dataset:
         dataset = get_dataset()
@@ -79,9 +79,9 @@ def train():
     def labeler(example, index):
         return example, tf.cast(index, tf.int64)
     normal_commands, abnormal_commands = load_data()
-    with open('meta_data/abnormal_commands.txt', 'w') as outfp:
+    with open('meta_data/abnormal_commands.txt', 'w', encoding='utf-8') as outfp:
         outfp.write(os.linesep.join([item[0].strip() for item in abnormal_commands]))
-    with open('meta_data/normal_commands.txt', 'w') as outfp:
+    with open('meta_data/normal_commands.txt', 'w', encoding='utf-8') as outfp:
         outfp.write(os.linesep.join([item[0].strip() for item in normal_commands[:1000]]))
 
     normal_data = tf.data.TextLineDataset('meta_data/normal_commands.txt')

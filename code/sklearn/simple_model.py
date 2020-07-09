@@ -93,42 +93,49 @@ def multi_decision_predict(classifiers:list, command:str):
         pred_res.append(pred_y[0])
     counter = Counter(pred_res)
     counts = counter.most_common(2)
-    return counts[0][0]
+    try:
+
+        return counts[0][0]
+    except IndexError as e:
+        print(command)
+        print(counts)
+        print(counter)
+        print(pred_res)
+        sys.exit(1)
 
 
 
 def test_multi_decision_tree(normal_commands, abnormal_commands):
-    classifier = []
     model_filename = os.path.join('meta_data/multi_decision_tree', 'model.m')
-    if not os.path.exists(model_filename):
-        step = len(normal_commands) // 1000
-        classifiers = []
-        logging.info("total step:{}".format(step))
-        for i in range(step):
-            print("epoch {}:".format(i+1))
-            some_commands = normal_commands[i * 1000: (i+1) * 1000]
-            commands = some_commands + abnormal_commands
-            random.shuffle(commands)
-            vectorizer = TfidfVectorizer()
-            cmds = [item[0] for item in commands]
-            labels = [item[1] for item in commands]
-            X = vectorizer.fit_transform(cmds)
-            Y = labels
-            X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-            clf = DecisionTreeClassifier()
-            clf.fit(X, Y)
-            y_pred = clf.predict(X_test)
-            logging.info("decision tree score: {}".format(clf.score(X_test, Y_test)))
-            print(classification_report(Y_test, y_pred))
-            classifiers.append({
-                'clf': clf,
-                'vectorizer': vectorizer
-            })
-        with open(model_filename, 'wb') as outfp:
-            pickle.dump(classifiers, outfp)
-    else:
-        with open(model_filename, 'rb') as outfp:
-            classifier = pickle.load(outfp)
+    # if not os.path.exists(model_filename):
+    step = len(normal_commands) // 1000
+    classifiers = []
+    logging.info("total step:{}".format(step))
+    for i in range(step):
+        print("epoch {}:".format(i+1))
+        some_commands = normal_commands[i * 1000: (i+1) * 1000]
+        commands = some_commands + abnormal_commands
+        random.shuffle(commands)
+        vectorizer = TfidfVectorizer()
+        cmds = [item[0] for item in commands]
+        labels = [item[1] for item in commands]
+        X = vectorizer.fit_transform(cmds)
+        Y = labels
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3)
+        clf = DecisionTreeClassifier()
+        clf.fit(X, Y)
+        y_pred = clf.predict(X_test)
+        logging.info("decision tree score: {}".format(clf.score(X_test, Y_test)))
+        print(classification_report(Y_test, y_pred))
+        classifiers.append({
+            'clf': clf,
+            'vectorizer': vectorizer
+        })
+    with open(model_filename, 'wb') as outfp:
+        pickle.dump(classifiers, outfp)
+    # else:
+    #     with open(model_filename, 'rb') as outfp:
+    #         classifier = pickle.load(outfp)
 
     TP = 0
     TN = 0
@@ -137,7 +144,7 @@ def test_multi_decision_tree(normal_commands, abnormal_commands):
     for index, command_item in enumerate(normal_commands + abnormal_commands):
         cmd = command_item[0]
         label = command_item[1]
-        y_pred = multi_decision_predict(classifier, cmd)
+        y_pred = multi_decision_predict(classifiers, cmd)
         if str(label) == str(y_pred):
             if str(label) == '0':
                 TP += 1
@@ -148,7 +155,7 @@ def test_multi_decision_tree(normal_commands, abnormal_commands):
                 FP += 1
             else:
                 FN += 1
-        if index + 1 % 1000 == 0:
+        if (index + 1) % 1000 == 0:
             logging.info("{} commands predicted!".format(index + 1))
     print("percision normal: {}".format(round(TP/ (TP + FP),2)))
     print("percision abnormal: {}".format(round(TN / (TN + FN),2)))
