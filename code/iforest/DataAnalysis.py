@@ -5,6 +5,7 @@ import os
 import logging
 from collections import defaultdict
 import openpyxl
+import re
 logging.basicConfig(level=logging.INFO)
 data_dir = '../data/meta_data/'
 
@@ -48,9 +49,6 @@ def plot_length(commands:list, title=''):
     meta_length = defaultdict(int)
     for command in commands:
         items = command.split(' ')
-        if len(items) < 5:
-            print(' '.join(items))
-            print(len(items))
         result[len(items)] += 1
         bound = len(items) // 5
         meta_length["{}s".format(bound * 5)] += 1
@@ -82,9 +80,9 @@ if __name__ == '__main__':
 
     logging.info("total normal commands: {}".format(len(normal_commands)))
     logging.info("total abnormal commands:{}".format(len(abnormal_commands)))
-    common_commands = set([item for item in abnormal_commands if item in normal_commands])
-    logging.info("common items:{}".format(len(common_commands)))
-    normal_commands = list(set(normal_commands) - set(abnormal_commands))
+    for command in normal_commands:
+        if command.startswith('cp'):
+            print(command)
     p1s = parse_program(normal_commands)
     p2s = parse_program(abnormal_commands)
     plt.figure(figsize=(30, 20))
