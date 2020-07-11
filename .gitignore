@@ -3,4 +3,5 @@
 恶意数据/*
 code/data/*
 !code/data/meta_data
+!code/data/clean
 code/.idea/*
