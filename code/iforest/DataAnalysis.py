@@ -35,10 +35,11 @@ def parse_program(commands):
                 program_path = items[i]
             else:
                 program_path = items[0]
+            programs[program_path.split('/')[-1]] += 1
         except Exception as e:
             print(e)
             print(item)
-        programs[program_path.split('/')[-1]] += 1
+
 
     print("total program: {}".format(len(programs)))
     # print(programs.keys())
@@ -80,9 +81,6 @@ if __name__ == '__main__':
 
     logging.info("total normal commands: {}".format(len(normal_commands)))
     logging.info("total abnormal commands:{}".format(len(abnormal_commands)))
-    for command in normal_commands:
-        if command.startswith('cp'):
-            print(command)
     p1s = parse_program(normal_commands)
     p2s = parse_program(abnormal_commands)
     plt.figure(figsize=(30, 20))

@@ -92,16 +92,20 @@ def multi_decision_predict(classifiers:list, command:str):
         pred_y = clf.predict(X)
         pred_res.append(pred_y[0])
     counter = Counter(pred_res)
-    counts = counter.most_common(2)
-    try:
-
-        return counts[0][0]
-    except IndexError as e:
-        print(command)
-        print(counts)
-        print(counter)
-        print(pred_res)
-        sys.exit(1)
+    if counter[1] > 5:
+        return 1
+    else:
+        return 0
+    # counts = counter.most_common(2)
+    # try:
+    #
+    #     return counts[0][0]
+    # except IndexError as e:
+    #     print(command)
+    #     print(counts)
+    #     print(counter)
+    #     print(pred_res)
+    #     sys.exit(1)
 
 
 
@@ -159,8 +163,8 @@ def test_multi_decision_tree(normal_commands, abnormal_commands):
             logging.info("{} commands predicted!".format(index + 1))
     print("percision normal: {}".format(round(TP/ (TP + FP),2)))
     print("percision abnormal: {}".format(round(TN / (TN + FN),2)))
-    print("recal normal:{}".format(round(TP/ (TP + FN),2)))
-    print("recal abnormal:{}".format(round(TN/(TN + FP),2)))
+    print("recall normal:{}".format(round(TP/ (TP + FN),2)))
+    print("recall abnormal:{}".format(round(TN/(TN + FP),2)))
 
 
 

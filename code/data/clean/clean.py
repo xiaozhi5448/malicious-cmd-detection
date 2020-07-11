@@ -53,6 +53,21 @@ def clean():
     normal_command_set.add(jstat_commands[0])
     logging.info("{} jstat items".format(len(jstat_commands)))
 
+    cp_commands = [command for command in normal_command_set if command.startswith("cp -rf /opt/webserver/")]
+    normal_command_set -= set(cp_commands)
+    normal_command_set.add(cp_commands[0])
+    logging.info("{} cp items".format(len(cp_commands)))
+
+    java_commands = []
+    for command in normal_command_set:
+        items = command.split(" ")
+        if items[0].split('/')[-1] == 'java':
+            java_commands.append('java ' + ' '.join(items[1:]))
+    logging.info("{} java items".format(len(java_commands)))
+    java_command_set = set(java_commands)
+    logging.info("{} java items after remove duplicated!".format(len(java_command_set)))
+    print(java_commands[0])
+
 
 
     logging.info("{} normal items after clean abnormal command".format(len(normal_command_set)))
