@@ -92,20 +92,20 @@ def multi_decision_predict(classifiers:list, command:str):
         pred_y = clf.predict(X)
         pred_res.append(pred_y[0])
     counter = Counter(pred_res)
-    if counter[1] > 5:
-        return 1
-    else:
-        return 0
-    # counts = counter.most_common(2)
-    # try:
-    #
-    #     return counts[0][0]
-    # except IndexError as e:
-    #     print(command)
-    #     print(counts)
-    #     print(counter)
-    #     print(pred_res)
-    #     sys.exit(1)
+    # if counter[1] > 5:
+    #     return 1
+    # else:
+    #     return 0
+    counts = counter.most_common(2)
+    try:
+
+        return counts[0][0]
+    except IndexError as e:
+        print(command)
+        print(counts)
+        print(counter)
+        print(pred_res)
+        sys.exit(1)
 
 
 

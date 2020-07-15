@@ -265,13 +265,13 @@ def test_kmeans():
     logging.info(distances1[:10])
     logging.info(distances2[:10])
 
-    boundary = np.linspace(0.8, 1.1, 300)
+    boundary = np.linspace(0.8, 1.2, 300)
     results = []
     for bound in boundary:
         # bound = 1.0408026755852844
         TP = len([item[0] for item in distances1 if item[0] < bound])
-        FP = len([item[0] for item in distances1 if item[0] >= bound])
-        FN = len([item[0] for item in distances2 if item[0] < bound])
+        FN = len([item[0] for item in distances1 if item[0] >= bound])
+        FP = len([item[0] for item in distances2 if item[0] < bound])
         TN = len([item[0] for item in distances2 if item[0] >= bound])
         try:
             PrecisionP = TP /(TP + FP)

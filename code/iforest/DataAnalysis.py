@@ -81,6 +81,12 @@ if __name__ == '__main__':
 
     logging.info("total normal commands: {}".format(len(normal_commands)))
     logging.info("total abnormal commands:{}".format(len(abnormal_commands)))
+    print(abnormal_commands)
+    for command in abnormal_commands:
+        if 'grep' in abnormal_commands:
+            print(command)
+        if len(command) > 1000:
+            print(command)
     p1s = parse_program(normal_commands)
     p2s = parse_program(abnormal_commands)
     plt.figure(figsize=(30, 20))

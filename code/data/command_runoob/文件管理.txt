@@ -1,0 +1,145 @@
+cat -n textfile1 > textfile2
+cat -b textfile1 textfile2 >> textfile3
+cat /dev/null > /etc/test.txt
+cat /dev/fd0 > OUTFILE
+cat IMG_FILE > /dev/fd0
+chattr +i /etc/resolv.conf
+lsattr /etc/resolv.conf
+----i-------- /etc/resolv.conf
+chgrp -v bin log2012.log
+[root@localhost test]# ll
+[root@localhost test]# ll
+chgrp --reference=log2012.log log2013.log
+[root@localhost test]# ll
+[ugoa...][[+-=][rwxX]...][,...]
+chown runoob:runoobgroup file1.txt
+chown -R runoob:runoobgroup *
+$ cksum testfile1
+1263453430 78 testfile1         //输出信息
+cmp prog.o.bak prog.o
+prog.o.bak prog.o differ: char 4, line 1
+[root@localhost test3]# diff log2014.log log2013.log  -y -W 50
+$ diff test1 test2 | diffstat   #进行比较结果的统计显示
+$ cat test1/testf.txt           #查看test1/testf的内容  
+testfile | 2 +-             #统计信息输出显示  
+[root@localhost ~]# file install.log
+[root@localhost ~]# ls -l /var/mail
+# find . -name "*.c"
+# find . -type f
+# find . -ctime -20
+# find /var/log -type f -mtime +7 -ok rm {} \;
+# find . -type f -perm 644 -exec ls -l {} \;
+# find / -type f -size 0 -exec ls -l {} \;
+git
+$ gitview -c /home/rootlocal/demo.txt      #使用gitview指令观看指定文件内容
+$ who
+$ who|cut -b 3
+ln -s log2013.log link2013
+[root@localhost test]# ll
+ln log2013.log ln2013
+[root@localhost test]# ll
+locate -u
+# chattr +i /etc/resolv.conf
+chattr -i /etc/resolv.conf
+# lsattr /etc/resolv.conf
+----i-------- /etc/resolv.conf
+# chattr +a /var/log/messages
+mattrib a:
+mattrib -h -s -r a:msdos.sys
+mattrib -r -/ a:*.*
+mdel a:autoexec.bat .
+$ mdir -/ a:\*
+Volume in drive A has no label  #加载信息  
+mktemp tmp.xxxx #生成临时文件
+cmd@cmd-desktop:~$ mktemp tmp.xxxx #生成临时文件  
+$ mmove autorun.bat test        #移动文件到目录test中
+$ mread a:\* ./     #将a盘上的所有文件复制到当前工作目录
+$ mdir -/ a:\*      #查看a盘中的文件  
+$ mtools #显示所支持的MS-DOS命令  
+$ mtoolstest #显示mtools 软件包当前的配置信息  
+mv aaa bbb
+mv info/ logs
+$ mv /usr/student/*  .
+$ echo abcdef g > tmp
+$ od -b tmp
+$ od -c tmp
+$ od -t d1 tmp
+$ od -A d -c tmp
+paste file testfile testfile1 #合并指定文件的内容
+$ cat file                  #file文件的内容  
+xiongdan 200  
+$ paste -s file             #合并指定文件的多行数据
+xiongdan 200 lihaihui 233 lymlrl 231
+$ patch -p0 testfile1 testfile.patch    #使用补丁程序升级文件
+$ cat testfile1                 #查看testfile1的内容  
+rcp root@218.6.132.5:./testfile testfile  #复制远程文件到本地  
+# rm  test.txt 
+rm  -r  *
+$ slocate fdisk #显示文件名中含有fdisk关键字的文件的路径信息
+$ slocate fdisk #显示文件名中含有fdisk 关键字的文件的路径信息  
+$ split -6 README       #将README文件每六行分割成一个文件
+$ ls                                #执行ls指令  
+$ tee file1 file2                   #在两个文件中复制内容
+My Linux                        #提示用户输入数据  
+$ tmpwatch 24 /tmp/ #删除/tmp目录中超过一天未使用的文件
+removing directctmp/orbit-tom if not empty
+$ su                                #切换到root用户  
+$ touch testfile                #修改文件的时间属性
+$ ls -l testfile                #查看文件的时间属性  
+$ touch testfile                #修改文件时间属性为当前系统时间  
+$ touch file            #创建一个名为“file”的新的空白文件
+$ umask                         #获取当前权限掩码
+0022
+$ mkdir test1                       #创建目录  
+drwxr-xr-x 2 rootlocal rootlocal 4096 2011-9-19 21:46 test1/
+$ which bash
+/bin/bash                   #bash可执行程序的绝对路径
+$ cp –r test/ newtest
+whereis [-bfmsu][-B <目录>...][-M <目录>...][-S <目录>...][文件...]
+mcopy a:autoexec.bat .
+mcopy -/ A:\*
+cmd@cmd-desktop:~$ mdir -/ a:\* #查看A 盘中的文件  
+$ rhmask code.txt demo.txt
+#scp 命令使用端口号 4588
+awk [选项参数] 'script' var=value file(s)
+2 this is a test
+awk '{[pattern] action}' {filenames}   # 行匹配语句 awk '' 只能用单引号
+# 每行按空格或TAB分割，输出文本中的1、4项
+awk -F  #-F相当于内置变量FS, 指定分割字符
+# 使用","分割
+awk -v  # 设置变量
+$ awk -va=1 '{print $1,$1+a}' log.txt
+awk -f {awk脚本} {文件名}
+$ awk -f cal.awk log.txt
+$ awk '$1>2' log.txt    #命令
+$ awk '$1==2 {print $1,$3}' log.txt    #命令
+$ awk '$1>2 && $2=="Are" {print $1,$2,$3}' log.txt    #命令
+$ awk 'BEGIN{printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n","FILENAME","ARGC","FNR","FS","NF","NR","OFS","ORS","RS";printf "---------------------------------------------\n"} {printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n",FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS}'  log.txt
+# 输出第二列包含 "th"，并打印第二列与第四列
+# 输出包含 "re" 的行
+$ awk 'BEGIN{IGNORECASE=1} /this/' log.txt
+$ awk '$2 !~ /th/ {print $2,$4}' log.txt
+$ cat score.txt
+$ cat cal.awk
+$ awk -f cal.awk score.txt
+BEGIN { print "Hello, world!" }
+$ ls -l *.txt | awk '{sum+=$5} END {print sum}'
+awk 'length>80' log.txt
+seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")}'
+#!/bin/bash
+输入网站名: 
+#!/bin/bash
+输入网站名:www.runoob.com
+#!/bin/bash
+输入网站名:
+#!/bin/bash
+#!/bin/bash
+请随便输入两个字符: 12
+#!/bin/bash
+请输入您的密码:
+123
+#!/bin/bash
+Line 1:123
+$ read -e -p "输入文件名:" str 
+# locate runoob.txt   # 检索 runoob.txt，没有任何输出，表示没有该文件
+updatedb -U /root/runoob/

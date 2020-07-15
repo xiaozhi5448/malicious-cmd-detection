@@ -1,0 +1,23 @@
+lprm -Phpprinter 1123
+lprm 1011
+$ lpr -P mailroom report
+$ lpr -P laser1 05.txt 108.txt 12.txt
+$ lpq  
+$ ls *.txt | pr -3 | lp  
+bye
+ftp ftp.kernel.org #发起链接请求
+uuto./testfile localhost/tmp #将文件传送到远程UUCP 主机localhost的tmp目录
+uupick-s localhost
+uucp-d-R temp localhost ~/Public/
+uucico-r1
+tftp 218.28.188.288 #连接远程服务器
+$ tftp 218.28.188.228                      #连接远程服务器  
+ncftp ftp.kernel.org
+$ ncftp ftp.kernel.org #匿名连接ftp.kernel.org服务器  
+ncftp / > pwd               #查看当前路径  
+You have not saved a bookmark for this site.  #离开提示信息  
+ftpshut-d 3 -1 5 1100 "Server will be shutdown at 23:00:00"
+ftpwho
+$ ftpwho              #查询当前正在登录FTP 服务器的用户  
+ftpcount              #查询当前FTP用户的人数
+$ ftpcount             #查询当前FTP用户的人数  
