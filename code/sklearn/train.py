@@ -4,7 +4,6 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier, RadiusNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
-# from sklearn.externals import joblib
 import joblib
 from sklearn import svm
 import glob
@@ -28,7 +27,11 @@ logging.basicConfig(level=logging.INFO,
 data_dirs = ['../data/normal_all', '../data/abnormal_all']
 meta_data_dir = '../data/meta_data/'
 dataset_bin = 'dataset_clean.pkl'
+
+
 plt.figure(figsize=(10, 20))
+
+
 def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None, n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):
     plt.title(title)
     if ylim:
@@ -52,11 +55,10 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None, n_jobs=1, tr
     plt.legend(loc="best")
     return plt
 
+
 def get_dataset():
     normal_commands = set()
     abnormal_commands = set()
-    labels = []
-    # vectorizer = CountVectorizer()
     t1 = datetime.now()
     logging.info("reading data started at : {}".format(t1))
     for data_directory in data_dirs:
@@ -75,10 +77,7 @@ def get_dataset():
                         abnormal_commands.add(cmdline)
                     else:
                         normal_commands.add(cmdline)
-
-            # vectorizer.fit(commands)
             logging.info("commands len: {}".format(len(normal_commands) + len(abnormal_commands)))
-            # print "vectorizer size: {}".format(round(sys.getsizeof(vectorizer) / (1024*1024), 2))
     t2 = datetime.now()
     delta = t2 - t1
     logging.info("reading data cost {} seconds".format(delta.seconds))
@@ -96,7 +95,7 @@ def get_dataset():
 
 
 def train_knn(X, Y):
-    clfs = []
+    clfs = list()
     clfs.append(('KNN', KNeighborsClassifier(n_neighbors=3)))
     clfs.append(('RadiusKNN', RadiusNeighborsClassifier(n_neighbors=3, radius=500)))
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
@@ -280,7 +279,8 @@ def test_kmeans():
             RecallN = TN /(FP + TN)
         except ZeroDivisionError as e:
             continue
-        logging.info("precision P: {}; recall p: {}; precision N: {}; recall N: {}; bound: {};".format(PrecisionP, RecallP, PrecisionN, RecallN, bound))
+        logging.info("precision P: {}; recall p: {}; precision N: {}; recall N: {}; bound:"
+                     " {};".format(PrecisionP, RecallP, PrecisionN, RecallN, bound))
         results.append((PrecisionP, RecallP, PrecisionN, RecallN, bound))
     x_index = [item[4] for item in results]
     precision_P = [item[0] for item in results]

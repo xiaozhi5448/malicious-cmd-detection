@@ -1,83 +1,72 @@
-man man | col-b > man_help
-colrm
-cmd@hdd-desktop:~$ colrm  
-colrm 4
-cmd@hdd-desktop:~$ colrm 4  
-colrm 4 6
-cmd@hdd-desktop:~$ colrm 4 6  
-[root@localhost text]# cat aaa.txt 
-[root@localhost text]# comm aaa.txt bbb.txt 
-csplit testfile 2
-$ cat testfile #查看testfile 文件内容  
-$ csplit testfile 2  
-$ cat xx00 #查看分割后的xx00文件内容  
-$ cat xx01 #查看分割后的xx01文件内容  
-$ ed              <- 激活 ed 命令 
-$ cat readme.text 
-egrep Linux *
-$ egrep Linux * #查找当前目录下包含字符串“Linux”的文件  
-ex [选项][参数]
-fmt testfile
-$ fmt testfile #重排testfile 文件  
-fmt -w 85 testfile
-$ cat testfile #查看testfile 文件的内容  
-$ fmt -w 85 testfile #指定重排宽度为85个字符  
-fold -w 30 testfile
-$ cat testfile #查看testfile 中的内容  
-$ fold -w 30 testfile #行折叠成宽度为30，显示testfile 文件  
-grep test *file
-$ grep test test* #查找前缀有“test”的文件包含“test”字符串的文件  
-grep -r update /etc/acpi
-$ grep -r update /etc/acpi #以递归的方式查找“etc/acpi”  
-grep -v test *test*
-$ grep-v test* #查找文件名中包含test 的文件中不包含test 的行  
-ispell testfile
-netwrks File: testfile  
-ispell-b testfile    #检查拼写错误的同时，备份文件
-$ ls #以列表的形式查看当前目录下的文件  
-jed main.c       #用jed编辑器打开main.c 文件
-F10 key ==> File Edit Mode Search Buffers Windows System Help #编辑器菜单  
-joe main.c
-I A main.c (c) Row 1 Col 1 12:28 Ctrl-K H for help  
-look L testfile
-$ cat testfile #查看testfile 文件内容  
-$ look L testfile                              #查找以“L”开头的单词  
-mtype dos.txt         #打开MS-DOS 文件
-$ mtype dos.txt #打开MS-DOS 文件  
-pico testfile
-GNU nano 2.0.9 文件: testfile #从左到右分别为编辑器版本号、文件名  
-rgrep Hello *
-$ rgrep Hello *             #在当前目录下查找句子中包含“Hello”字符串的文件  
-[root@www ~]# cat regular_express.txt 
-[root@www ~]# sed -i 's/\.$/\!/g' regular_express.txt
-[root@www ~]# sed -i '$a # This is a test' regular_express.txt
-sort testfile
-$ cat testfile      #testfile文件原有排序  
-$ sort testfile #重排结果  
-spell testfile
-$ spell testfile   #检查testfile 拼写错误  
-spell
-$ spell #检查标准输入的字符串的拼写错误  
-cat testfile |tr a-z A-Z
-$ cat testfile         #testfile原来的内容  
-$ cat testfile | tr a-z A-Z #转换后的输出  
-cat testfile |tr [:lower:] [:upper:]
-$ cat testfile | tr [:lower:] [:upper:] #转换后的输出  
-> expr length “this is a test”
-> expr substr “this is a test” 3 5
-> expr index "sarasara"  a
-> expr 14 % 9
-uniq testfile
-$ cat testfile      #原有内容  
-$ uniq testfile     #删除重复行后的内容  
-uniq -c testfile
-$ uniq -c testfile      #删除重复行后的内容  
-$ cat testfile1      # 原有内容 
-$ sort  testfile1 | uniq
-$ sort testfile1 | uniq -c
-$ sort testfile1 | uniq -d
-$ wc testfile           # testfile文件的统计信息  
-wc testfile testfile_1 testfile_2   #统计三个文件的信息
-$ wc testfile testfile_1 testfile_2  #统计三个文件的信息  
-#!/bin/bash
-9 6
+man man | col-b > man_help
+colrm
+cmd@hdd-desktop:~$ colrm  
+colrm 4
+cmd@hdd-desktop:~$ colrm 4  
+colrm 4 6
+cmd@hdd-desktop:~$ colrm 4 6  
+[root@localhost text]# cat aaa.txt 
+[root@localhost text]# comm aaa.txt bbb.txt 
+csplit testfile 2
+$ cat testfile #查看testfile 文件内容  
+$ csplit testfile 2  
+$ cat xx00 #查看分割后的xx00文件内容  
+$ cat xx01 #查看分割后的xx01文件内容  
+$ ed              <- 激活 ed 命令 
+$ cat readme.text 
+
+$ egrep Linux * #查找当前目录下包含字符串“Linux”的文件  
+
+fmt testfile
+
+fmt -w 85 testfile
+$ cat testfile #查看testfile 文件的内容  
+$ fmt -w 85 testfile #指定重排宽度为85个字符
+$ cat testfile #查看testfile 中的内容  
+$ fold -w 30 testfile #行折叠成宽度为30，显示testfile 文件  
+grep test *file
+$ grep test test* #查找前缀有“test”的文件包含“test”字符串的文件  
+grep -r update /etc/acpi
+$ grep -r update /etc/acpi #以递归的方式查找“etc/acpi”  
+grep -v test *test*
+$ grep -v test* #查找文件名中包含test 的文件中不包含test 的行
+ispell testfile
+ispell -b testfile    #检查拼写错误的同时，备份文件
+$ ls #以列表的形式查看当前目录下的文件  
+jed main.c       #用jed编辑器打开main.c 文件
+
+joe main.c
+
+$ cat testfile #查看testfile 文件内容  
+$ look L testfile                              #查找以“L”开头的单词  
+mtype dos.txt         #打开MS-DOS 文件
+$ mtype dos.txt #打开MS-DOS 文件  
+pico testfile
+rgrep Hello *
+[root@www ~]# cat regular_express.txt 
+[root@www ~]# sed -i 's/\.$/\!/g' regular_express.txt
+[root@www ~]# sed -i '$a # This is a test' regular_express.txt
+sort testfile
+$ cat testfile      #testfile文件原有排序  
+$ sort testfile #重排结果  
+spell testfile
+$ spell testfile   #检查testfile 拼写错误
+$ cat testfile         #testfile原来的内容  
+$ cat testfile | tr a-z A-Z #转换后的输出  
+
+> expr length “this is a test”
+> expr substr “this is a test” 3 5
+> expr index "sarasara"  a
+> expr 14 % 9
+uniq testfile
+$ cat testfile      #原有内容  
+$ uniq testfile     #删除重复行后的内容  
+uniq -c testfile
+$ uniq -c testfile      #删除重复行后的内容  
+$ cat testfile1      # 原有内容 
+$ sort  testfile1 | uniq
+$ sort testfile1 | uniq -c
+$ sort testfile1 | uniq -d
+$ wc testfile           # testfile文件的统计信息
+$ wc testfile testfile_1 testfile_2  #统计三个文件的信息  
+

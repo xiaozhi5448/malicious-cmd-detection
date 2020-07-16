@@ -1,3 +1,7 @@
+"""
+恶意数据集中包含有正常数据
+脚本目的是去除恶意数据集中的正常指令
+"""
 import openpyxl
 import matplotlib.pyplot as plt
 import pickle as pkl

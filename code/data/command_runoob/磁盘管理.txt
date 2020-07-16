@@ -1,13 +1,13 @@
-cd /usr/bin
-cd ~
-cd ../..
-# df 
-# df test 
-df -i 
-# df --total 
-# df -h 
-dir -l /home/cc/Ruijie
-$ dir -l /home/cc/Ruijie
-# du
-# du log2012.log 
-# du -h test
+cd /usr/bin
+cd ~
+cd ../..
+# df 
+# df test 
+df -i 
+# df --total 
+# df -h 
+dir -l /home/cc/Ruijie
+$ dir -l /home/cc/Ruijie
+# du
+# du log2012.log 
+# du -h test

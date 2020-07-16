@@ -68,7 +68,15 @@ def get_real_command(links:dict):
                         command_line = command_text.split('\r\n')[0]
 
 
-                        command = re.split("[#$]", command_line)[-1]
+                        items = re.split("[#$]", command_line)
+                        # if len(items) == 3:
+                        #     command_line = items[1]
+                        # elif len(items) == 2:
+                        #     if not items[0] or '[' in items[0]:
+                        #         command_line = items[1]
+                        #     else:
+                        #         command_line = items[0]
+
 
                         data_outfp.write(command_line + os.linesep)
             else:
