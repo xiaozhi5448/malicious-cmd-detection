@@ -40,26 +40,26 @@ def clean():
 
     grep_commands = [command for command in normal_command_set if re.match("grep -w \d+", command)]
     normal_command_set = normal_command_set - set(grep_commands)
-    normal_command_set.add(grep_commands[0])
+    normal_command_set |= set(grep_commands[:500])
     logging.info("{} grep items!".format(len(grep_commands)))
     readlink_commands = [command for command in normal_command_set if re.match("readlink /proc/\d+/exe", command)]
     normal_command_set = normal_command_set - set(readlink_commands)
-    normal_command_set.add(readlink_commands[0])
+    normal_command_set |= set(readlink_commands[:500])
     logging.info("{} readlink items".format(len(readlink_commands)))
 
     top_commands = [command for command in normal_command_set if re.match("top -p \d+ -bn 1", command)]
     normal_command_set = normal_command_set - set(top_commands)
-    normal_command_set.add(top_commands[0])
+    normal_command_set|= set(top_commands[:500])
     logging.info("{} top items".format(len(top_commands)))
 
     jstat_commands = [command for command in normal_command_set if re.match('(/\w+){1,}/jstat -gc \d+', command)]
     normal_command_set -= set(jstat_commands)
-    normal_command_set.add(jstat_commands[0])
+    normal_command_set |= set(jstat_commands[0:500])
     logging.info("{} jstat items".format(len(jstat_commands)))
 
     cp_commands = [command for command in normal_command_set if command.startswith("cp -rf /opt/webserver/")]
     normal_command_set -= set(cp_commands)
-    normal_command_set.add(cp_commands[0])
+    normal_command_set|= set(cp_commands[0:500])
     logging.info("{} cp items".format(len(cp_commands)))
 
     java_commands = []

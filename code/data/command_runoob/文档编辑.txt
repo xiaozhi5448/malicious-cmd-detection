@@ -2,9 +2,7 @@ man man | col-b > man_help
 colrm
 cmd@hdd-desktop:~$ colrm  
 colrm 4
-cmd@hdd-desktop:~$ colrm 4  
 colrm 4 6
-cmd@hdd-desktop:~$ colrm 4 6  
 [root@localhost text]# cat aaa.txt 
 [root@localhost text]# comm aaa.txt bbb.txt 
 csplit testfile 2
@@ -32,7 +30,6 @@ grep -v test *test*
 $ grep -v test* #查找文件名中包含test 的文件中不包含test 的行
 ispell testfile
 ispell -b testfile    #检查拼写错误的同时，备份文件
-$ ls #以列表的形式查看当前目录下的文件  
 jed main.c       #用jed编辑器打开main.c 文件
 
 joe main.c

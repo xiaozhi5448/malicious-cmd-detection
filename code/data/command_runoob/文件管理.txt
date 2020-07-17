@@ -5,13 +5,8 @@ cat /dev/fd0 > OUTFILE
 cat IMG_FILE > /dev/fd0
 chattr +i /etc/resolv.conf
 lsattr /etc/resolv.conf
-----i-------- /etc/resolv.conf
 chgrp -v bin log2012.log
-[root@localhost test]# ll
 chgrp --reference=log2012.log log2013.log
-[root@localhost test]# ll
-chown runoob:runoobgroup file1.txt
-chown -R runoob:runoobgroup *
 cksum testfile1
 cmp prog.o.bak prog.o
 prog.o.bak prog.o differ: char 4, line 1
@@ -29,7 +24,7 @@ find / -type f -size 0 -exec ls -l {} \;
 git
 gitview -c /home/rootlocal/demo.txt      #使用gitview指令观看指定文件内容
  who
-who|cut -b 3
+who | cut -b 3
 ln -s log2013.log link2013
 ll
 ln log2013.log ln2013
@@ -56,12 +51,8 @@ od -c tmp
 od -t d1 tmp
 od -A d -c tmp
 paste file testfile testfile1 #合并指定文件的内容
-cat file
-xiongdan 200  
 $ paste -s file             #合并指定文件的多行数据
-xiongdan 200 lihaihui 233 lymlrl 231
 $ patch -p0 testfile1 testfile.patch    #使用补丁程序升级文件
-$ cat testfile1                 #查看testfile1的内容  
 rcp root@218.6.132.5:./testfile testfile  #复制远程文件到本地  
 # rm  test.txt 
 rm  -r  *
@@ -70,9 +61,7 @@ $ slocate fdisk #显示文件名中含有fdisk 关键字的文件的路径信息
 $ split -6 README       #将README文件每六行分割成一个文件
 $ ls                                #执行ls指令  
 $ tee file1 file2                   #在两个文件中复制内容
-My Linux                        #提示用户输入数据  
 $ tmpwatch 24 /tmp/ #删除/tmp目录中超过一天未使用的文件
-removing directctmp/orbit-tom if not empty
 $ su                                #切换到root用户  
 $ touch testfile                #修改文件的时间属性
 $ ls -l testfile                #查看文件的时间属性  
@@ -86,9 +75,7 @@ mcopy a:autoexec.bat .
 mcopy -/ A:\*
 mdir -/ a:\*
 $ rhmask code.txt demo.txt
-awk -F  #-F相当于内置变量FS, 指定分割字符
 
-awk -v  # 设置变量
 $ awk -va=1 '{print $1,$1+a}' log.txt
 
 $ awk -f cal.awk log.txt
@@ -101,7 +88,6 @@ $ awk '$2 !~ /th/ {print $2,$4}' log.txt
 $ cat score.txt
 $ cat cal.awk
 $ awk -f cal.awk score.txt
-BEGIN { print "Hello, world!" }
 $ ls -l *.txt | awk '{sum+=$5} END {print sum}'
 awk 'length>80' log.txt
 seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")}'

@@ -1,0 +1,178 @@
+lprm -Phpprinter 1123lprm 1011lpr -P mailroom reportlpr -P laser1 05.txt 108.txt 12.txtlpqls *.txt | pr -3 | lpbyeftp ftp.kernel.orguuto ./testfile localhost/tmpuupick -s localhostuucp -d -R temp localhost ~/Public/uucico -r1tftp 218.28.188.288tftp 218.28.188.228ncftp ftp.kernel.orgncftp ftp.kernel.orgftpshut -d 3 -1 5 1100 "Server will be shutdown at 23:00:00"ftpwhoftpcountcat -n textfile1cat -b textfile1 textfile2cat /dev/nullcat /dev/fd0cat IMG_FILEchattr +i /etc/resolv.conflsattr /etc/resolv.confchgrp -v bin log2012.logchgrp --reference=log2012.log log2013.logcksum testfile1cmp prog.o.bak prog.oprog.o.bak prog.o differ: char 4, line 1diff log2014.log log2013.log  -y -W 50diff test1 test2 | diffstatcat test1/testf.txtfile install.logls -l /var/mailfind . -name "*.c"find . -type ffind . -ctime -20find /var/log -type f -mtime +7 -ok rm {} \;find . -type f -perm 644 -exec ls -l {} \;find / -type f -size 0 -exec ls -l {} \;gitgitview -c /home/rootlocal/demo.txtwhowho | cut -b 3ln -s log2013.log link2013llln log2013.log ln2013locate -uchattr +i /etc/resolv.conflsattr /etc/resolv.confchattr +a /var/log/messagesmattrib -h -s -r a:msdos.sysmattrib -r -/ a:*.*mdel a:autoexec.bat .mdir -/ a:\*mktemp tmp.xxxxmmove autorun.bat testmread a:\* ./mdir -/ a:\*mtoolsmtoolstestmv aaa bbbmv info/ logsmv /usr/student/*  .echo abcdef god -b tmpod -c tmpod -t d1 tmpod -A d -c tmppaste file testfile testfile1paste -s filepatch -p0 testfile1 testfile.patchrcp root@218.6.132.5:./testfile testfilerm  test.txtrm  -r  *slocate fdiskslocate fdisksplit -6 READMElstee file1 file2tmpwatch 24 /tmp/sutouch testfilels -l testfiletouch testfiletouch fileumaskmkdir test1which bashcp –r test/ newtestmcopy a:autoexec.bat .mcopy -/ A:\*mdir -/ a:\*rhmask code.txt demo.txt1,awk -f cal.awk log.txtawk 'BEGIN{printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n","FILENAME","ARGC","FNR","FS","NF","NR","OFS","ORS","RS";printf "---------------------------------------------\n"} {printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n",FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS}'  log.txtawk 'BEGIN{IGNORECASE=1} /this/' log.txtcat score.txtcat cal.awkawk -f cal.awk score.txtls -l *.txt | awk '{sum+=awk 'lengthseq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;iread -e -p "输入文件名:" strlocate runoob.txtman man | col-bcolrmcmd@hdd-desktop:~colrm 4colrm 4 6cat aaa.txtcomm aaa.txt bbb.txtcsplit testfile 2cat testfilecsplit testfile 2cat xx00cat xx01edcat readme.textegrep Linux *fmt testfilefmt -w 85 testfilecat testfilefmt -w 85 testfilecat testfilefold -w 30 testfilegrep test *filegrep test test*grep -r update /etc/acpigrep -r update /etc/acpigrep -v test *test*grep -v test*ispell testfileispell -b testfilejed main.cjoe main.ccat testfilelook L testfilemtype dos.txtmtype dos.txtpico testfilergrep Hello *cat regular_express.txtsed -i 's/\.sort testfilecat testfilesort testfilespell testfilespell testfilecat testfilecat testfile | tr a-z A-Zexpr length “this is a test”expr substr “this is a test” 3 5expr index "sarasara"  aexpr 14 % 9uniq testfilecat testfileuniq testfileuniq -c testfileuniq -c testfilecat testfile1sort  testfile1 | uniqsort testfile1 | uniq -csort testfile1 | uniq -dwc testfilewc testfile testfile_1 testfile_2cd /usr/bincd ~cd ../..dfdf testdf -idf --totaldf -hdir -l /home/cc/Ruijiedir -l /home/cc/Ruijiedudu log2012.logdu -h testlprm -Phpprinter 1123lprm 1011lpr -P mailroom reportlpr -P laser1 05.txt 108.txt 12.txtlpqls *.txt | pr -3 | lpbyeftp ftp.kernel.orguuto ./testfile localhost/tmpuupick -s localhostuucp -d -R temp localhost ~/Public/uucico -r1tftp 218.28.188.288tftp 218.28.188.228ncftp ftp.kernel.orgncftp ftp.kernel.orgftpshut -d 3 -1 5 1100 "Server will be shutdown at 23:00:00"ftpwhoftpcountcat -n textfile1cat -b textfile1 textfile2cat /dev/nullcat /dev/fd0cat IMG_FILEchattr +i /etc/resolv.conflsattr /etc/resolv.confchgrp -v bin log2012.logchgrp --reference=log2012.log log2013.logcksum testfile1cmp prog.o.bak prog.oprog.o.bak prog.o differ: char 4, line 1diff log2014.log log2013.log  -y -W 50diff test1 test2 | diffstatcat test1/testf.txtfile install.logls -l /var/mailfind . -name "*.c"find . -type ffind . -ctime -20find /var/log -type f -mtime +7 -ok rm {} \;find . -type f -perm 644 -exec ls -l {} \;find / -type f -size 0 -exec ls -l {} \;gitgitview -c /home/rootlocal/demo.txtwhowho | cut -b 3ln -s log2013.log link2013llln log2013.log ln2013locate -uchattr +i /etc/resolv.conflsattr /etc/resolv.confchattr +a /var/log/messagesmattrib -h -s -r a:msdos.sysmattrib -r -/ a:*.*mdel a:autoexec.bat .mdir -/ a:\*mktemp tmp.xxxxmmove autorun.bat testmread a:\* ./mdir -/ a:\*mtoolsmtoolstestmv aaa bbbmv info/ logsmv /usr/student/*  .echo abcdef god -b tmpod -c tmpod -t d1 tmpod -A d -c tmppaste file testfile testfile1paste -s filepatch -p0 testfile1 testfile.patchrcp root@218.6.132.5:./testfile testfilerm  test.txtrm  -r  *slocate fdiskslocate fdisksplit -6 READMElstee file1 file2tmpwatch 24 /tmp/sutouch testfilels -l testfiletouch testfiletouch fileumaskmkdir test1which bashcp –r test/ newtestmcopy a:autoexec.bat .mcopy -/ A:\*mdir -/ a:\*rhmask code.txt demo.txt1,awk -f cal.awk log.txtawk 'BEGIN{printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n","FILENAME","ARGC","FNR","FS","NF","NR","OFS","ORS","RS";printf "---------------------------------------------\n"} {printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n",FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS}'  log.txtawk 'BEGIN{IGNORECASE=1} /this/' log.txtcat score.txtcat cal.awkawk -f cal.awk score.txtls -l *.txt | awk '{sum+=awk 'lengthseq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;iread -e -p "输入文件名:" strlocate runoob.txtman man | col-bcolrmcmd@hdd-desktop:~colrm 4colrm 4 6cat aaa.txtcomm aaa.txt bbb.txtcsplit testfile 2cat testfilecsplit testfile 2cat xx00cat xx01edcat readme.textegrep Linux *fmt testfilefmt -w 85 testfilecat testfilefmt -w 85 testfilecat testfilefold -w 30 testfilegrep test *filegrep test test*grep -r update /etc/acpigrep -r update /etc/acpigrep -v test *test*grep -v test*ispell testfileispell -b testfilejed main.cjoe main.ccat testfilelook L testfilemtype dos.txtmtype dos.txtpico testfilergrep Hello *cat regular_express.txtsed -i 's/\.sort testfilecat testfilesort testfilespell testfilespell testfilecat testfilecat testfile | tr a-z A-Zexpr length “this is a test”expr substr “this is a test” 3 5expr index "sarasara"  aexpr 14 % 9uniq testfilecat testfileuniq testfileuniq -c testfileuniq -c testfilecat testfile1sort  testfile1 | uniqsort testfile1 | uniq -csort testfile1 | uniq -dwc testfilewc testfile testfile_1 testfile_2cd /usr/bincd ~cd ../..dfdf testdf -idf --totaldf -hdir -l /home/cc/Ruijiedir -l /home/cc/Ruijiedudu log2012.logdu -h test
+lprm -Phpprinter 1123
+lprm 1011
+lpr -P mailroom report
+lpr -P laser1 05.txt 108.txt 12.txt
+lpq
+ls *.txt | pr -3 | lp
+ftp ftp.kernel.org
+uuto ./testfile localhost/tmp
+uupick -s localhost
+uucp -d -R temp localhost ~/Public/
+uucico -r1
+tftp 218.28.188.288
+tftp 218.28.188.228
+ncftp ftp.kernel.org
+ncftp ftp.kernel.org
+ftpshut -d 3 -1 5 1100 "Server will be shutdown at 23:00:00"
+ftpwho
+ftpcount
+cat -n textfile1
+cat -b textfile1 textfile2
+cat /dev/null
+cat /dev/fd0
+cat IMG_FILE
+chattr +i /etc/resolv.conf
+lsattr /etc/resolv.conf
+chgrp -v bin log2012.log
+chgrp --reference=log2012.log log2013.log
+cksum testfile1
+cmp prog.o.bak prog.o
+prog.o.bak prog.o differ: char 4, line 1
+diff log2014.log log2013.log  -y -W 50
+diff test1 test2 | diffstat
+cat test1/testf.txt
+file install.log
+ls -l /var/mail
+find . -name "*.c"
+find . -type f
+find . -ctime -20
+find /var/log -type f -mtime +7 -ok rm {} \;
+find . -type f -perm 644 -exec ls -l {} \;
+find / -type f -size 0 -exec ls -l {} \;
+git
+gitview -c /home/rootlocal/demo.txt
+who
+who | cut -b 3
+ln -s log2013.log link2013
+ll
+ln log2013.log ln2013
+locate -u
+chattr +i /etc/resolv.conf
+lsattr /etc/resolv.conf
+chattr +a /var/log/messages
+mattrib -h -s -r a:msdos.sys
+mattrib -r -/ a:*.*
+mdel a:autoexec.bat .
+mdir -/ a:\*
+mktemp tmp.xxxx
+mmove autorun.bat test
+mread a:\* ./
+mdir -/ a:\*
+mtools
+mtoolstest
+mv aaa bbb
+mv info/ logs
+mv /usr/student/*  .
+echo abcdef g
+od -b tmp
+od -c tmp
+od -t d1 tmp
+od -A d -c tmp
+paste file testfile testfile1
+paste -s file
+patch -p0 testfile1 testfile.patch
+rcp root@218.6.132.5:./testfile testfile
+rm  test.txt
+rm  -r  *
+slocate fdisk
+slocate fdisk
+split -6 README
+ls
+tee file1 file2
+tmpwatch 24 /tmp/
+touch testfile
+ls -l testfile
+touch testfile
+touch file
+umask
+mkdir test1
+which bash
+cp –r test/ newtest
+mcopy a:autoexec.bat .
+mcopy -/ A:\*
+mdir -/ a:\*
+rhmask code.txt demo.txt
+awk -f cal.awk log.txt
+awk 'BEGIN{printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n","FILENAME","ARGC","FNR","FS","NF","NR","OFS","ORS","RS";printf "---------------------------------------------\n"} {printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n",FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS}'  log.txt
+awk 'BEGIN{IGNORECASE=1} /this/' log.txt
+cat score.txt
+cat cal.awk
+awk -f cal.awk score.txt
+ls -l *.txt | awk '{sum+=
+awk 'length
+seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i
+read -e -p "输入文件名:" str
+locate runoob.txt
+man man | col-b
+colrm
+colrm 4
+colrm 4 6
+cat aaa.txt
+comm aaa.txt bbb.txt
+csplit testfile 2
+cat testfile
+csplit testfile 2
+cat xx00
+cat xx01
+cat readme.text
+egrep Linux *
+fmt testfile
+fmt -w 85 testfile
+cat testfile
+fmt -w 85 testfile
+cat testfile
+fold -w 30 testfile
+grep test *file
+grep test test*
+grep -r update /etc/acpi
+grep -r update /etc/acpi
+grep -v test *test*
+grep -v test*
+ispell testfile
+ispell -b testfile
+jed main.c
+joe main.c
+cat testfile
+look L testfile
+mtype dos.txt
+mtype dos.txt
+pico testfile
+rgrep Hello *
+cat regular_express.txt
+sed -i 's/\.
+sort testfile
+cat testfile
+sort testfile
+spell testfile
+spell testfile
+cat testfile
+cat testfile | tr a-z A-Z
+expr length “this is a test”
+expr substr “this is a test” 3 5
+expr index "sarasara"  a
+expr 14 % 9
+uniq testfile
+cat testfile
+uniq testfile
+uniq -c testfile
+uniq -c testfile
+cat testfile1
+sort  testfile1 | uniq
+sort testfile1 | uniq -c
+sort testfile1 | uniq -d
+wc testfile
+wc testfile testfile_1 testfile_2
+cd /usr/bin
+cd ~
+cd ../..
+df
+df test
+df -i
+df --total
+df -h
+dir -l /home/cc/Ruijie
+dir -l /home/cc/Ruijie
+du
+du log2012.log
+du -h test
