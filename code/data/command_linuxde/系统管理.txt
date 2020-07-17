@@ -125,79 +125,6 @@ firewall-cmd --list-all
 firewall-cmd --direct -add-rule ipv4 filter INPUT 0 -p tcp --dport 9000 -j accept
 firewall-cmd --reload
 
-（末尾带有 [P only] 的话表示该选项除了与（--permanent）之外，不能与其他选项一同使用！）
---new-service=<服务名> 新建一个自定义服务 [P only]
---new-service-from-file=<文件名> [--name=<服务名>]
-从文件中读取配置用以新建一个自定义服务 [P only]
---delete-service=<服务名>
-删除一个已存在的服务 [P only]
---load-service-defaults=<服务名>
-Load icmptype default settings [P only]
---info-service=<服务名>
-显示该服务的相关信息
---path-service=<服务名>
-显示该服务的文件的相关路径 [P only]
---service=<服务名> --set-description=<描述>
-给该服务设置描述信息 [P only]
---service=<服务名> --get-description
-显示该服务的描述信息 [P only]
---service=<服务名> --set-short=<描述>
-给该服务设置一个简短的描述 [P only]
---service=<服务名> --get-short
-显示该服务的简短描述 [P only]
-
---service=<服务名> --add-port=<端口号>[-<端口号>]/<protocol>
-给该服务添加一个新的端口(端口段) [P only]
-
---service=<服务名> --remove-port=<端口号>[-<端口号>]/<protocol>
-从该服务上移除一个端口(端口段) [P only]
-
---service=<服务名> --query-port=<端口号>[-<端口号>]/<protocol>
-查询该服务是否添加了某个端口(端口段) [P only]
-
---service=<服务名> --get-ports
-显示该服务添加的所有端口 [P only]
-
---service=<服务名> --add-protocol=<protocol>
-为该服务添加一个协议 [P only]
-
---service=<服务名> --remove-protocol=<protocol>
-从该服务上移除一个协议 [P only]
-
---service=<服务名> --query-protocol=<protocol>
-查询该服务是否添加了某个协议 [P only]
-
---service=<服务名> --get-protocols
-显示该服务添加的所有协议 [P only]
-
---service=<服务名> --add-source-port=<端口号>[-<端口号>]/<protocol>
-添加新的源端口(端口段)到该服务 [P only]
-
---service=<服务名> --remove-source-port=<端口号>[-<端口号>]/<protocol>
-从该服务中删除源端口(端口段) [P only]
-
---service=<服务名> --query-source-port=<端口号>[-<端口号>]/<protocol>
-查询该服务是否添加了某个源端口(端口段) [P only]
-
---service=<服务名> --get-source-ports
-显示该服务所有源端口 [P only]
-
---service=<服务名> --add-module=<module>
-为该服务添加一个模块 [P only]
---service=<服务名> --remove-module=<module>
-为该服务移除一个模块 [P only]
---service=<服务名> --query-module=<module>
-查询该服务是否添加了某个模块 [P only]
---service=<服务名> --get-modules
-显示该服务添加的所有模块 [P only]
---service=<服务名> --set-destination=<ipv>:<address>[/]
-Set destination for ipv to address in service [P only]
---service=<服务名> --remove-destination=<ipv>
-Disable destination for ipv i service [P only]
---service=<服务名> --query-destination=<ipv>:<address>[/]
-Return whether destination ipv is set for service [P only]
---service=<服务名> --get-destinations
-List destinations in service [P only]
 
 firewall-cmd --add-service=mysql        # 开放mysql端口
 firewall-cmd --remove-service=http      # 阻止http端口
@@ -270,1053 +197,46 @@ expect eof
 
 
 # pssh -h ip.txt -i uptime
-[1] 11:15:03 [SUCCESS] Mar.mars.he
-11:15:11 up 4 days, 16:25,  1 user,  load average: 0.00, 0.00, 0.00
-[2] 11:15:03 [SUCCESS] Jan.mars.he
-11:15:12 up 3 days, 23:26,  0 users,  load average: 0.00, 0.00, 0.00
-[3] 11:15:03 [SUCCESS] Feb.mars.he
-11:15:12 up 4 days, 16:26,  2 users,  load average: 0.08, 0.02, 0.01
+
 
 # pssh -h IP.txt -i "/usr/local/mysql/bin/mysql -e 'show slave status \G'"|grep Running:
-Slave_IO_Running: yes
-Slave_SQL_Running: Yes
-Slave_IO_Running: Yes
-Slave_SQL_Running: Yes
-Slave_IO_Running: Yes
-Slave_SQL_Running: Yes
 
 # pssh -h IP.txt -i -o /tmp/pssh/ uptime
-[1] 11:19:47 [SUCCESS] Feb.mars.he
-11:19:55 up 4 days, 16:31,  2 users,  load average: 0.02, 0.03, 0.00
-[2] 11:19:47 [SUCCESS] Jan.mars.he
-11:19:56 up 3 days, 23:30,  0 users,  load average: 0.01, 0.00, 0.00
-[3] 11:19:47 [SUCCESS] Mar.mars.he
-11:19:56 up 4 days, 16:30,  1 user,  load average: 0.00, 0.00, 0.00
+
 
 # ll /tmp/pssh/
-总用量 12
--rw-r--r--. 1 root root 70 12月  1 11:19 Feb.mars.he
--rw-r--r--. 1 root root 70 12月  1 11:19 Jan.mars.he
--rw-r--r--. 1 root root 69 12月  1 11:19 Mar.mars.he
+
 
 # cat /tmp/pssh/*
-11:19:55 up 4 days, 16:31,  2 users,  load average: 0.02, 0.03, 0.00
-11:19:56 up 3 days, 23:30,  0 users,  load average: 0.01, 0.00, 0.00
-11:19:56 up 4 days, 16:30,  1 user,  load average: 0.00, 0.00, 0.00
 
 lixi@lixi-desktop:~$ ping -T tsandaddr www.ustc.edu.cn -c 1
-PING www.ustc.edu.cn (202.38.64.9) 56(124) bytes of data.
-64 bytes from 202.38.64.9: icmp_seq=1 ttl=62 time=0.823 ms
-TS:     lixi-desktop.local (210.45.74.25)    12522473 absolute
-210.45.74.1    -251
-local-gw.ustc.edu.cn (202.38.64.126)    248
-202.38.64.9    -857514
-Unrecorded hops: 3
-
---- www.ustc.edu.cn ping statistics ---
-1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 0.823/0.823/0.823/0.000 ms
 
 lixi@lixi-desktop:~# ./clockdiff -o 202.38.64.9
-..................................................
-host=202.38.64.9 rtt=1(0)ms/1ms delta=-857517ms/-857517ms Wed Dec 17 11:28:30 2008
-
 lixi@lixi-desktop:~# ./clockdiff 202.38.64.9
-.
-host=202.38.64.9 rtt=750(187)ms/0ms delta=-857517ms/-857517ms Wed Dec 17 11:28:35 2008
 
 lixi@lixi-desktop:~#./clockdiff gigagate1.Princeton.EDU
-..................................................
-host=gigagate1.Princeton.EDU rtt=307(21)ms/271ms delta=-5ms/-5ms Wed Dec 17 11:50:16 2008
+
 
 service sshd start
-启动 sshd： [确定]
+
 
 rsync -vzrtopg --progress -e ssh --delete work@172.16.78.192:/www/* /databack/experiment/rsync
-work@172.16.78.192's password:
-receiving file list ...
-5 files to consider
-test/
-a
-0 100% 0.00kB/s 527:35:41 (1, 20.0% of 5)
-b
-67 100% 65.43kB/s 0:00:00 (2, 40.0% of 5)
-c
-0 100% 0.00kB/s 527:35:41 (3, 60.0% of 5)
-dd
-100663296 100% 42.22MB/s 0:00:02 (4, 80.0% of 5)
-sent 96 bytes received 98190 bytes 11563.06 bytes/sec
-total size is 100663363 speedup is 1024.19
+
 
 vi /etc/xinetd.d/rsync
 
-#default: off
-# description: The rsync server is a good addition to an ftp server, as it \
-# allows crc checksumming etc.
-service rsync {
-disable = no
-socket_type = stream
-wait = no
-user = root
-server = /usr/bin/rsync
-server_args = --daemon
-log_on_failure += USERID
-}
-
 /etc/init.d/xinetd restart
-停止 xinetd： [确定]
-启动 xinetd： [确定]
 
 vi /etc/rsyncd.conf
 
-uid=root
-gid=root
-max connections=4
-log file=/var/log/rsyncd.log
-pid file=/var/run/rsyncd.pid
-lock file=/var/run/rsyncd.lock
-secrets file=/etc/rsyncd.passwd
-hosts deny=172.16.78.0/22
 
-[www]
-comment= backup web
-path=/www
-read only = no
-exclude=test
-auth users=work
-
-echo "work:abc123" > /etc/rsyncd.passwd
 chmod 600 /etc/rsyncd.passwd
 
-rsync -avz --progress --delete work@172.16.78.192::www /databack/experiment/rsync
-
-Password:
-receiving file list ...
-6 files to consider
-./ files...
-a
-0 100% 0.00kB/s 528:20:41 (1, 50.0% of 6)
-b
-67 100% 65.43kB/s 0:00:00 (2, 66.7% of 6)
-c
-0 100% 0.00kB/s 528:20:41 (3, 83.3% of 6)
-dd
-100663296 100% 37.49MB/s 0:00:02 (4, 100.0% of 6)
-sent 172 bytes received 98276 bytes 17899.64 bytes/sec
-total size is 150995011 speedup is 1533.75
-
-rsync -avz --progress /databack/experiment/rsync/ work@172.16.78.192::www
-
-Password:
-building file list ...
-6 files to consider
-./
-a
-b
-67 100% 0.00kB/s 0:00:00 (2, 66.7% of 6)
-c
-sent 258 bytes received 76 bytes 95.43 bytes/sec
-total size is 150995011 speedup is 452080.87
-
-sudo vdfuse -f /path/to/file.vdi /path/to/mountpoint
-
-mount /path/to/mountpoint/Partition1 /path/to/someother/mountpoint
-
-date +"%Y-%m-%d"
-2009-12-07
-
-date -d "1 day ago" +"%Y-%m-%d"
-2012-11-19
-
-date -d "2 second" +"%Y-%m-%d %H:%M.%S"
-2012-11-20 14:21.31
-
-date -d "1970-01-01 1234567890 seconds" +"%Y-%m-%d %H:%m:%S"
-2009-02-13 23:02:30
-
-date -d "2009-12-12" +"%Y/%m/%d %H:%M.%S"
-2009/12/12 00:00.00
-
-date -d "Dec 5, 2009 12:00:37 AM" +"%Y-%m-%d %H:%M.%S"
-2009-12-05 00:00.37
-
-date -d "Dec 5, 2009 12:00:37 AM 2 year ago" +"%Y-%m-%d %H:%M.%S"
-2007-12-05 00:00.37
-
-date +%Y%m%d                   //显示前天年月日
-date -d "+1 day" +%Y%m%d       //显示前一天的日期
-date -d "-1 day" +%Y%m%d       //显示后一天的日期
-date -d "-1 month" +%Y%m%d     //显示上一月的日期
-date -d "+1 month" +%Y%m%d     //显示下一月的日期
-date -d "-1 year" +%Y%m%d      //显示前一年的日期
-date -d "+1 year" +%Y%m%d      //显示下一年的日期
-
-date -s                        //设置当前时间，只有root权限才能设置，其他只能查看
-date -s 20120523               //设置成20120523，这样会把具体时间设置成空00:00:00
-date -s 01:01:01               //设置具体时间，不会对日期做更改
-date -s "01:01:01 2012-05-23"  //这样可以设置全部时间
-date -s "01:01:01 20120523"    //这样可以设置全部时间
-date -s "2012-05-23 01:01:01"  //这样可以设置全部时间
-date -s "20120523 01:01:01"    //这样可以设置全部时间
-
-#!/bin/bash
-
-start=$(date +%s)
-nmap man.linuxde.net &> /dev/null
-
-end=$(date +%s)
-difference=$(( end - start ))
-echo $difference seconds.
-
-[root@li229-122 ~]# speedtest-cli --list | grep China
-1185) China Unicom (Changchun, China) [10534.35 km]
-3784) China Mobile (Urumqi, China) [10581.15 km]
-2667) Beijing Normal University (Beijing, China) [11117.03 km]
-2529) Beijing Normal University (Beijing, China) [11117.03 km]
-2816) Capital Online Data service (Beijing, China) [11117.03 km]
-4354) SXmobile (Taiyuan, China) [11383.17 km]
-3973) China Telecom (Lanzhou, China) [11615.43 km]
-3633) China Telecom (Shanghai, China) [11983.37 km]
-3927) China Mobile Jiangsu Co., Ltd. (Suzhou, China) [11989.27 km]
-2461) China Unicom (Chengdu, China) [12213.35 km]
-1028) Shepherd Software (Xiamen, China) [12785.57 km]
-1628) Xiamen Guangdian Xinxu (Xiamen, China) [12785.57 km]
-3891) GZinternet (Guangzhou, China) [13005.36 km]
-3871) SZWCDMA (Shenzhen, China) [13059.20 km]
-3819) SZU (Shenzhen, China) [13059.20 km]
-1536) STC (Hong Kong, China) [13088.37 km]
-1890) Telin (Hong Kong, China) [13088.37 km]
-
-3633) China Telecom (Shanghai, China) [11983.37 km]
-
-3633: 服务器id
-china telecom：isp，这里是中国电信
-shanghai,china ：服务器所在地址
-11983.37 km：两台服务器地理位置之间距离，我这台机器在美国，和上海相距11983.37公里，很远呐.
-
-[root@li229-122 ~]# speedtest-cli --server=3633 --share
-Retrieving speedtest.net configuration...
-Retrieving speedtest.net server list...
-Testing from Linode (173.255.219.122)...
-Hosted by China Telecom (Shanghai) [11983.37 km]: 23.603 ms
-Testing download speed........................................
-Download: 24.84 Mbit/s
-Testing upload speed..................................................
-Upload: 4.57 Mbit/s
-Share results: http://www.speedtest.net/result/3240988007.png
-
-[root@localhost ~]# consoletype
-pty
-
-
-[root@localhost ~]# yes testline
-
-testline
-testline
-testline
-testline
-testline
-testline
-testline
-testline
-...一直重复打印 testline，按Ctrl+C结束。
-
-info info
-
-?键：它就会显示info的常用快捷键。
-N键：显示（相对于本节点的）下一节点的文档内容。
-P键：显示（相对于本节点的）前一节点的文档内容。
-U键：进入当前命令所在的主题。
-M键：敲M键后输入命令的名称就可以查看该命令的帮助文档了。
-G键：敲G键后输入主题名称，进入该主题。
-L键：回到上一个访问的页面。
-SPACE键：向前滚动一页。
-BACKUP或DEL键：向后滚动一页。
-Q：退出info。
-
-？     显示帮助窗口
-
-在帮助窗口中：
-Ctrl-x 0          关闭帮助窗口
-Ctrl-x Ctrl-c    关闭整个 Info
-
-q      退出 info
-n      打开与本 Node 关联的下一个 Node
-p      打开与本 Node 关联的前一个 Node
-u      打开与本 Node 关联的上一个 Node
-l      回到上一次访问的 Node
-m或g   选择一个菜单项（Node 的名字）
-输入指定菜单的名字后按回车，打开指定菜单项关联的 Node
-空格键 下一页（PageDown 也可以，下一页从当前页的最后两行开始算起）
-下一个 Node （若当前页在 Node 文档的末尾）
-Del 键 上一页（PageUp 也可以，上一页从当前页的开始两行开始算起）
-上一个 Node （若当前页 Node 文档的开始）
-
-b 或 t 或 Home   文档的开始（b 是 begining 的意思）
-e 或 End         文档的末尾（b 是 ending 的意思）
-Ctrl-l    刷新当前页，若当前文档显示情况有问题时
-Ctrl-g    取消所键入的指令
-
-ngrep -W byline -d lo port 18080
-
-ngrep -W byline -d eth0 port 80
-
-ngrep '[a-zA-Z]' -t -W byline -d any tcp port 18080
-
-ngrep -d3 -N -q \.flv
-interface: \Device\TNT_40_1_{670F6B50-0A13-4BAB-9D9E-994A833F5BA9} (10.132.0.0/2
-55.255.192.0)
-match: \.flv
-
-T(6) 10.132.34.23:24860 -> 61.142.208.154:80 [AP]
-GET /f59.c31.56.com/flvdownload/12/19/ggyg7741@56.com_56flv_zhajm_119556973
-97.flv HTTP/1.1..accept: */*..Referer: http://www.56.com/flashApp/v_player_
-site.swf..x-flash-version: 9,0,45,0..UA-CPU: x86..Accept-Encoding: gzip, de
-flate..User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET
-CLR 2.0.50727; .NET CLR 3.0.04506.30)..host: f59.r.56.com..Connection: Keep
--Alive..Cookie: whistoryview=23423759-23635627-23423344-23171935-23058374-2
-3081156-23207350-22395727-; geoip=............; wl_all_s=y....
-
-T(6) 2007/11/25 15:56:12.192619 10.132.34.23:26365 -> 59.151.21.101:80 [AP]
-GET /aa.flv HTTP/1.1.
-Accept: */*.
-Accept-Language: zh-cn.
-UA-CPU: x86.
-Accept-Encoding: gzip, deflate.
-User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.5072
-7; .NET CLR 3.0.04506.30).
-Host: www.google.cn.
-Connection: Keep-Alive.
-Cookie: PREF=id=a0b2932c336477e9:TB=4:NW=1:TM=1187877372:LM=1187956074:S=Y1Fzndp
-rT3vFo7ac; SID=DQAAAHcAAABJCEXeOVLHu2rIfb5BfKP3GG9PbhJDEkXsLTV8y0f_lvSd2Y46Q0FPt
-83CnEs9rxA1xBDM9mLR8-ckWeScyOQA8PyYnX5u5OjFvjfRbDg_FDZfwxhRzqS9KPZv26pjnsUxs0FDM
-1xpJ5AgDn38pXtlCdkksJ0-cbiIWoA61oHWMg; NID=7=AvJxn5B6YOLLxoYz4LLzhIbNsQUQiulRS6U
-JGxdBniQBmXm99y7L-NBNORN82N3unmZSGHFPfePVHnLK2MjYjglyXZhU9x7ETXNBnY3NurNijHDhJ7K
-yi7E53UBOcv4V.
-
-[root@localhost ~]# hostid
-007f0100
-
-[root@localhost ~]# mesg y    #允许系统用户将信息直接显示在你的屏幕上。
-[root@localhost ~]# mesg n    #不允许系统用户将信息直接显示在你的屏幕上。
-
-[root@localhost ~]# users
-root root
-
-[root@localhost ~]# whoami
-root
-
-[root@localhost ~]# id -un
-root
-
-[root@localhost ~]# md5sum insert.sql
-bcda6cb5c704664f989703ac5a88f112  insert.sql
-
-md5sum testfile > testfile.md5
-
-md5sum testfile -c testfile.md5
-
-forsort: OK
-
-forsort: FAILED
-md5sum: WARNING: 1 of 1 computed checksum did NOT match
-
-md5sum -w -c testfile.md5
-
-md5sum: testfile.md5: 1: improperly formatted MD5 checksum line
-md5sum: testfile.md5: no properly formatted MD5 checksum lines found
-
-#!/bin/bash
-
-b=''
-for ((i=0;$i<=100;i++))
-do
-printf "Progress:[%-100s]%d%%\r" $b $i
-sleep 0.1
-b=#$b
-done
-echo
-
-stty iuclc     #开启
-stty -iuclc    #恢复
-
-stty olcuc    #开启
-stty -olcuc   #恢复
-
-stty size
-
-stty eof "string"
-
-stty -echo   #禁止回显
-stty echo    #打开回显
-
-stty -echo;read;stty echo;read
-
-stty igncr     #开启
-stty -igncr    #恢复
-
-timeout_read()
-{
-timeout=$1
-old_stty_settings=`stty -g`　　#save current settings
-stty -icanon min 0 time 100　　#set 10seconds,not 100seconds
-eval read varname　　          #=read $varname
-stty "$old_stty_settings"　　  #recover settings
-}
-
-read -t 10 varname
-
-[root@localhost ~]# mtools     #显示所有支持的指令名称
-Supported commands:
-mattrib, mbadblocks, mcat, mcd, mclasserase, mcopy, mdel, mdeltree
-mdir, mdoctorfat, mdu, mformat, minfo, mlabel, mmd, mmount
-mpartition, mrd, mread, mmove, mren, mshowfat, mtoolstest, mtype
-mwrite, mzip
-
-
-#seq -f"%3g" 9 11
-9
-10
-11
-
-#sed -f"%03g" 9 11
-#seq -f"str%03g" 9 11
-str009
-str010
-str011
-
-seq -w 98 101
-098
-099
-100
-101
-
-seq -s" " -f"str%03g" 9 11
-str009 str010 str011
-
-seq -s"`echo -e "/t"`" 9 11
-
-seq -s"`echo -e "\n"`" 9 11
-19293949596979899910911
-
-w
-20:39:37 up 136 days,  3:58,  1 user,  load average: 0.00, 0.00, 0.00
-USER     TTY      FROM              login@   IDLE   JCPU   PCPU WHAT
-root     pts/0    222.94.97.122    20:39    1.00s  0.00s  0.00s w
-
-[root@AY1307311912260196fcZ satools]# sh -x check_ssh_login.sh
-+ DEFINE=30
-+ cat /var/log/secure
-+ awk '/Failed/ {++ip[$(NF-3)]} END {for (i in ip) print i"="ip[i]}'
-++ cat /root/satools/black.txt
-+ for i in '`cat /root/satools/black.txt`'
-++ echo 121.42.0.16=1427
-++ awk -F= '{print $1}'
-+ IP=121.42.0.16
-++ echo 121.42.0.16=1427
-++ awk -F= '{print $2}'
-+ NUM=1427
-+ '[' 1427 -gt 30 ']'
-+ grep 121.42.0.16 /etc/hosts.deny
-+ '[' 1 -gt 0 ']'
-+ echo sshd:121.42.0.16
-+ echo vsftpd:121.42.0.16
-+ for i in '`cat /root/satools/black.txt`'
-++ echo 121.42.0.72=276
-++ awk -F= '{print $1}'
-+ IP=121.42.0.72
-++ awk -F= '{print $2}'
-++ echo 121.42.0.72=276
-+ NUM=276
-+ '[' 276 -gt 30 ']'
-+ grep 121.42.0.72 /etc/hosts.deny
-+ '[' 1 -gt 0 ']'
-+ echo sshd:121.42.0.72
-+ echo vsftpd:121.42.0.72
-
-#!/bin/bash
-let a=5+4 b=9-3
-echo $a $b
-
-#!/bin/bash
-let "t1 = ((a = 5 + 3, b = 7 - 1, c = 15 - 4))"
-echo "t1 = $t1, a = $a, b = $b"
 
 [root@localhost ~]# man -k who
-at.allow [at]        (5)  - determine who can submit jobs via at or batch
-at.deny [at]         (5)  - determine who can submit jobs via at or batch
-jwhois               (1)  - client for the whois service
-jwhois              (rpm) - Internet whois/nicname client.
-Net::LDAP::Extension::whoami (3pm)  - LDAP Who am I? Operation
-w                    (1)  - Show who is logged on and what they are doing
-who                  (1p)  - display who is on the system
-who                  (1)  - show who is logged on
-whoami               (1)  - print effective userid
 
 [root@localhost ~]# apropos who
-at.allow [at]        (5)  - determine who can submit jobs via at or batch
-at.deny [at]         (5)  - determine who can submit jobs via at or batch
-jwhois               (1)  - client for the whois service
-jwhois              (rpm) - Internet whois/nicname client.
-Net::LDAP::Extension::WhoAmI (3pm)  - LDAP Who am I? Operation
-w                    (1)  - Show who is logged on and what they are doing
-who                  (1p)  - display who is on the system
-who                  (1)  - show who is logged on
-whoami               (1)  - print effective userid
-
 apropos -a emacs vi
-
-#!/bin/bash
-printf $(tput setaf 2; tput bold)'color show\n\n'$(tput sgr0)
-
-for((i=0; i<=7; i++)); do
-echo $(tput setaf $i)"show me the money"$(tput sgr0)
-done
-
-printf '\n'$(tput setaf 2; tput setab 0; tput bold)'background color show'$(tput sgr0)'\n\n'
-
-for((i=0,j=7; i<=7; i++,j--)); do
-echo $(tput setaf $i; tput setab $j; tput bold)"show me the money"$(tput sgr0)
-done
-
-exit 0
-
-#!/bin/bash
-
-# $1 str       print string
-# $2 color     0-7 设置颜色
-# $3 bgcolor   0-7 设置背景颜色
-# $4 bold      0-1 设置粗体
-# $5 underline 0-1 设置下划线
-
-function format_output(){
-str=$1
-color=$2
-bgcolor=$3
-bold=$4
-underline=$5
-normal=$(tput sgr0)
-
-case "$color" in
-0|1|2|3|4|5|6|7)
-setcolor=$(tput setaf $color;) ;;
-*)
-setcolor="" ;;
-esac
-
-case "$bgcolor" in
-0|1|2|3|4|5|6|7)
-setbgcolor=$(tput setab $bgcolor;) ;;
-*)
-setbgcolor="" ;;
-esac
-
-if [ "$bold" = "1" ]; then
-setbold=$(tput bold;)
-else
-setbold=""
-fi
-
-if [ "$underline" = "1" ]; then
-setunderline=$(tput smul;)
-else
-setunderline=""
-fi
-
-printf "$setcolor$setbgcolor$setbold$setunderline$str$normal\n"
-}
-
-format_output "Yesterday Once more" 2 5 1 1
-
-exit 0
-
-#!/bin/bash
-# clear the screen
-tput clear
-# Move cursor to screen location X,Y (top left is 0,0)
-tput cup 3 15
-# set a foreground colour using ANSI escape
-tput setaf 3
-echo "XYX Corp LTD."
-tput sgr0
-tput cup 5 17
-# Set reverse video mode
-tput rev
-echo "M A I N - M E N U"
-tput sgr0
-tput cup 7 15
-echo "1. User Management"
-tput cup 8 15
-echo "2. service Management"
-tput cup 9 15
-echo "3. Process Management"
-tput cup 10 15
-echo "4. Backup"
-# Set bold mode
-tput bold
-tput cup 12 15
-read -p "Enter your choice [1-4] " choice
-tput clear
-tput sgr0
-tput rc
-
-exit 0
-
-declare mylove='Visual C++'   #定义新环境变量
-
-set -a mylove                 #设置为环境变量
-
-env | grep mylove             #显示环境变量值
-
-bg 1            #后台执行任务号为1的任务
-
-find / -name password &     #后台执行任务
-
-command echo Linux            #调用执行shell内部指令
-
-Linux
-
-[root@localhost ~]# fc -l -10     #显示10条历史命令
-1039     type -a grep
-1040     export
-1041     history 10
-1042     ulimit -a
-1043     shopt
-1044     help ls
-1045     help env
-1046     help short
-1047     help shopt
-1048     showkey -a
-
-fc 1040                    #编辑第1040条历史命令
-
-bind -x '"\C-l":ls -l'    #直接按 CTRL+L 就列出目录
-
-[root@localhost ~]# showkey -a
-
-Press any keys - Ctrl-D will terminate this program
-
-^[[A     27 0033 0x1b  上
-91 0133 0x5b
-65 0101 0x41
-^[[B     27 0033 0x1b  下
-91 0133 0x5b
-66 0102 0x42
-^[[D     27 0033 0x1b  左
-91 0133 0x5b
-68 0104 0x44
-^[[C     27 0033 0x1b 右
-91 0133 0x5b
-67 0103 0x43
-32 0040 0x20
-^M       13 0015 0x0d 字母M
-^C        3 0003 0x03 Ctrl-C
-^D        4 0004 0x04 Ctrl-D 退出
-
-read 1987name
-从标准输入读取输入并赋值给变量1987name。
-
-read first last
-从标准输入读取输入到第一个空格或者回车，将输入的第一个单词放到变量first中，并将该行其他的输入放在变量last中。
-
-read
-从标准输入读取一行并赋值给特定变量REPLY。
-
-read -a arrayname
-把单词清单读入arrayname的数组里。
-
-read -p "text"
-打印提示（text），等待输入，并将输入存储在REPLY中。
-
-read -r line
-允许输入包含反斜杠。
-
-read -t 3
-指定读取等待时间为3秒。
-
-read -n 2 var
-从输入中读取两个字符并存入变量var，不需要按回车读取。
-
-read -d ":" var
-用定界符“:”结束输入行。
-
-#read 1987name        #等待读取输入，直到回车后表示输入完毕，并将输入赋值给变量answer
-HelloWorld            #控制台输入Hello
-
-#echo $1987name       #打印变量
-HelloWorld
-
-#read one two three
-1 2 3                   #在控制台输入1 2 3，它们之间用空格隔开。
-
-#echo "one = $one, two = $two, three = $three"
-one = 1, two = 2, three = 3
-
-#read                  #等待控制台输入，并将结果赋值给特定内置变量REPLY。
-This is REPLY          #在控制台输入该行。
-
-
-#echo $REPLY           #打印输出特定内置变量REPLY，以确认是否被正确赋值。
-
-This is REPLY
-
-#read -p "Enter your name: "            #输出文本提示，同时等待输入，并将结果赋值给REPLY。
-Enter you name: stephen                 #在提示文本之后输入stephen
-
-#echo $REPLY
-stephen
-
-#read -a friends
-Tim Tom Helen
-
-#echo "They are ${friends[0]}, ${friends[1]} and ${friends[2]}."
-They are Tim, Tom and Helen.
-
-#!/bin/bash
-read -p "输入密码：" -s pwd
-echo
-echo password read, is "$pwd"
-
-#!/bin/bash
-stty -echo
-read -p "输入密码：" pwd
-stty echo
-echo
-echo 输入完毕。
-
-read v1 v3          #读取变量值
-
-Linux c+            #输入数据
-
-echo $v1 $v3       #输出变量的值
-
-Linux c+           #输出变量值
-
-[root@localhost ~]# readonly     #显示只读变量
-declare -ar BASH_VERSINFO='([0]="3" [1]="2" [2]="25" [3]="1" [4]="release" [5]="i686-redhat-linux-gnu")'
-declare -ir EUID="0"
-declare -ir PPID="31436"
-declare -r SHELLOPTS="braceexpand:emacs:hashall:histexpand:history:interactive-comments:monitor"
-declare -ir UID="0"
-
-[root@localhost ~]# readonly test='ok'         #定义只读变量并初始化
-
-[root@localhost ~]# test='my'                 #试图修改只读变量的值
--bash: test: readonly variable
-
-[root@localhost ~]# ulimit -a
-core file size          (blocks, -c) 0           #core文件的最大值为100 blocks。
-data seg size           (kbytes, -d) unlimited   #进程的数据段可以任意大。
-scheduling priority             (-e) 0
-file size               (blocks, -f) unlimited   #文件可以任意大。
-pending signals                 (-i) 98304       #最多有98304个待处理的信号。
-max locked memory       (kbytes, -l) 32          #一个任务锁住的物理内存的最大值为32KB。
-max memory size         (kbytes, -m) unlimited   #一个任务的常驻物理内存的最大值。
-open files                      (-n) 1024        #一个任务最多可以同时打开1024的文件。
-pipe size            (512 bytes, -p) 8           #管道的最大空间为4096字节。
-POSIX message queues     (bytes, -q) 819200      #POSIX的消息队列的最大值为819200字节。
-real-time priority              (-r) 0
-stack size              (kbytes, -s) 10240       #进程的栈的最大值为10240字节。
-cpu time               (seconds, -t) unlimited   #进程使用的CPU时间。
-max user processes              (-u) 98304       #当前用户同时打开的进程（包括线程）的最大个数为98304。
-virtual memory          (kbytes, -v) unlimited   #没有限制进程的最大地址空间。
-file locks                      (-x) unlimited   #所能锁住的文件的最大个数没有限制。
-
-[root@localhost ~]# exit
-logout
-
-cd $(dirname $0) || exit 1
-
-if [ "$#" -ne "2" ]; then
-echo "usage: $0 <area> <hours>"
-exit 2
-fi
-
-trap "rm -f tmpfile; echo Bye." EXIT
-
-./mycommand.sh
-EXCODE=$?
-if [ "$EXCODE" == "0" ]; then
-echo "O.K"
-fi
-
-builtin alias                 #执行shell内部指令
-alias cp='cp -i'
-alias l.='ls -d .* --color=tty'
-alias ll='ls -l --color=tty'
-alias ls='ls --color=tty'
-alias mv='mv -i'
-alias rm='rm -i'
-alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
-
-[root@localhost ~]# history 10
-92  ls
-93  cd ..
-94  ls
-95  exit
-96  ls -a
-97  cd .ssh/
-98  ls
-99  cat known_hosts
-100  exit
-101  history 10
-
-declare test='man.linuxde.net'    #定义并初始化shell变量
-
-echo $test                        #输出shell变量的值
-
-man.linuxde.net
-
-[root@localhost ~]# enable -a
-enable .
-enable :
-enable [
-enable alias
-enable bg
-enable bind
-enable break
-enable builtin
-enable caller
-enable cd
-enable command
-enable compgen
-enable complete
-enable continue
-enable declare
-enable dirs
-enable disown
-enable echo
-enable enable
-enable eval
-enable exec
-enable exit
-enable export
-enable false
-enable fc
-enable fg
-enable getopts
-enable hash
-enable help
-enable history
-enable jobs
-enable kill
-enable let
-enable local
-enable logout
-enable popd
-enable printf
-enable pushd
-enable pwd
-enable read
-enable readonly
-enable return
-enable set
-enable shift
-enable shopt
-enable source
-enable suspend
-enable test
-enable times
-enable trap
-enable true
-enable type
-enable typeset
-enable ulimit
-enable umask
-enable unalias
-enable unset
-enable wait
-
-wait %1       #等待作业号为3的作业完成
-
-find / -name password
-
-echo Linux C++           #输出指定信息
-
-Linux C++                #输出信息
-
-exec -c echo Linux C++          #调用命令
-
-Linux C++                       #使用指定指令输出信息
-
-help shopt                #获取shopt命令的帮助信息
-shopt: shopt [-pqsu] [-o long-option] optname [optname...]
-Toggle the values of variables controlling optional behavior.
-The -s flag means to enable (set) each OPTNAME; the -u flag
-unsets each OPTNAME.  The -q flag suppresses output; the exit
-status indicates whether each OPTNAME is set or unset.  The -o
-option restricts the OPTNAMEs to those defined for use with
-`set -o'.  With no options, or with the -p option, a list of all
-settable options is displayed, with an indication of whether or
-not each is set.
-
-jobs -l               #显示当前系统的任务列表
-
-[1] + 1903 运行中          find / -name password &
-
-shopt           #输出所有可以设置的shell操作选项
-cdable_vars     off
-cdspell         off
-checkhash       off
-checkwinsize    on
-cmdhist         on
-dotglob         off
-execfail        off
-expand_aliases  on
-extdebug        off
-...
-
-shopt -s cdspell          #开启cd拼写检查
-
-cdspell on                #开启cdspell选项
-
-unset -v mylove         #删除指定的环境变量
-
-[root@localhost ~]# export
-declare -x G_BROKEN_FILENAMES="1"
-declare -x HISTSIZE="1000"
-declare -x HOME="/root"
-declare -x hostname="localhost"
-declare -x INPUTRC="/etc/inputrc"
-declare -x LANG="zh_CN.UTF-8"
-declare -x LESSOPEN="|/usr/bin/lesspipe.sh %s"
-declare -x logname="root"
-declare -x LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:"
-declare -x mail="/var/spool/mail/root"
-declare -x OLDPWD
-declare -x PATH="/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin"
-declare -x pwd="/root"
-declare -x SHELL="/bin/bash"
-declare -x SHLVL="1"
-declare -x SSH_CLIENT="192.168.2.111 2705 22"
-declare -x SSH_CONNECTION="192.168.2.111 2705 192.168.2.2 22"
-declare -x SSH_TTY="/dev/pts/0"
-declare -x TERM="linux"
-declare -x USER="root"
-
-[root@localhost ~]# env
-hostname=LinServ-1
-TERM=linux
-SHELL=/bin/bash
-HISTSIZE=1000
-SSH_CLIENT=192.168.2.111 2705 22
-SSH_TTY=/dev/pts/0
-USER=root
-LS_COLORS=no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:
-mail=/var/spool/mail/root
-PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-INPUTRC=/etc/inputrc
-pwd=/root
-LANG=zh_CN.UTF-8
-SHLVL=1
-HOME=/root
-logname=root
-SSH_CONNECTION=192.168.2.111 2705 192.168.2.2 22
-LESSOPEN=|/usr/bin/lesspipe.sh %s
-G_BROKEN_FILENAMES=1
-_=/bin/env
-
-kill -l
-1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
-5) SIGTRAP      6) SIGABRT      7) SIGBUS       8) SIGFPE
-9) SIGKILL     10) SIGUSR1     11) SIGSEGV     12) SIGUSR2
-13) SIGPIPE     14) SIGALRM     15) SIGTERM     16) SIGSTKFLT
-17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
-21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU
-25) SIGXFSZ     26) SIGVTALRM   27) SIGPROF     28) SIGWINCH
-29) SIGIO       30) SIGPWR      31) SIGSYS      34) SIGRTMIN
-35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3  38) SIGRTMIN+4
-39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
-43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12
-47) SIGRTMIN+13 48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14
-51) SIGRTMAX-13 52) SIGRTMAX-12 53) SIGRTMAX-11 54) SIGRTMAX-10
-55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7  58) SIGRTMAX-6
-59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
-63) SIGRTMAX-1  64) SIGRTMAX
-
-HUP     1    终端断线
-INT     2    中断（同 Ctrl + C）
-QUIT    3    退出（同 Ctrl + \）
-TERM   15    终止
-KILL    9    强制终止
-CONT   18    继续（与STOP相反， fg/bg命令）
-STOP   19    暂停（同 Ctrl + Z）
-
-ps -ef | grep vim
-root      3268  2884  0 16:21 pts/1    00:00:00 vim install.log
-root      3370  2822  0 16:21 pts/0    00:00:00 grep vim
-
-kill 3268
-kill 3268
--bash: kill: (3268) - 没有那个进程
-
-rpm -qa logwatch
-
-rpm -Ivh logwatch***.rpm
-
-rpm -Uvh logwatch***.rpm
-
-logwatch --detail High --Service All --range All --print    基本就可以显示出所有日志的情况了
-logwatch --service sshd --detail High                       只看sshd的日志情况
-
-unalias cc            #取消已经设置的命令别名
-
-cc：no input files
-
-fg 1          #将任务转换到前台执行
-
-find / -name password       #前台执行命令
-
-[root@localhost ~]# type ls
-ls is aliased to `ls --color=tty'
-
-[root@localhost ~]# type cd
-cd is a shell builtin
-
-[root@localhost ~]# type date
-date is /bin/date
-
-[root@localhost ~]# type mysql
-mysql is /usr/bin/mysql
-
-[root@localhost ~]# type nginx
--bash: type: nginx: not found
-
-[root@localhost ~]# type if
-if is a shell keyword
-
-[root@localhost ~]# type which
-which is aliased to `alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
-
-[root@localhost ~]# type -a cd
-cd is a shell builtin
-
-[root@localhost ~]# type -a grep
-grep is /bin/grep
-
-alias 新的命令='原命令 -选项/参数'
-
-alias -p
-alias cp='cp -i'
-alias l.='ls -d .* --color=tty'
-alias ll='ls -l --color=tty'
-alias ls='ls --color=tty'
-alias mv='mv -i'
-alias rm='rm -i'
-alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
-
-echo -e "\e[1;31mThis is red text\e[0m"
-This is red text
-
-echo -e "\e[1;42mGreed Background\e[0m"
-Greed Background
-
-echo -e "\033[37;31;5mMySQL Server Stop...\033[39;49;0m"
-
-
-# openssl dgst -sha1 file.txt
-
-# openssl sha1 -out digest.txt file.txt
 
 # openssl dgst -dss1 -sign dsakey.pem -out dsasign.bin file.txt
 
@@ -1378,10 +298,6 @@ gcc main.c
 
 ldd a.out
 
-linux-gate.so.1 = &gt;  (0xb8034000)
-libc.so.6 = &gt; /lib/tls/i686/cmov/libc.so.6 (0xb7eab000)
-/lib/ld-linux.so.2 (0xb801a000)
-
 cp a.out newRoot
 mkdir newRoot/lib
 cp /lib/tls/i686/cmov/libc.so.6 newRoot/lib
@@ -1392,101 +308,48 @@ a.out lib/
 su
 chroot newRoot /a.out
 
-lastb: /var/log/btmp: No such file or directory
-Perhaps this file was removed by the operator to prevent logging lastb info.
+
 
 touch /var/log/btmp
 
 lastb | head
-root     ssh:notty    110.84.129.3     Tue Dec 17 06:19 - 06:19  (00:00)
-root     ssh:notty    110.84.129.3     Tue Dec 17 04:05 - 04:05  (00:00)
-root     ssh:notty    110.84.129.3     Tue Dec 17 01:52 - 01:52  (00:00)
-root     ssh:notty    110.84.129.3     Mon Dec 16 23:38 - 23:38  (00:00)
-leonob   ssh:notty    222.211.85.18    Mon Dec 16 22:18 - 22:18  (00:00)
-leonob   ssh:notty    222.211.85.18    Mon Dec 16 22:18 - 22:18  (00:00)
-root     ssh:notty    110.84.129.3     Mon Dec 16 21:25 - 21:25  (00:00)
-root     ssh:notty    110.84.129.3     Mon Dec 16 19:12 - 19:12  (00:00)
-root     ssh:notty    110.84.129.3     Mon Dec 16 17:00 - 17:00  (00:00)
-admin    ssh:notty    129.171.193.99   Mon Dec 16 16:52 - 16:52  (00:00)
 
->>> sudoers file: syntax error, line 22 <<
-
-# Runas alias specification
-# User privilege specificationroot    ALL=(ALL)ALL
-
-foobar ALL=(ALL)    ALL
 
 [foobar@localhost ~]$ ls /root
-ls: /root: 权限不够
+
 
 [foobar@localhost ~]$ sudo ls /root
-PassWord:
-anaconda-ks.cfg Desktop install.log install.log.syslog
 
-foobar localhost=    /sbin/ifconfig,   /bin/ls
 
 [foobar@localhost ~]$ sudo head -5 /etc/shadow
-Password:
-Sorry, user foobar is not allowed to execute '/usr/bin/head -5 /etc/shadow' as root on localhost.localdomain.
 
-[foobar@localhost ~]$ sudo /sbin/ifconfigeth0      Linkencap:Ethernet HWaddr 00:14:85:EC:E9:9B...
+[foobar@localhost ~]$ sudo /sbin/ifconfigeth0
 
-foobar    linux=(jimmy,rene)    /bin/kill
-
-Defaults:foobar    runas_default=rene
-
-Defaults    env_reset
-
-foobar localhost=NOPASSWD:     /bin/cat, /bin/ls
 
 [foobar@localhost ~]$ sudo ls /rootanaconda-ks.cfg Desktop install.log
-install.log.syslog
 
 touch /var/log/sudo
 vi /etc/syslog.conf
 
-local2.debug                    /var/log/sudo
+
 
 ps aux grep syslogd
 
 kill –HUP PID
 
 [foobar@localhost ~]$ sudo ls /rootanaconda-ks.cfg
-Desktop install.log
-install.log.syslog
+
 $cat /var/log/sudoJul 28 22:52:54 localhost sudo:   foobar :
-TTY=pts/1 ; pwd=/home/foobar ; USER=root ; command=/bin/ls /root
+
 
 [foobar@localhost ~]$ sudo cat /etc/shadow > /dev/null
-cat /var/log/sudo...Jul 28 23:10:24 localhost sudo:   foobar : TTY=pts/1 ;
-PWD=/home/foobar ; USER=root ; COMMAND=/bin/cat /etc/shadow
+
+
 
 [foobar@localhost ~]$ sudo ls /root > /etc/shadowbash: /etc/shadow: 权限不够
 
-top -c -p 16514
-23:00:44  up 12 days,  2:04,  4 users,  load average: 0.47, 0.35, 0.31
-1 processes: 1 sleeping, 0 running, 0 zombie, 0 stopped
-CPU states:  cpu    user    nice  system    irq  softirq  iowait    idle
-total    0.0%    0.6%    8.7%   2.2%     0.0%   88.3%    0.0%
-Mem:  1026912k av, 1010476k used,   16436k free,       0k shrd,   52128k buff
-766724k actv,  143128k in_d,   14264k in_c
-Swap: 2041192k av,   83160k used, 1958032k free                  799432k cached
-
-PID USER     PRI  NI  SIZE  RSS SHARE stat %CPU %MEM   time CPU command
-16514 oracle    19   4 28796  26M 20252 D N   7.0  2.5   0:03   0 oraclePRODB2...
-
 skill -STOP 1
 
-23:01:11  up 12 days,  2:05,  4 users,  load average: 1.20, 0.54, 0.38
-1 processes: 0 sleeping, 0 running, 0 zombie, 1 stopped
-CPU states:  cpu    user    nice  system    irq  softirq  iowait    idle
-total    2.3%    0.0%    0.3%   0.0%     0.0%    2.3%   94.8%
-Mem:  1026912k av, 1008756k used,   18156k free,       0k shrd,    3976k buff
-770024k actv,  143496k in_d,   12876k in_c
-Swap: 2041192k av,   83152k used, 1958040k free                  851200k cached
-
-PID USER     PRI  NI  SIZE  RSS SHARE STAT %CPU %MEM   TIME CPU COMMAND
-16514 oracle    19   4 28796  26M 20252 T N   0.0  2.5   0:04   0 oraclePRODB2...
 
 skill -CONT 16514
 
@@ -1498,58 +361,10 @@ skill -STOP oracle
 
 skill -STOP -c oracle
 
-PID USER     PRI  NI  SIZE  RSS SHARE STAT %CPU %MEM   TIME CPU COMMAND
-3 root      15   0     0    0     0 RW    0.0  0.0   0:00   0 kapmd
-13680 oracle    15   0 11336  10M  8820 T     0.0  1.0   0:00   0 oracle
-13683 oracle    15   0  9972 9608  7788 T     0.0  0.9   0:00   0 oracle
-13686 oracle    15   0  9860 9496  7676 T     0.0  0.9   0:00   0 oracle
-13689 oracle    15   0 10004 9640  7820 T     0.0  0.9   0:00   0 oracle
-13695 oracle    15   0  9984 9620  7800 T     0.0  0.9   0:00   0 oracle
-13698 oracle    15   0 10064 9700  7884 T     0.0  0.9   0:00   0 oracle
-13701 oracle    15   0 22204  21M 16940 T     0.0  2.1   0:00   0 oracle
 
 snice +4 -u oracle
-PID USER     PRI  NI  SIZE  RSS SHARE STAT %CPU %MEM   TIME CPU COMMAND
-16894 oracle    20   4 38904  32M 26248 D N   5.5  3.2   0:01   0 oracle
-
-lastlog
-Username         Port     From             Latest
-root             pts/0    221.6.45.34      Tue Dec 17 09:40:48 +0800 2013
-bin                                        **Never logged in**
-daemon                                     **Never logged in**
-adm                                        **Never logged in**
-lp                                         **Never logged in**
-sync                                       **Never logged in**
-shutdown                                   **Never logged in**
-halt                                       **Never logged in**
-mail                                       **Never logged in**
-news                                       **Never logged in**
-uucp                                       **Never logged in**
-operator                                   **Never logged in**
-games                                      **Never logged in**
-gopher                                     **Never logged in**
-ftp                                        **Never logged in**
-nobody                                     **Never logged in**
-vcsa                                       **Never logged in**
-ntp                                        **Never logged in**
-sshd                                       **Never logged in**
-nscd                                       **Never logged in**
-ldap                                       **Never logged in**
-postfix                                    **Never logged in**
-www                                        **Never logged in**
-mysql                                      **Never logged in**
 
 last -10
-root     pts/0        221.6.45.34      Tue Dec 17 09:40   still logged in
-root     pts/0        221.6.45.34      Mon Dec 16 09:00 - 11:57  (02:56)
-root     pts/0        222.94.97.122    Sun Dec 15 20:39 - 23:28  (02:48)
-root     pts/0        222.95.209.80    Sat Dec 14 14:39 - 14:58  (00:18)
-root     pts/0        221.6.45.34      Thu Dec 12 16:55 - 17:37  (00:41)
-root     pts/0        49.65.139.195    Wed Dec 11 20:40 - 21:16  (00:35)
-root     pts/0        49.65.139.195    Wed Dec 11 19:46 - 20:03  (00:17)
-root     pts/0        221.6.45.34      Tue Dec 10 14:41 - 15:52  (01:10)
-root     pts/0        221.6.45.34      Mon Dec  9 17:24 - 17:30  (00:06)
-root     pts/0        221.6.45.34      Mon Dec  9 09:38 - 11:41  (02:02)
 
 renice 1 987 -u daemon root -p 32
 
@@ -1574,12 +389,6 @@ sudo systemctl disable firewalld.service
 nohup command > myout.file 2>&1 &
 
 ipcs -a
------- Shared Memory Segments --------
-key        shmid      owner      perms      bytes      nattch     status
-0x7401833d 2654208    root      600        4          0
-0x00000000 3145729    root      600        4194304    9          dest
-0x7401833c 2621442    root      600        4          0
-0xd201012b 3080195    root      600        1720       2
 
 #watch uptime
 #watch -t uptime
@@ -1590,339 +399,129 @@ key        shmid      owner      perms      bytes      nattch     status
 #watch -n 1 "df -i;df"       //监测磁盘inode和block数目变化情况
 
 pidof nginx
-13312 5371
 
 pmap -x 5371
-5371:   nginx: worker process
-Address           Kbytes     RSS   Dirty Mode   Mapping
-0000000000400000     564     344       0 r-x--  nginx
-000000000068c000      68      68      60 rw---  nginx
-000000000069d000      56      12      12 rw---    [ anon ]
-000000000a0c8000    1812    1684    1684 rw---    [ anon ]
-0000003ac0a00000     112      40       0 r-x--  ld-2.5.so
-0000003ac0c1c000       4       4       4 r----  ld-2.5.so
-0000003ac0c1d000       4       4       4 rw---  ld-2.5.so
-0000003ac0e00000    1340     284       0 r-x--  libc-2.5.so
-0000003ac0f4f000    2044       0       0 -----  libc-2.5.so
-0000003ac114e000      16      16       8 r----  libc-2.5.so
-0000003ac1152000       4       4       4 rw---  libc-2.5.so
-0000003ac1153000      20      20      20 rw---    [ anon ]
-0000003ac1200000       8       4       0 r-x--  libdl-2.5.so
-0000003ac1202000    2048       0       0 -----  libdl-2.5.so
-0000003ac1402000       4       4       4 r----  libdl-2.5.so
-0000003ac1403000       4       4       4 rw---  libdl-2.5.so
-0000003ac1600000      84       0       0 r-x--  libselinux.so.1
-0000003ac1615000    2048       0       0 -----  libselinux.so.1
-0000003ac1815000       8       8       8 rw---  libselinux.so.1
-0000003ac1817000       4       4       4 rw---    [ anon ]
-0000003ac1a00000     236       0       0 r-x--  libsepol.so.1
-0000003ac1a3b000    2048       0       0 -----  libsepol.so.1
-0000003ac1c3b000       4       4       4 rw---  libsepol.so.1
-0000003ac1c3c000      40       0       0 rw---    [ anon ]
-0000003ac1e00000      88      44       0 r-x--  libpthread-2.5.so
-0000003ac1e16000    2048       0       0 -----  libpthread-2.5.so
-0000003ac2016000       4       4       4 r----  libpthread-2.5.so
-0000003ac2017000       4       4       4 rw---  libpthread-2.5.so
-0000003ac2018000      16       4       4 rw---    [ anon ]
-0000003ac2600000      80      52       0 r-x--  libz.so.1.2.3
-0000003ac2614000    2044       0       0 -----  libz.so.1.2.3
-0000003ac2813000       4       4       4 rw---  libz.so.1.2.3
-0000003ac2a00000      36       4       0 r-x--  libcrypt-2.5.so
-0000003ac2a09000    2044       0       0 -----  libcrypt-2.5.so
-0000003ac2c08000       4       4       4 r----  libcrypt-2.5.so
-0000003ac2c09000       4       4       4 rw---  libcrypt-2.5.so
-0000003ac2c0a000     184       0       0 rw---    [ anon ]
-0000003ac3600000       8       0       0 r-x--  libkeyutils-1.2.so
-0000003ac3602000    2044       0       0 -----  libkeyutils-1.2.so
-0000003ac3801000       4       4       4 rw---  libkeyutils-1.2.so
-0000003ac3a00000      68       0       0 r-x--  libresolv-2.5.so
-0000003ac3a11000    2048       0       0 -----  libresolv-2.5.so
-0000003ac3c11000       4       4       4 r----  libresolv-2.5.so
-0000003ac3c12000       4       4       4 rw---  libresolv-2.5.so
-0000003ac3c13000       8       0       0 rw---    [ anon ]
-0000003ac3e00000       8       0       0 r-x--  libcom_err.so.2.1
-0000003ac3e02000    2044       0       0 -----  libcom_err.so.2.1
-0000003ac4001000       4       4       4 rw---  libcom_err.so.2.1
-0000003ac4200000    1204       8       0 r-x--  libcrypto.so.0.9.8e
-0000003ac432d000    2044       0       0 -----  libcrypto.so.0.9.8e
-0000003ac452c000     132      88      12 rw---  libcrypto.so.0.9.8e
-0000003ac454d000      16      12      12 rw---    [ anon ]
-0000003ac4600000     176       0       0 r-x--  libgssapi_krb5.so.2.2
-0000003ac462c000    2048       0       0 -----  libgssapi_krb5.so.2.2
-0000003ac482c000       8       8       8 rw---  libgssapi_krb5.so.2.2
-0000003ac4a00000     144       0       0 r-x--  libk5crypto.so.3.1
-0000003ac4a24000    2044       0       0 -----  libk5crypto.so.3.1
-0000003ac4c23000       8       8       8 rw---  libk5crypto.so.3.1
-0000003ac4e00000      32       0       0 r-x--  libkrb5support.so.0.1
-0000003ac4e08000    2044       0       0 -----  libkrb5support.so.0.1
-0000003ac5007000       4       4       4 rw---  libkrb5support.so.0.1
-0000003ac5200000     580       0       0 r-x--  libkrb5.so.3.3
-0000003ac5291000    2048       0       0 -----  libkrb5.so.3.3
-0000003ac5491000      16      16      12 rw---  libkrb5.so.3.3
-0000003ac5a00000     288       4       0 r-x--  libssl.so.0.9.8e
-0000003ac5a48000    2048       0       0 -----  libssl.so.0.9.8e
-0000003ac5c48000      24      16      12 rw---  libssl.so.0.9.8e
-00002b5751808000       8       8       8 rw---    [ anon ]
-00002b5751810000     108      36       0 r-x--  libpcre.so.1.2.0
-00002b575182b000    2044       0       0 -----  libpcre.so.1.2.0
-00002b5751a2a000       4       4       4 rw---  libpcre.so.1.2.0
-00002b5751a2b000      28      28      28 rw---    [ anon ]
-00002b5751a32000      40      20       0 r-x--  libnss_files-2.5.so
-00002b5751a3c000    2044       0       0 -----  libnss_files-2.5.so
-00002b5751c3b000       4       4       4 r----  libnss_files-2.5.so
-00002b5751c3c000       4       4       4 rw---  libnss_files-2.5.so
-00002b5751c3d000       4       4       4 rw-s-  zero (deleted)
-00002b5751c3e000   20012   20000   20000 rw---    [ anon ]
-00007fffbf2ce000      84      20      20 rw---    [ stack ]
-00007fffbf35e000      12       0       0 r-x--    [ anon ]
-ffffffffff600000    8192       0       0 -----    [ anon ]
-----------------  ------  ------  ------
-total kB           72880   22940   22000
+
 
 pidof nginx
-13312 5371
+
 
 pidof crond
-1509
+
 
 pidof init
-1
+
 
 pgrep -lo httpd
-4557 httpd
+
 
 [root@localhost ~]# pgrep -ln httpd
-4566 httpd
+
 
 [root@localhost ~]# pgrep -l httpd
-4557 httpd
-4560 httpd
-4561 httpd
-4562 httpd
-4563 httpd
-4564 httpd
-4565 httpd
-4566 httpd
 
 [root@localhost ~]# pgrep httpd
-4557
-4560
-4561
-4562
-4563
-4564
-4565
-4566
 
-nice -19 tar zcf pack.tar.gz documents
 
-nice --19 tar zcf pack.tar.gz documents
 
 service network status
-配置设备：
-lo eth0
-当前的活跃设备：
-lo eth0
-
-service network restart
-正在关闭接口 eth0：                                        [  确定  ]
-关闭环回接口：                                             [  确定  ]
-设置网络参数：                                             [  确定  ]
-弹出环回接口：                                             [  确定  ]
-弹出界面 eth0：                                            [  确定  ]
 
 service mysqld status
-mysqld (pid 1638) 正在运行...
+
 
 service mysqld restart
-停止 MySQL：                                               [  确定  ]
-启动 MySQL：                                               [  确定  ]
+
 
 pstree -p
 
 pstree  -a
 
 pgrep -l gaim
-2979 gaim
+
 
 pkill gaim
 
 batch
-at> echo 1234
-at> <EOT>
-job 5 at Sun Apr 28 08:49:00 2013
-
-#0  停机（千万不能把initdefault 设置为0）
-#1  单用户模式
-#2  多用户，没有 NFS(和级别3相似，会停止部分服务)
-#3  完全多用户模式
-#4  没有用到
-#5  x11(Xwindow)
-#6  重新启动（千万不要把initdefault 设置为6）
 
 killall vi
-
-* * * * * command
-
-3,15 * * * * command
-
-3,15 8-11 * * * command
-
-3,15 8-11 */2 * * command
-
-3,15 8-11 * * 1 command
-
-30 21 * * * /etc/init.d/smb restart
-
-45 4 1,10,22 * * /etc/init.d/smb restart
-
-10 1 * * 6,0 /etc/init.d/smb restart
-
-0,30 18-23 * * * /etc/init.d/smb restart
-
-0 23 * * 6 /etc/init.d/smb restart
-
-* */1 * * * /etc/init.d/smb restart
-
-* 23-7/1 * * * /etc/init.d/smb restart
-
-0 11 4 * mon-wed /etc/init.d/smb restart
-
-0 4 1 jan * /etc/init.d/smb restart
-
-01 * * * * root run-parts /etc/cron.hourly
-
-atq        //显示当前已经设置的任务
-2 Mon May 17 08:00:00 2010 a root
-1 Sat May 15 17:00:00 2010 a root
 
 atrm 2     //删除任务2
 
 cat /etc/passwd | grep test
-test:x:3001:3001::/home/test:/bin/sh
+
 
 cat /etc/shadow | grep test
-test:$6$nYOEWamm$bz07nlv/.RgJufb3FAqJJeULfwybzgxmrWqbk7O4vI0KsT6N.ujrh6dDIUcAJdfjksyuyAFDPIngZeD3cgcf.0:15022:0:99999:7:::
+
 
 at now + 10 minutes
-at> echo 1111
-at> <eot>
-job 3 at Fri Apr 26 12:56:00 2013
+
 
 atq
-3       Fri Apr 26 12:56:00 2013 a root
+
 
 [root@localhost ~]# at 5pm+3 days
-at> /bin/ls
-at> <EOT>
-job 7 at 2013-01-08 17:00
+
 
 [root@localhost ~]# at 17:20 tomorrow
-at> date >/root/2013.log
-at> <EOT>
-job 8 at 2013-01-06 17:20
+
 
 [root@localhost ~]# atq
-8       2013-01-06 17:20 a root
-7       2013-01-08 17:00 a root
+
 
 [root@localhost ~]# atq
-8       2013-01-06 17:20 a root
-7       2013-01-08 17:00 a root
+
 
 [root@localhost ~]# atrm 7
 [root@localhost ~]# atq
-8       2013-01-06 17:20 a root
+
 
 [root@localhost ~]# at -c 8
-#!/bin/sh
-# atrun uid=0 gid=0
-# mail     root 0
-umask 22此处省略n个字符
-date >/root/2013.log
 
 [root@localhost ~]# id
-uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel)
+
 
 [root@localhost ~]# id -a
-uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel)
 
 [root@localhost ~]# id -G
-0 1 2 3 4 6 10
+
 
 [root@localhost ~]# id -g
-0
 
 [root@localhost ~]# id www
-uid=500(www) gid=500(www) groups=500(www)
+
 
 pwunconv     //关闭影子密码
 cat /etc/passwd | grep test     //发现密码已经在passwd文件中了
-test:$6$nYOEWamm$bz07nlv/.RgJufb3FAqJJeULfwybzgxmrWqbk7O4vI0KsT6N.ujrh6dDIUcAJdfjksyuyAFDPIngZeD3cgcf.0:3001:3001::/home/test:/bin/sh
-
 ls /etc/shadow     //查看影子文件，提示没有这个文件或目录
-ls: cannot access /etc/shadow: No such file or directory
-
-PASS_MAX_DAYS   99999
-PASS_MIN_DAYS   0
-PASS_MIN_LEN    5
-PASS_WARN_AGE   7
 
 # useradd defaults file
-GROUP=100
-HOME=/home
-INACTIVE=-1
-EXPIRE=
-SHELL=/bin/bash
-SKEL=/etc/skel
-CREATE_MAIL_SPOOL=yes
+
 
 [root@linuxde ~]# chage -l root
-最近一次密码修改时间                    ： 3月 12, 2013
-密码过期时间                            ：从不
-密码失效时间                           ：从不
-帐户过期时间                           ：从不
-两次改变密码之间相距的最小天数          ：0
-两次改变密码之间相距的最大天数          ：99999
-在密码过期之前警告的天数                ：7
+
 
 [root@linuxde ~]# chage -M 60 root
 [root@linuxde ~]# chage -l root
-最近一次密码修改时间                          ： 3月 12, 2013
-密码过期时间                                       ： 5月 11, 2013
-密码失效时间                                       ：从不
-帐户过期时间                                       ：从不
-两次改变密码之间相距的最小天数          ：0
-两次改变密码之间相距的最大天数          ：60
-在密码过期之前警告的天数                    ：9
+
 
 [root@linuxde ~]# chage -I 5 root
 [root@linuxde ~]# chage -l root
-最近一次密码修改时间                          ： 3月 12, 2013
-密码过期时间                                  ： 5月 11, 2013
-密码失效时间                                  ： 5月 16, 2013
-帐户过期时间                                  ：从不
-两次改变密码之间相距的最小天数          ：0
-两次改变密码之间相距的最大天数          ：60
-在密码过期之前警告的天数                 ：9
 
 groupmod --password 123456 cdy
 cat /etc/group | grep cdy
-cdy:123456:1000:     //看出密码是123456
 
 grpconv
 cat /etc/group |  grep cdy
-cdy:x:1000:      //看出密码段已经被x替代
+
 
 cat /etc/gshadow | grep cdy
-cdy:123456::      //已经移到影子文件了
 
 grpck   //必须以管理员身份运行
-grpck /etc/group /etc/gshadow   //后面两句一样，如果没有输出信息，则表示没有错误。
+grpck /etc/group /etc/gshadow
 
 echo check_user:x: >> /etc/group    //添加一行错误的格式数据
 cat /etc/group | grep check_user
-check_user:x:  //这儿GID字段为空，是错误的。
+
 
 grpck /etc/group
 invalid group file entry
@@ -1942,33 +541,22 @@ lynn:x:500:500::/home/lynn:/sbin/nologin
 touch /etc/nologin
 
 [rocrocket@localhost ~]$ chsh -l
-/bin/sh
-/bin/bash
-/sbin/nologin
-/bin/zsh
+
 
 [rocrocket@localhost ~]$ cat /etc/shells
-/bin/sh
-/bin/bash
-/sbin/nologin
-/bin/zsh
+
 
 [rocrocket@localhost ~]$ echo $SHELL
-/bin/bash
+
 
 [rocrocket@localhost ~]$ chsh -s /bin/zsh
-Changing shell for rocrocket.
-Password:
-Shell changed.
+
 [rocrocket@localhost ~]$
 
 [rocrocket@localhost ~]$ cat /etc/passwd|grep ^rocrocket
-rocrocket:x:500:500:rocrocket,China:/rocrocket/PSB/home:/bin/zsh
+
 
 [rocrocket@localhost ~]$ chsh -s /bin/bash
-Changing shell for rocrocket.
-Password:
-Shell changed.
 
 chpasswd < user.txt
 
@@ -1976,7 +564,7 @@ groupadd damon  //创建damon工作组
 groupdel damon  //删除这个工作组
 
 cat /etc/gshadow | grep cdy
-cdy:123456::
+
 
 cat /etc/gshadow
 cat: /etc/gshadow: 没有那个文件或目录
@@ -1994,99 +582,37 @@ gpasswd -a allen users
 gpasswd -a user_name group_name
 
 [root@localhost ~]# passwd linuxde    //更改或创建linuxde用户的密码；
-Changing password for user linuxde.
-New UNIX password:          //请输入新密码；
-Retype new UNIX password:   //再输入一次；
-passwd: all authentication tokens updated successfully. //成功；
+
 
 [linuxde@localhost ~]$ passwd
-Changing password for user linuxde. //更改linuxde用户的密码；
-(current) UNIX password:   //请输入当前密码；
-New UNIX password:         //请输入新密码；
-Retype new UNIX password:  //确认新密码；
-passwd: all authentication tokens updated successfully. //更改成功；
+
 
 [root@localhost ~]# passwd -l linuxde    //锁定用户linuxde不能更改密码；
-Locking password for user linuxde.
-passwd: Success           //锁定成功；
+
 
 [linuxde@localhost ~]# su linuxde   //通过su切换到linuxde用户；
 [linuxde@localhost ~]$ passwd      //linuxde来更改密码；
-Changing password for user linuxde.
-Changing password for linuxde
-(current) UNIX password:          //输入linuxde的当前密码；
-passwd: Authentication token manipulation error     //失败，不能更改密码；
 
 [root@localhost ~]# passwd -d linuxde  //清除linuxde用户密码；
-Removing password for user linuxde.
-passwd: Success                         //清除成功；
+
 
 [root@localhost ~]# passwd -S linuxde    //查询linuxde用户密码状态；
-Empty password.                         //空密码，也就是没有密码；
+
 
 pwck /etc/passwd
-user 'lp': directory '/var/spool/lpd' does not exist
-user 'news': directory '/var/spool/news' does not exist
-user 'uucp': directory '/var/spool/uucp' does not exist
-user 'www-data': directory '/var/www' does not exist
-user 'list': directory '/var/list' does not exist
-user 'irc': directory '/var/run/ircd' does not exist
-user 'gnats': directory '/var/lib/gnats' does not exist
-user 'nobody': directory '/nonexistent' does not exist
-user 'syslog': directory '/home/syslog' does not exist
-user 'couchdb': directory '/var/lib/couchdb' does not exist
-user 'speech-dispatcher': directory '/var/run/speech-dispatcher' does not exist
-user 'usbmux': directory '/home/usbmux' does not exist
-user 'haldaemon': directory '/var/run/hald' does not exist
-user 'pulse': directory '/var/run/pulse' does not exist
-user 'saned': directory '/home/saned' does not exist
-user 'hplip': directory '/var/run/hplip' does not exist
-pwck：无改变
 
 [root@localhost Desktop]# chfn
-Changing finger information for root.
-Name [root]: jack
-Office []: hn
-Office Phone []: 888888
-Home Phone []: 9999999
 
-Finger information changed.
+
 
 [root@localhost Desktop]# chfn -f jack
-Changing finger information for root.
-Finger information changed.
-
-shell>> chfn
-Changing finger information for user
-Password: [del]
-Name[]:linuxde ### 提供 finger 时的资料
-Office[]:NCCU
-Office Phone[]: [del]
-Home Phone[]: [del]
 
 groups linux
-linux : linux adm dialout cdrom plugdev lpadmin admin sambashare
 
-用户名1:x:UID:GID:用户说明:用户的家目录:所用SHELL
-
-jingang0:x:520:520::/home/jingang0:/sbin/nologin
-jingang1:x:521:521::/home/jingang1:/sbin/nologin
-......
 
 [root@localhost beinan]# chsh --list
-/bin/sh
-/bin/bash
-/sbin/nologin
-/bin/ksh
-/bin/tcsh
-/bin/csh
-/bin/zsh
 
 [root@localhost root]# finger
-login Name Tty Idle Login time Office Office Phone
-root root tty1 2 Dec 18 13
-root root pts/0 1 Dec 18 13
-root root *pts/1 Dec 18 13
 
 usermod -G staff newuser2
 
@@ -2112,46 +638,23 @@ useradd –g sales jack –G company,employees    //-g：加入主要组、-G：
 useradd caojh -u 544
 
 getsebool -a
-NetworkManager_disable_trans --> off
-allow_console_login --> off
-allow_cvs_read_shadow --> off
-allow_daemons_dump_core --> on
-....(底下省略)....
 
 getsebool httpd_enable_homedirs
 setsebool -P httpd_enable_homedirs=0    //0是关闭  1是开启
 
 
 semanage fcontext -l
-SELinux fcontext    type          Context
-....(前面省略)....
-/var/www(/.*)?      all files     system_u:object_r:httpd_sys_content_t:s0
-....(後面省略)....
 
 mkdir /srv/samba
 ll -Zd /srv/samba
-drwxr-xr-x  root root root:object_r:var_t    /srv/samba
 
 semanage fcontext -l | grep '/srv'
-/srv/.*                     all files   system_u:object_r:var_t:s0
-/srv/([^/]*/)?ftp(/.*)?     all files   system_u:object_r:public_content_t:s0
-/srv/([^/]*/)?www(/.*)?     all files   system_u:object_r:httpd_sys_content_t:s0
-/srv/([^/]*/)?rsync(/.*)?   all files   system_u:object_r:public_content_t:s0
-/srv/gallery2(/.*)?         all files   system_u:object_r:httpd_sys_content_t:s0
-/srv                        directory   system_u:object_r:var_t:s0   //看这里！
-
 semanage fcontext -a -t public_content_t "/srv/samba(/.*)?"
 semanage fcontext -l | grep '/srv/samba'
-/srv/samba(/.*)?            all files   system_u:object_r:public_content_t:s0
-
 cat /etc/selinux/targeted/contexts/files/file_contexts.local
-# This file is auto-generated by libsemanage
-# Please use the semanage command to make changes
-/srv/samba(/.*)?    system_u:object_r:public_content_t:s0  #写入这个档案
 
 
 restorecon -Rv /srv/samba* #尝试恢复默认值
-ll -Zd /srv/samba
 drwxr-xr-x  root root system_u:object_r:public_content_t /srv/samba/  #有默认值，以后用restorecon命令来修改比较简单！
 
 startx
@@ -2163,31 +666,6 @@ startx; kill -9 $$
 startx -x .xinitrc
 
 startx -m mwm
-
-#!/bin/csh
-(mwm &)
-xrdb -load .Xdefaults
-(xclock -g 75x75+0+0 &)
-(xbiff -g 75x75+101-0 &)
-if ("/dev/lft*" == "`tty`") then
-aixterm -g 80x24+0+0 +ut -C -T `hostname`
-else
-aixterm -g 80x24+0+0 +ut -T `hostname`
-endif
-
-$HOME/.xerrors 其中，startx 用来重定向错误消息。在缺省情况下，startx 将错误重定向至用户主目录中的 .xerrors 文件中。
-$HOME/.Xinit,
-$HOME/.xinit,
-$HOME/.Xinitrc,
-$HOME/.xinitrc,
-$HOME/.xsession 作为包含 shell 命令的“启动文件”来启动窗口管理器、装入 X 资源并产生 X 客户机。
-$HOME/.Xdefaults,
-$HOME/.xresources 作为装入的 X 资源文件来设置 X 客户机的用户首选项。
-$HOME/.mwmrc mwm 配置文件。
-$HOME/.twmrc twm 配置文件。
-$HOME/.awmrc awm 配置文件。
-$HOME/.uwmrc uwm 配置文件。
-/dev/lft* 终端或 tty、工作站初始 login shell 的界面。
 
 repquota -a
 
@@ -2237,55 +715,19 @@ setsebool -P allow_kerberos 1
 
 setsebool -P allow_ypbind 1
 
-/*使用CentOS举例,如果默认没有安装apache，确保网络连接，使用下面的命令安装*/
 [root@linuxde.net ~]# yum install httpd
 
-/*我们在root的家目录新建一个html文件*/
 [root@linuxde.net ~]# pwd
-/root
 
 [root@linuxde.net ~]# vi index.html
 
-/*随便输入一段文字，保存退出*/
-welcome to www.linuxde.net
-
-/*将这个文件mv到网页默认目录下*/
 [root@linuxde.net ~]# mv index.html /var/www/html/
 
-/*
-* 这个时候我们使用firefox浏览器输入127.0.0.1/index.html发现打不开，
-* 查看一下SELinux的日志文件，发现了下面这一段报错信息，从这个报错信息不难看出，
-* 进程httpd访问网页主目录中的index.html时被SELinux阻止，原因是因为，SELinux配置信息不正确,
-* 正确的SELinux配置信息应该是scontext=后面的部分，
-* 而index.html文件的SELinux配置信息却是tcontext=后面的部分，
-* 从tcontext=的第三段“admin_home_t”不难看出，这个文件的SELinux配置信息是root用户家目录的。
-*/
-type=AVC msg=audit(1378974214.610:465): avc:  denied  { open } for  pid=2359 comm="httpd" path="/var/www/html/index.html" dev="sda1" ino=1317685 scontext=system_u:system_r:httpd_t:s0 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file
-
-/*使用ls -Z也可以看出,文件和目录的SELinux信息不匹配*/
 [root@linuxde.net html]# ls -Z /var/www/html/
-.... unconfined_u:object_r:admin_home_t:s0 index.html
-
-[root@linuxde.net html]# ls -Zd /var/www/html/
-.... system_u:object_r:httpd_sys_content_t:s0 /var/www/html/
-
-/*使用restorecon来恢复网页主目录中所有文件的SELinux配置信息(如果目标为一个目录，可以添加-R参数递归)*/
 [root@linuxde.net html]# restorecon -R /var/www/html/
 
-resize2fs /dev/vbirdvg/vbirdlv
-resize2fs 1.39 (29-May-2006)
-Filesystem at /dev/vbirdvg/vbirdlv is mounted on /mnt/lvm; on-line resizing
-Performing an on-line resize of /dev/vbirdvg/vbirdlv to 2191360 (4k) blocks.
-The filesystem on /dev/vbirdvg/vbirdlv is now 2191360 blocks long.
 
-label=//ext3 defaults 1 1
-/dev/hda7 /usr ext3 defaults 1 1
-
-e2label /dev/hdax /new
 mkdir /new
-
-label=/new  /new  ext3  defaults  1 1
-
 sesearch -a -t httpd_sys_content_t
 
 sesearch -s httpd_t -t httpd_* -a
@@ -2317,212 +759,65 @@ Filename                                type            Size    Used    Priority
 
 vi /etc/fstab
 
-/dev/sda5 /home ext2 defaults 1 2
-/dev/sda7 /www ext2 defaults 1 2
-
-/dev/sda5 /home ext2 defaults，usrquota 1 2
-
-/dev/sda7 /www ext2 defaults，grpquota 1 2
-
-LABEL=/ / ext2 defaults,usrquota,grpquota 1 1
-
-example:quotacheck / ; quotacheck /home
-
-edquota -u lanf
-
-Quotas for user lanf:
-/dev/sda5:blocks in use:0,limits(soft = 0,hard = 0)
-inodes in use:0,limits(soft = 0,hard = 0)
-
-Quotas for user lanf:
-/dev/sda5:blocks in use:0,limits(soft = 102400,hard = 409800)
-inodes in use:0,limits(soft = 0,hard = 0)
-
-/dev/sda5:blocks in use:0,limits(soft = 102400,hard = 409800)
-inodes in use:0,limits(soft = 12800,hard = 51200)
-
 edquota -p lanf -u Jack Tom Chen
 
 edquota -g webterm1
 
 edquota -t
 
-time units may be:days,hours,minutes,or seconds
-Grace period before enforcing soft limits for users:
-/dev/sda5:block grace period:0 days,file grace period:0 days
-
-Time units may be:days,hours,minutes,or seconds
-Grace period before enforcing soft limits for users:
-/dev/sda5:block grace period:2 days,file grace period:6 hours
-
 setquota –u / 2000 2500 100 110 bye2000
 
-setquota [ -u|-g ] 装载点 软块数 硬块数 软文件数 硬文件数 用户名/组名
-
 quota -u lanf
-
-Disk quotas for user lanf(uid 503):
-Filesystem blocks quota limit grace file quota limit grace
-/dev/sda5 3 102400 409800 1 12800 51200
-
-tune2fs -c 30 /dev/hda1      设置强制检查前文件系统可以挂载的次数
-tune2fs -c -l /dev/hda1      关闭强制检查挂载次数限制。
-tune2fs -i 10 /dev/hda1      10天后检查
-tune2fs -i 1d /dev/hda1      1天后检查
-tune2fs -i 3w /dev/hda1      3周后检查
-tune2fs -i 6m /dev/hda1      半年后检查
-tune2fs -i 0 /dev/hda1       禁用时间检查
-tune2fs -j /dev/hda1         添加日志功能，将ext2转换成ext3文件系统
-tune2fs -r 40000 /dev/hda1   调整/dev/hda1分区的保留空间为40000个磁盘块
-tune2fs -o acl,user_xattr /dev/hda1       设置/dev/hda1挂载选项，启用Posix Access Control Lists和用户指定的扩展属性
-
-swapoff /dev/sda2
 
 [root@localhost ~]# groupadd qgroup
 [root@localhost ~]# useradd -m -g qgroup quser1
 [root@localhost ~]# useradd -m -g qgroup quser2
 [root@localhost ~]# passwd quser1
 [root@localhost ~]# passwd quser2
-[root@localhost ~]# df     ===>  自己找一个合适的分区来做实验，这里用/disk2
-Filesystem             1K-blocks        Used      Available   Use% Mounted on
-/dev/hda1              5952252   3193292     2451720     57%     /
-/dev/hdb1            28267608       77904   26730604       1%     /disk2
-/dev/hda5              9492644     227252     8775412       3%     /disk1
-
 [root@localhost ~]# vi /etc/fstab
-LABEL=/             /                ext3      defaults                                     1 1
-LABEL=/disk1    /disk1        ext3      defaults                                      1 2
-LABEL=/disk2    /disk2        ext3      defaults,usrquota,grpquota       1 2
-/dev/hda3         swap         swap     defaults                                     0 0
-
 [root@localhost ~]# umount /dev/hdb1
 [root@localhost ~]# mount -a
 [root@localhost ~]# grep '/disk2' /etc/mtab
-/dev/hdb1 /disk2 ext3 rw,usrquota,grpquota 0 0
+
 
 [root@localhost ~]# mount -o remount /disk2
 
 [root@localhost ~]# quotacheck -avug
-quotacheck: Scanning /dev/hdb1 [/disk2] done
-quotacheck: Checked 3 directories and 4 files
 
 [root@localhost ~]# ll /disk2
--rw-------  1 root root  6144 Sep  6 11:44 aquota.group
--rw-------  1 root root  6144 Sep  6 11:44 aquota.user
-
 [root@localhost ~]# cd /disk2
 [root@localhost ~]# ln -s aquota.user quota.user
 [root@localhost ~]# ln -s aquota.group quota.group
 
 [root@localhost ~]# quotaon -avug
-/dev/hdb1 [/disk2]: group quotas turned on
-/dev/hdb1 [/disk2]: user quotas turned on    ===>  看到turned on，才是真的成功！
-
 [root@localhost ~]# edquota -u quser1
-Disk quotas for user quser1 (uid 502):
-Filesystem    blocks    soft    hard   inodes   soft   hard
-/dev/hdb1           0     45000    50000         0      0      0
 [root@localhost ~]# edquota -p quser1 quser2      ===>  直接复制给quser2
 
 [root@localhost ~]# edquota -t
-Grace period before enforcing soft limits for users:
-time units may be: days, hours, minutes, or seconds
-Filesystem             Block grace period     Inode grace period
-/dev/hdb1                     1days                  7days
-
 [root@localhost ~]# quota -vu quser1 quser2
-Disk quotas for user quser1 (uid 502):
-Filesystem  blocks   quota      limit   grace   files   quota   limit   grace
-/dev/hdb1         0    45000    50000                   0       0       0
-Disk quotas for user quser2 (uid 503):
-Filesystem  blocks   quota      limit   grace   files   quota   limit   grace
-/dev/hdb1         0    45000    50000                   0       0       0
-
 [root@localhost ~]# edquota -g qgroup
-Disk quotas for group qgroup (gid 502):
-Filesystem     blocks       soft       hard    inodes   soft   hard
-/dev/hdb1            0      80000   90000           0      0      0
-
 [root@localhost ~]# quota -vg qgroup
-Disk quotas for group qgroup (gid 502):
-Filesystem   blocks    quota      limit      grace    files   quota   limit   grace
-/dev/hdb1         0     80000   90000                       0        0        0
-
-[root@localhost ~]# quotastats
 Kernel quota version: 6.5.1
-Number of dquot lookups: 0
-Number of dquot drops: 0
-Number of dquot reads: 0
-Number of dquot writes: 0
-Number of quotafile syncs: 21
-Number of dquot cache hits: 0
-Number of allocated dquots: 0
-Number of free dquots: 0
-Number of in use dquot entries (user/group): 0
-
 mkfs -V -t msdos -c /dev/hda5
 
 mkfs -t ext3 /dev/sda6     //将sda6分区格式化为ext3格式
 mkfs -t ext2 /dev/sda7     //将sda7分区格式化为ext2格式
 
 [root@linux ~]# quotacheck -avug
-quotacheck: Scanning /dev/hdb1 [/disk2] done
-quotacheck: Checked 3 directories and 4 files
 
 
 [root@linux ~]# quotacheck -avug -m
 
-mountpoint /mnt
-/mnt is a mountpoint
-
-mountpoint /usr/local
-/usr/local is not a mountpoint
-
-mountpoint -d /mnt
-8:5
-
-mountpoint -x /dev/sda9
-8:9
+mkdir -p /mnt/cdrom
 
 mount -t auto /dev/cdrom /mnt/cdrom
-mount: mount point /mnt/cdrom does not exist           /mnt/cdrom目录不存在，需要先创建。
-
-cd /mnt
--bash: cd: /mnt: No such file or directory
-
-mkdir -p /mnt/cdrom    创建/mnt/cdrom目录
-ls
-bin   dev  home    lib         media  mnt  proc  sbin     srv  tmp  var
-boot  etc  initrd  lost+found  misc   opt  root  selinux  sys  usr
-
-mount -t auto /dev/cdrom /mnt/cdrom     挂载cdrom
-mount: block device /dev/cdrom is write-protected, mounting read-only     挂载成功
-
-ll /mnt/cdrom    查看cdrom里面内容
-total 859
-dr-xr-xr-x  4 root root   2048 Sep  4  2005 CentOS
--r--r--r--  2 root root   8859 Mar 19  2005 centosdocs-man.css
--r--r--r--  9 root root  18009 Mar  1  2005 GPL
-dr-xr-xr-x  2 root root 241664 May  7 02:32 headers
-dr-xr-xr-x  4 root root   2048 May  7 02:23 images
-dr-xr-xr-x  2 root root   4096 May  7 02:23 isolinux
-dr-xr-xr-x  2 root root  18432 May  2 18:50 NOTES
--r--r--r--  2 root root   5443 May  7 01:49 RELEASE-NOTES-en.html
-dr-xr-xr-x  2 root root   2048 May  7 02:34 repodata
--r--r--r--  9 root root   1795 Mar  1  2005 rpm-GPG-KEY
--r--r--r--  2 root root   1795 Mar  1  2005 RPM-GPG-KEY-centos4
--r--r--r--  1 root root 571730 May  7 01:39 yumgroups.xml
+ll /mnt/cdrom
 
 umount -v /dev/sda1
-/dev/sda1 umounted
 
 umount -v /mnt/mymount/
-/tmp/diskboot.img umounted
 
 umount -v /mnt/mymount/
-umount: /mnt/mymount: device is busy
-umount: /mnt/mymount: device is busy
-
 lsof | grep mymount         查找mymount分区里打开的文件
 bash   9341  francois  cwd   DIR   8,1   1024    2 /mnt/mymount
 
@@ -2534,58 +829,6 @@ halt -p     //关闭系统后关闭电源。
 halt -d     //关闭系统，但不留下纪录。
 
 dumpe2fs /dev/hda1
-dumpe2fs 1.39 (29-May-2006)
-Filesystem volume name:   /
-last mounted on:          <not available>
-Filesystem UUID:          845ccd40-1f3b-4729-a63d-cb80f51b082a
-Filesystem magic number:  0xEF53
-Filesystem revision #:    1 (dynamic)
-Filesystem features:      has_journal ext_attr resize_inode dir_index filetype needs_recovery sparse_super large_file
-Default mount options:    user_xattr acl
-Filesystem state:         clean
-Errors behavior:          Continue
-Filesystem OS type:       Linux
-Inode count:              5242880
-Block count:              5241817
-Reserved block count:     262090
-free blocks:              4434157
-Free inodes:              5170836
-First block:              0
-Block size:               4096
-Fragment size:            4096
-Reserved GDT blocks:      1022
-Blocks per group:         32768
-Fragments per group:      32768
-Inodes per group:         32768
-Inode blocks per group:   1024
-Filesystem created:       Sun Mar 24 02:09:14 2013
-Last mount time:          Thu Aug  1 16:42:07 2013
-Last write time:          Thu Aug  1 16:42:07 2013
-Mount count:              10
-Maximum mount count:      -1
-Last checked:             Sun Mar 24 02:09:14 2013
-Check interval:           0 (<none>)
-Reserved blocks uid:      0 (user root)
-Reserved blocks gid:      0 (group root)
-First inode:              11
-Inode size:               128
-Journal inode:            8
-First orphan inode:       3735559
-Default directory hash:   tea
-Directory Hash Seed:      e3f7162e-1194-4161-805d-763db89dbc69
-Journal backup:           inode blocks
-Journal size:             128M
-
-Group 0: (Blocks 0-32767)
-Primary superblock at 0, Group descriptors at 1-2
-Reserved GDT blocks at 3-1024
-Block bitmap at 1025 (+1025), Inode bitmap at 1026 (+1026)
-Inode table at 1027-2050 (+1027)
-0 free blocks, 32757 free inodes, 2 directories
-Free blocks:
-Free inodes: 12-32768
-
-...
 
 e2fsck -a -y /dev/sda1
 

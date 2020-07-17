@@ -93,7 +93,7 @@ def test_multi_decision_tree(normal_commands, abnormal_commands):
     # print("percision abnormal: {}".format(round(TN / (TN + FN),2)))
     # print("recall normal:{}".format(round(TP/ (TP + FN),2)))
     # print("recall abnormal:{}".format(round(TN/(TN + FP),2)))
-    print("report final test set:")
+    print("report for final test set:")
     print(classification_report(real_y, y_preds))
 
 if __name__ == '__main__':
