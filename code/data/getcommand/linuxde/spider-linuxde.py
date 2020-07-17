@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import logging
 import pickle
-import os
+import os,re
 from concurrent.futures import ThreadPoolExecutor, as_completed, wait, ALL_COMPLETED
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s  %(filename)s %(lineno)d: %(levelname)s  %(message)s')
@@ -114,7 +114,34 @@ def save_command():
                 outfp.write('\n')
     logging.info('save finished!')
 
+def clean_data():
+    outfp = open(os.path.join(output_dir, 'total.txt'), 'w', encoding='utf-8')
+    for filename in os.listdir(output_dir):
+        filepath = os.path.join(output_dir, filename)
+        with open(filepath, 'r', encoding='utf-8') as infp:
+            for line in infp:
+                line = line.strip()
+                if line and  line.startswith('#') or line.startswith('//'):
+                    continue
+                if line:
+                    items = re.split(r'[#$]|//', line)
+                    items = [item for item in items if item]
+                    if len(items) == 2:
+                        if '[' in items[0]:
+                            command = items[1].strip()
+                        else:
+                            command = items[0]
+                    elif len(items) == 3:
+                        command = items[1]
+                    elif len(items) == 1:
+                        command = items[0]
+                    else:
+                        print("invalid command: {}".format(line.strip()))
+                    outfp.write(command + '\n')
+
+
 
 if __name__ == '__main__':
-    main_loop()
-    save_command()
+    # main_loop()
+    # save_command()
+    clean_data()
