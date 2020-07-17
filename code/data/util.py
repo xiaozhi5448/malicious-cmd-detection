@@ -64,7 +64,7 @@ def get_dataset():
     labels.extend([1 for _ in range(len(abnormal_commands))])
     dataset = list(zip(commands, labels))
     random.shuffle(dataset)
-    with open('meta_data/dataset.pkl', 'wb') as outfp:
+    with open('data/meta_data/dataset.pkl', 'wb') as outfp:
         pickle.dump(dataset, outfp)
         logging.info("data dumped to file meta_data/dataset.pkl")
     logging.info("reading data finished!")

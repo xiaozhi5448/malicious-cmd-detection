@@ -1,0 +1,2107 @@
+
+mattrib a:
+
+mattrib -h -s -r a:msdos.sys
+
+mattrib -r -/ a:*.*
+
+$ mmove autorun.bat test        #移动文件到目录test中
+
+# 安装firewalld
+yum install firewalld firewall-config
+
+systemctl start  firewalld # 启动
+systemctl status firewalld # 或者 firewall-cmd --state 查看状态
+systemctl disable firewalld # 停止
+systemctl stop firewalld  # 禁用
+
+# 关闭服务的方法
+# 你也可以关闭目前还不熟悉的FirewallD防火墙，而使用iptables，命令如下：
+
+systemctl stop firewalld
+systemctl disable firewalld
+yum install iptables-services
+systemctl start iptables
+systemctl enable iptables
+
+firewall-cmd --version  # 查看版本
+firewall-cmd --help     # 查看帮助
+
+# 查看设置：
+firewall-cmd --state  # 显示状态
+firewall-cmd --get-active-zones  # 查看区域信息
+firewall-cmd --get-zone-of-interface=eth0  # 查看指定接口所属区域
+firewall-cmd --panic-on  # 拒绝所有包
+firewall-cmd --panic-off  # 取消拒绝状态
+firewall-cmd --query-panic  # 查看是否拒绝
+
+firewall-cmd --reload # 更新防火墙规则
+firewall-cmd --complete-reload
+# 两者的区别就是第一个无需断开连接，就是firewalld特性之一动态添加规则，第二个需要断开连接，类似重启服务
+
+
+# 将接口添加到区域，默认接口都在public
+firewall-cmd --zone=public --add-interface=eth0
+# 永久生效再加上 --permanent 然后reload防火墙
+
+# 设置默认接口区域，立即生效无需重启
+firewall-cmd --set-default-zone=public
+
+# 查看所有打开的端口：
+firewall-cmd --zone=dmz --list-ports
+
+# 加入一个端口到区域：
+firewall-cmd --zone=dmz --add-port=8080/tcp
+# 若要永久生效方法同上
+
+# 打开一个服务，类似于将端口可视化，服务需要在配置文件中添加，/etc/firewalld 目录下有services文件夹，这个不详细说了，详情参考文档
+firewall-cmd --zone=work --add-service=smtp
+
+# 移除服务
+firewall-cmd --zone=work --remove-service=smtp
+
+# 显示支持的区域列表
+firewall-cmd --get-zones
+
+# 设置为家庭区域
+firewall-cmd --set-default-zone=home
+
+# 查看当前区域
+firewall-cmd --get-active-zones
+
+# 设置当前区域的接口
+firewall-cmd --get-zone-of-interface=enp03s
+
+# 显示所有公共区域（public）
+firewall-cmd --zone=public --list-all
+
+# 临时修改网络接口（enp0s3）为内部区域（internal）
+firewall-cmd --zone=internal --change-interface=enp03s
+
+# 永久修改网络接口enp03s为内部区域（internal）
+firewall-cmd --permanent --zone=internal --change-interface=enp03s
+
+# 显示服务列表
+Amanda, ftp, Samba和tftp等最重要的服务已经被FirewallD提供相应的服务，可以使用如下命令查看：
+
+firewall-cmd --get-services
+
+# 允许ssh服务通过
+firewall-cmd --enable service=ssh
+
+# 禁止SSH服务通过
+firewall-cmd --disable service=ssh
+
+# 打开TCP的8080端口
+firewall-cmd --enable ports=8080/tcp
+
+# 临时允许Samba服务通过600秒
+firewall-cmd --enable service=samba --timeout=600
+
+# 显示当前服务
+firewall-cmd --list-services
+
+# 添加HTTP服务到内部区域（internal）
+firewall-cmd --permanent --zone=internal --add-service=http
+firewall-cmd --reload     # 在不改变状态的条件下重新加载防火墙
+
+# 打开443/TCP端口
+firewall-cmd --add-port=443/tcp
+
+# 永久打开3690/TCP端口
+firewall-cmd --permanent --add-port=3690/tcp
+
+# 永久打开端口好像需要reload一下，临时打开好像不用，如果用了reload临时打开的端口就失效了
+# 其它服务也可能是这样的，这个没有测试
+firewall-cmd --reload
+
+# 查看防火墙，添加的端口也可以看到
+firewall-cmd --list-all
+
+# FirewallD包括一种直接模式，使用它可以完成一些工作，例如打开TCP协议的9999端口
+
+firewall-cmd --direct -add-rule ipv4 filter INPUT 0 -p tcp --dport 9000 -j accept
+firewall-cmd --reload
+
+（末尾带有 [P only] 的话表示该选项除了与（--permanent）之外，不能与其他选项一同使用！）
+--new-service=<服务名> 新建一个自定义服务 [P only]
+--new-service-from-file=<文件名> [--name=<服务名>]
+从文件中读取配置用以新建一个自定义服务 [P only]
+--delete-service=<服务名>
+删除一个已存在的服务 [P only]
+--load-service-defaults=<服务名>
+Load icmptype default settings [P only]
+--info-service=<服务名>
+显示该服务的相关信息
+--path-service=<服务名>
+显示该服务的文件的相关路径 [P only]
+--service=<服务名> --set-description=<描述>
+给该服务设置描述信息 [P only]
+--service=<服务名> --get-description
+显示该服务的描述信息 [P only]
+--service=<服务名> --set-short=<描述>
+给该服务设置一个简短的描述 [P only]
+--service=<服务名> --get-short
+显示该服务的简短描述 [P only]
+
+--service=<服务名> --add-port=<端口号>[-<端口号>]/<protocol>
+给该服务添加一个新的端口(端口段) [P only]
+
+--service=<服务名> --remove-port=<端口号>[-<端口号>]/<protocol>
+从该服务上移除一个端口(端口段) [P only]
+
+--service=<服务名> --query-port=<端口号>[-<端口号>]/<protocol>
+查询该服务是否添加了某个端口(端口段) [P only]
+
+--service=<服务名> --get-ports
+显示该服务添加的所有端口 [P only]
+
+--service=<服务名> --add-protocol=<protocol>
+为该服务添加一个协议 [P only]
+
+--service=<服务名> --remove-protocol=<protocol>
+从该服务上移除一个协议 [P only]
+
+--service=<服务名> --query-protocol=<protocol>
+查询该服务是否添加了某个协议 [P only]
+
+--service=<服务名> --get-protocols
+显示该服务添加的所有协议 [P only]
+
+--service=<服务名> --add-source-port=<端口号>[-<端口号>]/<protocol>
+添加新的源端口(端口段)到该服务 [P only]
+
+--service=<服务名> --remove-source-port=<端口号>[-<端口号>]/<protocol>
+从该服务中删除源端口(端口段) [P only]
+
+--service=<服务名> --query-source-port=<端口号>[-<端口号>]/<protocol>
+查询该服务是否添加了某个源端口(端口段) [P only]
+
+--service=<服务名> --get-source-ports
+显示该服务所有源端口 [P only]
+
+--service=<服务名> --add-module=<module>
+为该服务添加一个模块 [P only]
+--service=<服务名> --remove-module=<module>
+为该服务移除一个模块 [P only]
+--service=<服务名> --query-module=<module>
+查询该服务是否添加了某个模块 [P only]
+--service=<服务名> --get-modules
+显示该服务添加的所有模块 [P only]
+--service=<服务名> --set-destination=<ipv>:<address>[/]
+Set destination for ipv to address in service [P only]
+--service=<服务名> --remove-destination=<ipv>
+Disable destination for ipv i service [P only]
+--service=<服务名> --query-destination=<ipv>:<address>[/]
+Return whether destination ipv is set for service [P only]
+--service=<服务名> --get-destinations
+List destinations in service [P only]
+
+firewall-cmd --add-service=mysql        # 开放mysql端口
+firewall-cmd --remove-service=http      # 阻止http端口
+firewall-cmd --list-services            # 查看开放的服务
+firewall-cmd --add-port=3306/tcp        # 开放通过tcp访问3306
+firewall-cmd --remove-port=80tcp        # 阻止通过tcp访问3306
+firewall-cmd --add-port=233/udp         # 开放通过udp访问233
+firewall-cmd --list-ports               # 查看开放的端口
+
+firewall-cmd --query-masquerade # 检查是否允许伪装IP
+firewall-cmd --add-masquerade   # 允许防火墙伪装IP
+firewall-cmd --remove-masquerade# 禁止防火墙伪装IP
+
+firewall-cmd --add-forward-port=port=80:proto=tcp:toport=8080   # 将80端口的流量转发至8080
+firewall-cmd --add-forward-port=port=80:proto=tcp:toaddr=192.168.0.1 # 将80端口的流量转发至192.168.0.1
+firewall-cmd --add-forward-port=port=80:proto=tcp:toaddr=192.168.0.1:toport=8080 # 将80端口的流量转发至192.168.0.1的8080端口
+
+mdel a:autoexec.bat .
+
+[root@li229-122 ~]# speedtest-cli --list | grep China
+1185) China Unicom (Changchun, China) [10534.35 km]
+3784) China Mobile (Urumqi, China) [10581.15 km]
+2667) Beijing Normal University (Beijing, China) [11117.03 km]
+2529) Beijing Normal University (Beijing, China) [11117.03 km]
+2816) Capital Online Data service (Beijing, China) [11117.03 km]
+4354) SXmobile (Taiyuan, China) [11383.17 km]
+3973) China Telecom (Lanzhou, China) [11615.43 km]
+3633) China Telecom (Shanghai, China) [11983.37 km]
+3927) China Mobile Jiangsu Co., Ltd. (Suzhou, China) [11989.27 km]
+2461) China Unicom (Chengdu, China) [12213.35 km]
+1028) Shepherd Software (Xiamen, China) [12785.57 km]
+1628) Xiamen Guangdian Xinxu (Xiamen, China) [12785.57 km]
+3891) GZinternet (Guangzhou, China) [13005.36 km]
+3871) SZWCDMA (Shenzhen, China) [13059.20 km]
+3819) SZU (Shenzhen, China) [13059.20 km]
+1536) STC (Hong Kong, China) [13088.37 km]
+1890) Telin (Hong Kong, China) [13088.37 km]
+
+3633) China Telecom (Shanghai, China) [11983.37 km]
+
+3633: 服务器id
+china telecom：isp，这里是中国电信
+shanghai,china ：服务器所在地址
+11983.37 km：两台服务器地理位置之间距离，我这台机器在美国，和上海相距11983.37公里，很远呐.
+
+[root@li229-122 ~]# speedtest-cli --server=3633 --share
+Retrieving speedtest.net configuration...
+Retrieving speedtest.net server list...
+Testing from Linode (173.255.219.122)...
+Hosted by China Telecom (Shanghai) [11983.37 km]: 23.603 ms
+Testing download speed........................................
+Download: 24.84 Mbit/s
+Testing upload speed..................................................
+Upload: 4.57 Mbit/s
+Share results: http://www.speedtest.net/result/3240988007.png
+
+# pssh -h ip.txt -i uptime
+[1] 11:15:03 [SUCCESS] Mar.mars.he
+11:15:11 up 4 days, 16:25,  1 user,  load average: 0.00, 0.00, 0.00
+[2] 11:15:03 [SUCCESS] Jan.mars.he
+11:15:12 up 3 days, 23:26,  0 users,  load average: 0.00, 0.00, 0.00
+[3] 11:15:03 [SUCCESS] Feb.mars.he
+11:15:12 up 4 days, 16:26,  2 users,  load average: 0.08, 0.02, 0.01
+
+# pssh -h IP.txt -i "/usr/local/mysql/bin/mysql -e 'show slave status \G'"|grep Running:
+Slave_IO_Running: yes
+Slave_SQL_Running: Yes
+Slave_IO_Running: Yes
+Slave_SQL_Running: Yes
+Slave_IO_Running: Yes
+Slave_SQL_Running: Yes
+
+# pssh -h IP.txt -i -o /tmp/pssh/ uptime
+[1] 11:19:47 [SUCCESS] Feb.mars.he
+11:19:55 up 4 days, 16:31,  2 users,  load average: 0.02, 0.03, 0.00
+[2] 11:19:47 [SUCCESS] Jan.mars.he
+11:19:56 up 3 days, 23:30,  0 users,  load average: 0.01, 0.00, 0.00
+[3] 11:19:47 [SUCCESS] Mar.mars.he
+11:19:56 up 4 days, 16:30,  1 user,  load average: 0.00, 0.00, 0.00
+
+# ll /tmp/pssh/
+总用量 12
+-rw-r--r--. 1 root root 70 12月  1 11:19 Feb.mars.he
+-rw-r--r--. 1 root root 70 12月  1 11:19 Jan.mars.he
+-rw-r--r--. 1 root root 69 12月  1 11:19 Mar.mars.he
+
+# cat /tmp/pssh/*
+11:19:55 up 4 days, 16:31,  2 users,  load average: 0.02, 0.03, 0.00
+11:19:56 up 3 days, 23:30,  0 users,  load average: 0.01, 0.00, 0.00
+11:19:56 up 4 days, 16:30,  1 user,  load average: 0.00, 0.00, 0.00
+
+sudo vdfuse -f /path/to/file.vdi /path/to/mountpoint
+
+mount /path/to/mountpoint/Partition1 /path/to/someother/mountpoint
+
+lixi@lixi-desktop:~$ ping -T tsandaddr www.ustc.edu.cn -c 1
+PING www.ustc.edu.cn (202.38.64.9) 56(124) bytes of data.
+64 bytes from 202.38.64.9: icmp_seq=1 ttl=62 time=0.823 ms
+TS:     lixi-desktop.local (210.45.74.25)    12522473 absolute
+210.45.74.1    -251
+local-gw.ustc.edu.cn (202.38.64.126)    248
+202.38.64.9    -857514
+Unrecorded hops: 3
+
+--- www.ustc.edu.cn ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.823/0.823/0.823/0.000 ms
+
+lixi@lixi-desktop:~# ./clockdiff -o 202.38.64.9
+..................................................
+host=202.38.64.9 rtt=1(0)ms/1ms delta=-857517ms/-857517ms Wed Dec 17 11:28:30 2008
+
+lixi@lixi-desktop:~# ./clockdiff 202.38.64.9
+.
+host=202.38.64.9 rtt=750(187)ms/0ms delta=-857517ms/-857517ms Wed Dec 17 11:28:35 2008
+
+lixi@lixi-desktop:~#./clockdiff gigagate1.Princeton.EDU
+..................................................
+host=gigagate1.Princeton.EDU rtt=307(21)ms/271ms delta=-5ms/-5ms Wed Dec 17 11:50:16 2008
+
+[root@localhost ~]# yes testline
+
+testline
+testline
+testline
+testline
+testline
+testline
+testline
+testline
+...一直重复打印 testline，按Ctrl+C结束。
+
+info info
+
+?键：它就会显示info的常用快捷键。
+N键：显示（相对于本节点的）下一节点的文档内容。
+P键：显示（相对于本节点的）前一节点的文档内容。
+U键：进入当前命令所在的主题。
+M键：敲M键后输入命令的名称就可以查看该命令的帮助文档了。
+G键：敲G键后输入主题名称，进入该主题。
+L键：回到上一个访问的页面。
+SPACE键：向前滚动一页。
+BACKUP或DEL键：向后滚动一页。
+Q：退出info。
+
+？     显示帮助窗口
+
+在帮助窗口中：
+Ctrl-x 0          关闭帮助窗口
+Ctrl-x Ctrl-c    关闭整个 Info
+
+q      退出 info
+n      打开与本 Node 关联的下一个 Node
+p      打开与本 Node 关联的前一个 Node
+u      打开与本 Node 关联的上一个 Node
+l      回到上一次访问的 Node
+m或g   选择一个菜单项（Node 的名字）
+输入指定菜单的名字后按回车，打开指定菜单项关联的 Node
+空格键 下一页（PageDown 也可以，下一页从当前页的最后两行开始算起）
+下一个 Node （若当前页在 Node 文档的末尾）
+Del 键 上一页（PageUp 也可以，上一页从当前页的开始两行开始算起）
+上一个 Node （若当前页 Node 文档的开始）
+
+b 或 t 或 Home   文档的开始（b 是 begining 的意思）
+e 或 End         文档的末尾（b 是 ending 的意思）
+Ctrl-l    刷新当前页，若当前文档显示情况有问题时
+Ctrl-g    取消所键入的指令
+
+service sshd start
+启动 sshd： [确定]
+
+rsync -vzrtopg --progress -e ssh --delete work@172.16.78.192:/www/* /databack/experiment/rsync
+work@172.16.78.192's password:
+receiving file list ...
+5 files to consider
+test/
+a
+0 100% 0.00kB/s 527:35:41 (1, 20.0% of 5)
+b
+67 100% 65.43kB/s 0:00:00 (2, 40.0% of 5)
+c
+0 100% 0.00kB/s 527:35:41 (3, 60.0% of 5)
+dd
+100663296 100% 42.22MB/s 0:00:02 (4, 80.0% of 5)
+sent 96 bytes received 98190 bytes 11563.06 bytes/sec
+total size is 100663363 speedup is 1024.19
+
+vi /etc/xinetd.d/rsync
+
+#default: off
+# description: The rsync server is a good addition to an ftp server, as it \
+# allows crc checksumming etc.
+service rsync {
+disable = no
+socket_type = stream
+wait = no
+user = root
+server = /usr/bin/rsync
+server_args = --daemon
+log_on_failure += USERID
+}
+
+/etc/init.d/xinetd restart
+停止 xinetd： [确定]
+启动 xinetd： [确定]
+
+vi /etc/rsyncd.conf
+
+uid=root
+gid=root
+max connections=4
+log file=/var/log/rsyncd.log
+pid file=/var/run/rsyncd.pid
+lock file=/var/run/rsyncd.lock
+secrets file=/etc/rsyncd.passwd
+hosts deny=172.16.78.0/22
+
+[www]
+comment= backup web
+path=/www
+read only = no
+exclude=test
+auth users=work
+
+echo "work:abc123" > /etc/rsyncd.passwd
+chmod 600 /etc/rsyncd.passwd
+
+rsync -avz --progress --delete work@172.16.78.192::www /databack/experiment/rsync
+
+Password:
+receiving file list ...
+6 files to consider
+./ files...
+a
+0 100% 0.00kB/s 528:20:41 (1, 50.0% of 6)
+b
+67 100% 65.43kB/s 0:00:00 (2, 66.7% of 6)
+c
+0 100% 0.00kB/s 528:20:41 (3, 83.3% of 6)
+dd
+100663296 100% 37.49MB/s 0:00:02 (4, 100.0% of 6)
+sent 172 bytes received 98276 bytes 17899.64 bytes/sec
+total size is 150995011 speedup is 1533.75
+
+rsync -avz --progress /databack/experiment/rsync/ work@172.16.78.192::www
+
+Password:
+building file list ...
+6 files to consider
+./
+a
+b
+67 100% 0.00kB/s 0:00:00 (2, 66.7% of 6)
+c
+sent 258 bytes received 76 bytes 95.43 bytes/sec
+total size is 150995011 speedup is 452080.87
+
+ngrep -W byline -d lo port 18080
+
+ngrep -W byline -d eth0 port 80
+
+ngrep '[a-zA-Z]' -t -W byline -d any tcp port 18080
+
+ngrep -d3 -N -q \.flv
+interface: \Device\TNT_40_1_{670F6B50-0A13-4BAB-9D9E-994A833F5BA9} (10.132.0.0/2
+55.255.192.0)
+match: \.flv
+
+T(6) 10.132.34.23:24860 -> 61.142.208.154:80 [AP]
+GET /f59.c31.56.com/flvdownload/12/19/ggyg7741@56.com_56flv_zhajm_119556973
+97.flv HTTP/1.1..accept: */*..Referer: http://www.56.com/flashApp/v_player_
+site.swf..x-flash-version: 9,0,45,0..UA-CPU: x86..Accept-Encoding: gzip, de
+flate..User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET
+CLR 2.0.50727; .NET CLR 3.0.04506.30)..host: f59.r.56.com..Connection: Keep
+-Alive..Cookie: whistoryview=23423759-23635627-23423344-23171935-23058374-2
+3081156-23207350-22395727-; geoip=............; wl_all_s=y....
+
+T(6) 2007/11/25 15:56:12.192619 10.132.34.23:26365 -> 59.151.21.101:80 [AP]
+GET /aa.flv HTTP/1.1.
+Accept: */*.
+Accept-Language: zh-cn.
+UA-CPU: x86.
+Accept-Encoding: gzip, deflate.
+User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.5072
+7; .NET CLR 3.0.04506.30).
+Host: www.google.cn.
+Connection: Keep-Alive.
+Cookie: PREF=id=a0b2932c336477e9:TB=4:NW=1:TM=1187877372:LM=1187956074:S=Y1Fzndp
+rT3vFo7ac; SID=DQAAAHcAAABJCEXeOVLHu2rIfb5BfKP3GG9PbhJDEkXsLTV8y0f_lvSd2Y46Q0FPt
+83CnEs9rxA1xBDM9mLR8-ckWeScyOQA8PyYnX5u5OjFvjfRbDg_FDZfwxhRzqS9KPZv26pjnsUxs0FDM
+1xpJ5AgDn38pXtlCdkksJ0-cbiIWoA61oHWMg; NID=7=AvJxn5B6YOLLxoYz4LLzhIbNsQUQiulRS6U
+JGxdBniQBmXm99y7L-NBNORN82N3unmZSGHFPfePVHnLK2MjYjglyXZhU9x7ETXNBnY3NurNijHDhJ7K
+yi7E53UBOcv4V.
+
+date +"%Y-%m-%d"
+2009-12-07
+
+date -d "1 day ago" +"%Y-%m-%d"
+2012-11-19
+
+date -d "2 second" +"%Y-%m-%d %H:%M.%S"
+2012-11-20 14:21.31
+
+date -d "1970-01-01 1234567890 seconds" +"%Y-%m-%d %H:%m:%S"
+2009-02-13 23:02:30
+
+date -d "2009-12-12" +"%Y/%m/%d %H:%M.%S"
+2009/12/12 00:00.00
+
+date -d "Dec 5, 2009 12:00:37 AM" +"%Y-%m-%d %H:%M.%S"
+2009-12-05 00:00.37
+
+date -d "Dec 5, 2009 12:00:37 AM 2 year ago" +"%Y-%m-%d %H:%M.%S"
+2007-12-05 00:00.37
+
+date +%Y%m%d                   //显示前天年月日
+date -d "+1 day" +%Y%m%d       //显示前一天的日期
+date -d "-1 day" +%Y%m%d       //显示后一天的日期
+date -d "-1 month" +%Y%m%d     //显示上一月的日期
+date -d "+1 month" +%Y%m%d     //显示下一月的日期
+date -d "-1 year" +%Y%m%d      //显示前一年的日期
+date -d "+1 year" +%Y%m%d      //显示下一年的日期
+
+date -s                        //设置当前时间，只有root权限才能设置，其他只能查看
+date -s 20120523               //设置成20120523，这样会把具体时间设置成空00:00:00
+date -s 01:01:01               //设置具体时间，不会对日期做更改
+date -s "01:01:01 2012-05-23"  //这样可以设置全部时间
+date -s "01:01:01 20120523"    //这样可以设置全部时间
+date -s "2012-05-23 01:01:01"  //这样可以设置全部时间
+date -s "20120523 01:01:01"    //这样可以设置全部时间
+
+#!/bin/bash
+
+start=$(date +%s)
+nmap man.linuxde.net &> /dev/null
+
+end=$(date +%s)
+difference=$(( end - start ))
+echo $difference seconds.
+
+[root@localhost ~]# md5sum insert.sql
+bcda6cb5c704664f989703ac5a88f112  insert.sql
+
+md5sum testfile > testfile.md5
+
+md5sum testfile -c testfile.md5
+
+forsort: OK
+
+forsort: FAILED
+md5sum: WARNING: 1 of 1 computed checksum did NOT match
+
+md5sum -w -c testfile.md5
+
+md5sum: testfile.md5: 1: improperly formatted MD5 checksum line
+md5sum: testfile.md5: no properly formatted MD5 checksum lines found
+
+[root@localhost ~]# consoletype
+pty
+
+[root@localhost ~]# whoami
+root
+
+[root@localhost ~]# id -un
+root
+
+
+[root@localhost ~]# users
+root root
+
+[root@localhost ~]# hostid
+007f0100
+
+#!/bin/bash
+
+b=''
+for ((i=0;$i<=100;i++))
+do
+printf "Progress:[%-100s]%d%%\r" $b $i
+sleep 0.1
+b=#$b
+done
+echo
+
+[root@localhost ~]# mesg y    #允许系统用户将信息直接显示在你的屏幕上。
+[root@localhost ~]# mesg n    #不允许系统用户将信息直接显示在你的屏幕上。
+
+[root@localhost ~]# mtools     #显示所有支持的指令名称
+Supported commands:
+mattrib, mbadblocks, mcat, mcd, mclasserase, mcopy, mdel, mdeltree
+mdir, mdoctorfat, mdu, mformat, minfo, mlabel, mmd, mmount
+mpartition, mrd, mread, mmove, mren, mshowfat, mtoolstest, mtype
+mwrite, mzip
+
+
+[root@AY1307311912260196fcZ satools]# sh -x check_ssh_login.sh
++ DEFINE=30
++ cat /var/log/secure
++ awk '/Failed/ {++ip[$(NF-3)]} END {for (i in ip) print i"="ip[i]}'
+++ cat /root/satools/black.txt
++ for i in '`cat /root/satools/black.txt`'
+++ echo 121.42.0.16=1427
+++ awk -F= '{print $1}'
++ IP=121.42.0.16
+++ echo 121.42.0.16=1427
+++ awk -F= '{print $2}'
++ NUM=1427
++ '[' 1427 -gt 30 ']'
++ grep 121.42.0.16 /etc/hosts.deny
++ '[' 1 -gt 0 ']'
++ echo sshd:121.42.0.16
++ echo vsftpd:121.42.0.16
++ for i in '`cat /root/satools/black.txt`'
+++ echo 121.42.0.72=276
+++ awk -F= '{print $1}'
++ IP=121.42.0.72
+++ awk -F= '{print $2}'
+++ echo 121.42.0.72=276
++ NUM=276
++ '[' 276 -gt 30 ']'
++ grep 121.42.0.72 /etc/hosts.deny
++ '[' 1 -gt 0 ']'
++ echo sshd:121.42.0.72
++ echo vsftpd:121.42.0.72
+
+stty iuclc     #开启
+stty -iuclc    #恢复
+
+stty olcuc    #开启
+stty -olcuc   #恢复
+
+stty size
+
+stty eof "string"
+
+stty -echo   #禁止回显
+stty echo    #打开回显
+
+stty -echo;read;stty echo;read
+
+stty igncr     #开启
+stty -igncr    #恢复
+
+timeout_read()
+{
+timeout=$1
+old_stty_settings=`stty -g`　　#save current settings
+stty -icanon min 0 time 100　　#set 10seconds,not 100seconds
+eval read varname　　          #=read $varname
+stty "$old_stty_settings"　　  #recover settings
+}
+
+read -t 10 varname
+
+command echo Linux            #调用执行shell内部指令
+
+Linux
+
+#!/bin/bash
+let a=5+4 b=9-3
+echo $a $b
+
+#!/bin/bash
+let "t1 = ((a = 5 + 3, b = 7 - 1, c = 15 - 4))"
+echo "t1 = $t1, a = $a, b = $b"
+
+#!/bin/bash
+printf $(tput setaf 2; tput bold)'color show\n\n'$(tput sgr0)
+
+for((i=0; i<=7; i++)); do
+echo $(tput setaf $i)"show me the money"$(tput sgr0)
+done
+
+printf '\n'$(tput setaf 2; tput setab 0; tput bold)'background color show'$(tput sgr0)'\n\n'
+
+for((i=0,j=7; i<=7; i++,j--)); do
+echo $(tput setaf $i; tput setab $j; tput bold)"show me the money"$(tput sgr0)
+done
+
+exit 0
+
+#!/bin/bash
+
+# $1 str       print string
+# $2 color     0-7 设置颜色
+# $3 bgcolor   0-7 设置背景颜色
+# $4 bold      0-1 设置粗体
+# $5 underline 0-1 设置下划线
+
+function format_output(){
+str=$1
+color=$2
+bgcolor=$3
+bold=$4
+underline=$5
+normal=$(tput sgr0)
+
+case "$color" in
+0|1|2|3|4|5|6|7)
+setcolor=$(tput setaf $color;) ;;
+*)
+setcolor="" ;;
+esac
+
+case "$bgcolor" in
+0|1|2|3|4|5|6|7)
+setbgcolor=$(tput setab $bgcolor;) ;;
+*)
+setbgcolor="" ;;
+esac
+
+if [ "$bold" = "1" ]; then
+setbold=$(tput bold;)
+else
+setbold=""
+fi
+
+if [ "$underline" = "1" ]; then
+setunderline=$(tput smul;)
+else
+setunderline=""
+fi
+
+printf "$setcolor$setbgcolor$setbold$setunderline$str$normal\n"
+}
+
+format_output "Yesterday Once more" 2 5 1 1
+
+exit 0
+
+#!/bin/bash
+# clear the screen
+tput clear
+# Move cursor to screen location X,Y (top left is 0,0)
+tput cup 3 15
+# set a foreground colour using ANSI escape
+tput setaf 3
+echo "XYX Corp LTD."
+tput sgr0
+tput cup 5 17
+# Set reverse video mode
+tput rev
+echo "M A I N - M E N U"
+tput sgr0
+tput cup 7 15
+echo "1. User Management"
+tput cup 8 15
+echo "2. service Management"
+tput cup 9 15
+echo "3. Process Management"
+tput cup 10 15
+echo "4. Backup"
+# Set bold mode
+tput bold
+tput cup 12 15
+read -p "Enter your choice [1-4] " choice
+tput clear
+tput sgr0
+tput rc
+
+exit 0
+
+#seq -f"%3g" 9 11
+9
+10
+11
+
+#sed -f"%03g" 9 11
+#seq -f"str%03g" 9 11
+str009
+str010
+str011
+
+seq -w 98 101
+098
+099
+100
+101
+
+seq -s" " -f"str%03g" 9 11
+str009 str010 str011
+
+seq -s"`echo -e "/t"`" 9 11
+
+seq -s"`echo -e "\n"`" 9 11
+19293949596979899910911
+
+[root@localhost ~]# fc -l -10     #显示10条历史命令
+1039     type -a grep
+1040     export
+1041     history 10
+1042     ulimit -a
+1043     shopt
+1044     help ls
+1045     help env
+1046     help short
+1047     help shopt
+1048     showkey -a
+
+fc 1040                    #编辑第1040条历史命令
+
+declare mylove='Visual C++'   #定义新环境变量
+
+set -a mylove                 #设置为环境变量
+
+env | grep mylove             #显示环境变量值
+
+[root@localhost ~]# man -k who
+at.allow [at]        (5)  - determine who can submit jobs via at or batch
+at.deny [at]         (5)  - determine who can submit jobs via at or batch
+jwhois               (1)  - client for the whois service
+jwhois              (rpm) - Internet whois/nicname client.
+Net::LDAP::Extension::whoami (3pm)  - LDAP Who am I? Operation
+w                    (1)  - Show who is logged on and what they are doing
+who                  (1p)  - display who is on the system
+who                  (1)  - show who is logged on
+whoami               (1)  - print effective userid
+
+[root@localhost ~]# apropos who
+at.allow [at]        (5)  - determine who can submit jobs via at or batch
+at.deny [at]         (5)  - determine who can submit jobs via at or batch
+jwhois               (1)  - client for the whois service
+jwhois              (rpm) - Internet whois/nicname client.
+Net::LDAP::Extension::WhoAmI (3pm)  - LDAP Who am I? Operation
+w                    (1)  - Show who is logged on and what they are doing
+who                  (1p)  - display who is on the system
+who                  (1)  - show who is logged on
+whoami               (1)  - print effective userid
+
+apropos -a emacs vi
+
+bind -x '"\C-l":ls -l'    #直接按 CTRL+L 就列出目录
+
+[root@localhost ~]# showkey -a
+
+Press any keys - Ctrl-D will terminate this program
+
+^[[A     27 0033 0x1b  上
+91 0133 0x5b
+65 0101 0x41
+^[[B     27 0033 0x1b  下
+91 0133 0x5b
+66 0102 0x42
+^[[D     27 0033 0x1b  左
+91 0133 0x5b
+68 0104 0x44
+^[[C     27 0033 0x1b 右
+91 0133 0x5b
+67 0103 0x43
+32 0040 0x20
+^M       13 0015 0x0d 字母M
+^C        3 0003 0x03 Ctrl-C
+^D        4 0004 0x04 Ctrl-D 退出
+
+[root@localhost ~]# ulimit -a
+core file size          (blocks, -c) 0           #core文件的最大值为100 blocks。
+data seg size           (kbytes, -d) unlimited   #进程的数据段可以任意大。
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited   #文件可以任意大。
+pending signals                 (-i) 98304       #最多有98304个待处理的信号。
+max locked memory       (kbytes, -l) 32          #一个任务锁住的物理内存的最大值为32KB。
+max memory size         (kbytes, -m) unlimited   #一个任务的常驻物理内存的最大值。
+open files                      (-n) 1024        #一个任务最多可以同时打开1024的文件。
+pipe size            (512 bytes, -p) 8           #管道的最大空间为4096字节。
+POSIX message queues     (bytes, -q) 819200      #POSIX的消息队列的最大值为819200字节。
+real-time priority              (-r) 0
+stack size              (kbytes, -s) 10240       #进程的栈的最大值为10240字节。
+cpu time               (seconds, -t) unlimited   #进程使用的CPU时间。
+max user processes              (-u) 98304       #当前用户同时打开的进程（包括线程）的最大个数为98304。
+virtual memory          (kbytes, -v) unlimited   #没有限制进程的最大地址空间。
+file locks                      (-x) unlimited   #所能锁住的文件的最大个数没有限制。
+
+[root@localhost ~]# readonly     #显示只读变量
+declare -ar BASH_VERSINFO='([0]="3" [1]="2" [2]="25" [3]="1" [4]="release" [5]="i686-redhat-linux-gnu")'
+declare -ir EUID="0"
+declare -ir PPID="31436"
+declare -r SHELLOPTS="braceexpand:emacs:hashall:histexpand:history:interactive-comments:monitor"
+declare -ir UID="0"
+
+[root@localhost ~]# readonly test='ok'         #定义只读变量并初始化
+
+[root@localhost ~]# test='my'                 #试图修改只读变量的值
+-bash: test: readonly variable
+
+bg 1            #后台执行任务号为1的任务
+
+find / -name password &     #后台执行任务
+
+jobs -l               #显示当前系统的任务列表
+
+[1] + 1903 运行中          find / -name password &
+
+declare test='man.linuxde.net'    #定义并初始化shell变量
+
+echo $test                        #输出shell变量的值
+
+man.linuxde.net
+
+read 1987name
+从标准输入读取输入并赋值给变量1987name。
+
+read first last
+从标准输入读取输入到第一个空格或者回车，将输入的第一个单词放到变量first中，并将该行其他的输入放在变量last中。
+
+read
+从标准输入读取一行并赋值给特定变量REPLY。
+
+read -a arrayname
+把单词清单读入arrayname的数组里。
+
+read -p "text"
+打印提示（text），等待输入，并将输入存储在REPLY中。
+
+read -r line
+允许输入包含反斜杠。
+
+read -t 3
+指定读取等待时间为3秒。
+
+read -n 2 var
+从输入中读取两个字符并存入变量var，不需要按回车读取。
+
+read -d ":" var
+用定界符“:”结束输入行。
+
+#read 1987name        #等待读取输入，直到回车后表示输入完毕，并将输入赋值给变量answer
+HelloWorld            #控制台输入Hello
+
+#echo $1987name       #打印变量
+HelloWorld
+
+#read one two three
+1 2 3                   #在控制台输入1 2 3，它们之间用空格隔开。
+
+#echo "one = $one, two = $two, three = $three"
+one = 1, two = 2, three = 3
+
+#read                  #等待控制台输入，并将结果赋值给特定内置变量REPLY。
+This is REPLY          #在控制台输入该行。
+
+
+#echo $REPLY           #打印输出特定内置变量REPLY，以确认是否被正确赋值。
+
+This is REPLY
+
+#read -p "Enter your name: "            #输出文本提示，同时等待输入，并将结果赋值给REPLY。
+Enter you name: stephen                 #在提示文本之后输入stephen
+
+#echo $REPLY
+stephen
+
+#read -a friends
+Tim Tom Helen
+
+#echo "They are ${friends[0]}, ${friends[1]} and ${friends[2]}."
+They are Tim, Tom and Helen.
+
+#!/bin/bash
+read -p "输入密码：" -s pwd
+echo
+echo password read, is "$pwd"
+
+#!/bin/bash
+stty -echo
+read -p "输入密码：" pwd
+stty echo
+echo
+echo 输入完毕。
+
+read v1 v3          #读取变量值
+
+Linux c+            #输入数据
+
+echo $v1 $v3       #输出变量的值
+
+Linux c+           #输出变量值
+
+wait %1       #等待作业号为3的作业完成
+
+find / -name password
+
+builtin alias                 #执行shell内部指令
+alias cp='cp -i'
+alias l.='ls -d .* --color=tty'
+alias ll='ls -l --color=tty'
+alias ls='ls --color=tty'
+alias mv='mv -i'
+alias rm='rm -i'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+
+[root@localhost ~]# enable -a
+enable .
+enable :
+enable [
+enable alias
+enable bg
+enable bind
+enable break
+enable builtin
+enable caller
+enable cd
+enable command
+enable compgen
+enable complete
+enable continue
+enable declare
+enable dirs
+enable disown
+enable echo
+enable enable
+enable eval
+enable exec
+enable exit
+enable export
+enable false
+enable fc
+enable fg
+enable getopts
+enable hash
+enable help
+enable history
+enable jobs
+enable kill
+enable let
+enable local
+enable logout
+enable popd
+enable printf
+enable pushd
+enable pwd
+enable read
+enable readonly
+enable return
+enable set
+enable shift
+enable shopt
+enable source
+enable suspend
+enable test
+enable times
+enable trap
+enable true
+enable type
+enable typeset
+enable ulimit
+enable umask
+enable unalias
+enable unset
+enable wait
+
+shopt           #输出所有可以设置的shell操作选项
+cdable_vars     off
+cdspell         off
+checkhash       off
+checkwinsize    on
+cmdhist         on
+dotglob         off
+execfail        off
+expand_aliases  on
+extdebug        off
+...
+
+shopt -s cdspell          #开启cd拼写检查
+
+cdspell on                #开启cdspell选项
+
+[root@localhost ~]# exit
+logout
+
+cd $(dirname $0) || exit 1
+
+if [ "$#" -ne "2" ]; then
+echo "usage: $0 <area> <hours>"
+exit 2
+fi
+
+trap "rm -f tmpfile; echo Bye." EXIT
+
+./mycommand.sh
+EXCODE=$?
+if [ "$EXCODE" == "0" ]; then
+echo "O.K"
+fi
+
+echo Linux C++           #输出指定信息
+
+Linux C++                #输出信息
+
+exec -c echo Linux C++          #调用命令
+
+Linux C++                       #使用指定指令输出信息
+
+[root@localhost ~]# type ls
+ls is aliased to `ls --color=tty'
+
+[root@localhost ~]# type cd
+cd is a shell builtin
+
+[root@localhost ~]# type date
+date is /bin/date
+
+[root@localhost ~]# type mysql
+mysql is /usr/bin/mysql
+
+[root@localhost ~]# type nginx
+-bash: type: nginx: not found
+
+[root@localhost ~]# type if
+if is a shell keyword
+
+[root@localhost ~]# type which
+which is aliased to `alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+
+[root@localhost ~]# type -a cd
+cd is a shell builtin
+
+[root@localhost ~]# type -a grep
+grep is /bin/grep
+
+fg 1          #将任务转换到前台执行
+
+find / -name password       #前台执行命令
+
+[root@localhost ~]# history 10
+92  ls
+93  cd ..
+94  ls
+95  exit
+96  ls -a
+97  cd .ssh/
+98  ls
+99  cat known_hosts
+100  exit
+101  history 10
+
+help shopt                #获取shopt命令的帮助信息
+shopt: shopt [-pqsu] [-o long-option] optname [optname...]
+Toggle the values of variables controlling optional behavior.
+The -s flag means to enable (set) each OPTNAME; the -u flag
+unsets each OPTNAME.  The -q flag suppresses output; the exit
+status indicates whether each OPTNAME is set or unset.  The -o
+option restricts the OPTNAMEs to those defined for use with
+`set -o'.  With no options, or with the -p option, a list of all
+settable options is displayed, with an indication of whether or
+not each is set.
+
+[root@localhost ~]# env
+hostname=LinServ-1
+TERM=linux
+SHELL=/bin/bash
+HISTSIZE=1000
+SSH_CLIENT=192.168.2.111 2705 22
+SSH_TTY=/dev/pts/0
+USER=root
+LS_COLORS=no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:
+mail=/var/spool/mail/root
+PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+INPUTRC=/etc/inputrc
+pwd=/root
+LANG=zh_CN.UTF-8
+SHLVL=1
+HOME=/root
+logname=root
+SSH_CONNECTION=192.168.2.111 2705 192.168.2.2 22
+LESSOPEN=|/usr/bin/lesspipe.sh %s
+G_BROKEN_FILENAMES=1
+_=/bin/env
+
+[root@localhost ~]# export
+declare -x G_BROKEN_FILENAMES="1"
+declare -x HISTSIZE="1000"
+declare -x HOME="/root"
+declare -x hostname="localhost"
+declare -x INPUTRC="/etc/inputrc"
+declare -x LANG="zh_CN.UTF-8"
+declare -x LESSOPEN="|/usr/bin/lesspipe.sh %s"
+declare -x logname="root"
+declare -x LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:"
+declare -x mail="/var/spool/mail/root"
+declare -x OLDPWD
+declare -x PATH="/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin"
+declare -x pwd="/root"
+declare -x SHELL="/bin/bash"
+declare -x SHLVL="1"
+declare -x SSH_CLIENT="192.168.2.111 2705 22"
+declare -x SSH_CONNECTION="192.168.2.111 2705 192.168.2.2 22"
+declare -x SSH_TTY="/dev/pts/0"
+declare -x TERM="linux"
+declare -x USER="root"
+
+echo -e "\e[1;31mThis is red text\e[0m"
+This is red text
+
+echo -e "\e[1;42mGreed Background\e[0m"
+Greed Background
+
+echo -e "\033[37;31;5mMySQL Server Stop...\033[39;49;0m"
+
+
+axel -n 10 -o /tmp/ http://www.linuxde.net/lnmp.tar.gz
+
+unset -v mylove         #删除指定的环境变量
+
+kill -l
+1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
+5) SIGTRAP      6) SIGABRT      7) SIGBUS       8) SIGFPE
+9) SIGKILL     10) SIGUSR1     11) SIGSEGV     12) SIGUSR2
+13) SIGPIPE     14) SIGALRM     15) SIGTERM     16) SIGSTKFLT
+17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
+21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU
+25) SIGXFSZ     26) SIGVTALRM   27) SIGPROF     28) SIGWINCH
+29) SIGIO       30) SIGPWR      31) SIGSYS      34) SIGRTMIN
+35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3  38) SIGRTMIN+4
+39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12
+47) SIGRTMIN+13 48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14
+51) SIGRTMAX-13 52) SIGRTMAX-12 53) SIGRTMAX-11 54) SIGRTMAX-10
+55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7  58) SIGRTMAX-6
+59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+63) SIGRTMAX-1  64) SIGRTMAX
+
+HUP     1    终端断线
+INT     2    中断（同 Ctrl + C）
+QUIT    3    退出（同 Ctrl + \）
+TERM   15    终止
+KILL    9    强制终止
+CONT   18    继续（与STOP相反， fg/bg命令）
+STOP   19    暂停（同 Ctrl + Z）
+
+ps -ef | grep vim
+root      3268  2884  0 16:21 pts/1    00:00:00 vim install.log
+root      3370  2822  0 16:21 pts/0    00:00:00 grep vim
+
+kill 3268
+kill 3268
+-bash: kill: (3268) - 没有那个进程
+
+unalias cc            #取消已经设置的命令别名
+
+cc：no input files
+
+telnet 192.168.2.10
+Trying 192.168.2.10...
+Connected to 192.168.2.10 (192.168.2.10).
+Escape character is '^]'.
+
+localhost (Linux release 2.6.18-274.18.1.el5 #1 SMP Thu Feb 9 12:45:44 EST 2012) (1)
+
+login: root
+Password:
+Login incorrect
+curl URL --silent
+curl http://man.linuxde.net/text.iso --silent -O
+curl http://man.linuxde.net/test.iso -o filename.iso --progress
+######################################### 100.0%
+curl URL/File -C 偏移量
+
+#偏移量是以字节为单位的整数，如果让curl自动推断出正确的续传位置使用-C -：
+curl -C -URL
+curl --referer http://www.google.com http://man.linuxde.net
+curl http://man.linuxde.net --cookie "user=root;pass=123456"
+curl URL --cookie-jar cookie_file
+curl URL --user-agent "Mozilla/5.0"
+curl URL -A "Mozilla/5.0"
+curl -H "Host:man.linuxde.net" -H "accept-language:zh-cn" URL
+curl URL --limit-rate 50k
+curl URL --max-filesize bytes
+curl -u user:pwd http://man.linuxde.net
+curl -u user http://man.linuxde.net
+[root@localhost text]# curl -I http://man.linuxde.net
+HTTP/1.1 200 OK
+Server: nginx/1.2.5
+date: Mon, 10 Dec 2012 09:24:34 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+Vary: Accept-Encoding
+X-Pingback: http://man.linuxde.net/xmlrpc.php
+
+alias 新的命令='原命令 -选项/参数'
+
+alias -p
+alias cp='cp -i'
+alias l.='ls -d .* --color=tty'
+alias ll='ls -l --color=tty'
+alias ls='ls --color=tty'
+alias mv='mv -i'
+alias rm='rm -i'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+
+# jwhois root
+
+//查找root用户信息
+
+[root@localhost ~]# jwhois linuxde.net
+[Querying whois.verisign-grs.com]
+[Redirected to whois.west263.com]
+[Querying whois.west263.com]
+[whois.west263.com]
+Domain Name: linuxde.net
+Registry Domain id: whois protect
+Registrar WHOIS Server: whois.west263.com
+
+...省略部分内容
+
+wget http://www.linuxde.net/testfile.zip
+
+wget -O wordpress.zip http://www.linuxde.net/download.aspx?id=1080
+
+wget http://www.linuxde.net/download?id=1
+
+wget -O wordpress.zip http://www.linuxde.net/download.aspx?id=1080
+
+wget --limit-rate=300k http://www.linuxde.net/testfile.zip
+
+wget -c http://www.linuxde.net/testfile.zip
+
+wget -b http://www.linuxde.net/testfile.zip
+
+Continuing in background, pid 1840.
+Output will be written to `wget-log'.
+
+tail -f wget-log
+
+wget --user-agent="Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.204 Safari/534.16" http://www.linuxde.net/testfile.zip
+
+wget --spider URL
+
+Spider mode enabled. Check if remote file exists.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Remote file exists and could contain further links,
+but recursion is disabled -- not retrieving.
+
+wget --spider url
+Spider mode enabled. Check if remote file exists.
+HTTP request sent, awaiting response... 404 Not Found
+Remote file does not exist -- broken link!!!
+
+wget --tries=40 URL
+
+wget -i filelist.txt
+
+cat > filelist.txt
+url1
+url2
+url3
+url4
+
+wget --mirror -p --convert-links -P ./LOCAL URL
+
+wget --reject=gif ur
+
+wget -o download.log URL
+
+wget -Q5m -i filelist.txt
+
+wget -r -A.pdf url
+
+wget ftp-url
+wget --ftp-user=USERNAME --ftp-password=PASSWORD url
+
+wget ftp-url
+
+wget --ftp-user=USERNAME --ftp-password=PASSWORD url
+
+rexec host1 date
+
+rexec -nhost1 date
+
+rexec host1 ls -l /home/karen
+
+mail -s "Hello from linuxde.net by shell" admin@linuxde.net
+hello,this is the content of mail.
+welcome to www.linuxde.net
+
+echo "hello,this is the content of mail.welcome to www.linuxde.net" | mail -s "Hello from linuxde.net by pipe" admin@linuxde.net
+
+mail -s "Hello from linuxde.net by file" admin@linuxde.net < mail.txt
+
+mail -s "Hello from linuxde.net with sender" admin@linuxde.net -- -f user@linuxde.net<mail.txt
+
+yum install sharutils
+
+uuencode test.txt test | mail -s "hello,see the attachement" admin@linuxde.net<mail.txt
+
+[root@localhost ~]# ipcalc -p 192.168.2.1 255.255.255.0
+PREFIX=24
+
+[root@localhost ~]# ipcalc -n 192.168.2.1 255.255.255.0
+NETWORK=192.168.2.0
+
+[root@localhost ~]# ipcalc -h 127.0.0.1
+hostname=localhost.localdomain
+
+[root@localhost ~]# ipcalc -m 192.168.2.1
+NETMASK=255.255.255.0
+
+[root@localhost ~]# ipcalc -pnbm 192.168.2.1 255.255.255.0
+NETMASK=255.255.255.0
+PREFIX=24
+BROADCAST=192.168.2.255
+NETWORK=192.168.2.0
+
+[root@localhost ~]# mailq -v
+/var/spool/mqueue is empty
+Total requests: 0
+
+[root@localhost ~]# ss -t -a
+State       Recv-Q Send-Q                            Local Address:Port                                Peer Address:Port
+LISTEN      0      0                                             *:3306                                           *:*
+LISTEN      0      0                                             *:http                                           *:*
+LISTEN      0      0                                             *:ssh                                            *:*
+LISTEN      0      0                                     127.0.0.1:smtp                                           *:*
+ESTAB       0      0                                112.124.15.130:42071                              42.156.166.25:http
+ESTAB       0      0                                112.124.15.130:ssh                              121.229.196.235:33398
+
+[root@localhost ~]# ss -s
+Total: 172 (kernel 189)
+TCP:   10 (estab 2, closed 4, orphaned 0, synrecv 0, timewait 0/0), ports 5
+
+Transport Total     ip        IPv6
+*         189       -         -
+RAW       0         0         0
+UDP       5         5         0
+TCP       6         6         0
+INET      11        11        0
+FRAG      0         0         0
+
+[root@localhost ~]# ss -l
+Recv-Q Send-Q                                 Local Address:Port                                     Peer Address:Port
+0      0                                                  *:3306                                                *:*
+0      0                                                  *:http                                                *:*
+0      0                                                  *:ssh                                                 *:*
+0      0                                          127.0.0.1:smtp                                                *:*
+
+[root@localhost ~]# ss -pl
+Recv-Q Send-Q                                          Local Address:Port                                              Peer Address:Port
+0      0                                                           *:3306                                                         *:*        users:(("mysqld",1718,10))
+0      0                                                           *:http                                                         *:*        users:(("nginx",13312,5),("nginx",13333,5))
+0      0                                                           *:ssh                                                          *:*        users:(("sshd",1379,3))
+0      0                                                   127.0.0.1:smtp                                                         *:*        us
+
+[root@localhost ~]# ss -pl | grep 3306
+0      0                            *:3306                          *:*        users:(("mysqld",1718,10))
+
+[root@localhost ~]# ss -u -a
+State       Recv-Q Send-Q                                     Local Address:Port                                         Peer Address:Port
+UNCONN      0      0                                                      *:syslog                                                  *:*
+UNCONN      0      0                                         112.124.15.130:ntp                                                     *:*
+UNCONN      0      0                                            10.160.7.81:ntp                                                     *:*
+UNCONN      0      0                                              127.0.0.1:ntp                                                     *:*
+UNCONN      0      0                                                      *:ntp                                                     *:*
+
+lftp 用户名:密码@ftp地址:传送端口（默认21）
+
+ls
+cd 对应ftp目录
+
+mget -c *.pdf    #把所有的pdf文件以允许断点续传的方式下载。
+mirror aaa/      #将aaa目录整个的下载下来，子目录也会自动复制。
+pget -c -n 10 file.dat   #以最多10个线程以允许断点续传的方式下载file.dat，可以通过设置pget:default-n的值而使用默认值。
+
+mirror -R 本地目录名
+
+set ftp:charset gbk
+
+set file:charset utf8
+
+set ftp:passive-mode 1
+
+bookmark add ustc
+
+bookmark edit
+
+vim /etc/lftp.conf
+
+set ftp:charset gbk
+set file:charset utf8
+set pget:default-n 5
+
+[root@localhost ~]# ip link list
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast qlen 1000
+link/ether 00:16:3e:00:1e:51 brd ff:ff:ff:ff:ff:ff
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast qlen 1000
+link/ether 00:16:3e:00:1e:52 brd ff:ff:ff:ff:ff:ff
+
+[root@localhost ~]# ip -s link list
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+RX: bytes  packets  errors  dropped overrun mcast
+5082831    56145    0       0       0       0
+TX: bytes  packets  errors  dropped carrier collsns
+5082831    56145    0       0       0       0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast qlen 1000
+link/ether 00:16:3e:00:1e:51 brd ff:ff:ff:ff:ff:ff
+RX: bytes  packets  errors  dropped overrun mcast
+3641655380 62027099 0       0       0       0
+TX: bytes  packets  errors  dropped carrier collsns
+6155236    89160    0       0       0       0
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast qlen 1000
+link/ether 00:16:3e:00:1e:52 brd ff:ff:ff:ff:ff:ff
+RX: bytes  packets  errors  dropped overrun mcast
+2562136822 488237847 0       0       0       0
+TX: bytes  packets  errors  dropped carrier collsns
+3486617396 9691081  0       0       0       0
+
+[root@localhost ~]# ip route list
+112.124.12.0/22 dev eth1  proto kernel  scope link  src 112.124.15.130
+10.160.0.0/20 dev eth0  proto kernel  scope link  src 10.160.7.81
+192.168.0.0/16 via 10.160.15.247 dev eth0
+172.16.0.0/12 via 10.160.15.247 dev eth0
+10.0.0.0/8 via 10.160.15.247 dev eth0
+default via 112.124.15.247 dev eth1
+
+[root@localhost ~]# ip neigh list
+112.124.15.247 dev eth1 lladdr 00:00:0c:9f:f3:88 REACHABLE
+10.160.15.247 dev eth0 lladdr 00:00:0c:9f:f2:c0 STALE
+
+[root@A ~]# tcpprep -an client -i ftp.pcap -o ftp.cache –v
+
+[root@A ~]# tcpreplay -c ftp.cache -i eth0 -j eth1 ftp.pcap -R –v
+
+[root@A ~]# tcpprep -an client -i bt.pcap -o bt.cache -C "100M BT Packet" –v
+
+[root@A ~]# tcpreplay -c bt.cache -i eth0 -j eth1 bt.pcap -v –R
+
+[root@A ~]# tcpprep -an server -i tftp.pcap -o tftp.cache –v
+
+[root@A ~]# tcpreplay -c tftp.cache -i eth0 -j eth1 tftp.pcap –v
+
+arpd -b /var/tmp/arpd.db
+
+arpd -l -b /var/tmp/arpd.db
+
+iptables -F
+iptables -X
+iptables -Z
+
+iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT               #允许本地回环接口(即运行本机访问本机)
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT    #允许已建立的或相关连的通行
+iptables -A OUTPUT -j ACCEPT         #允许所有本机向外的访问
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT    #允许访问22端口
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT    #允许访问80端口
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT    #允许ftp服务的21端口
+iptables -A INPUT -p tcp --dport 20 -j ACCEPT    #允许FTP服务的20端口
+iptables -A INPUT -j reject       #禁止其他未允许的规则访问
+iptables -A FORWARD -j REJECT     #禁止其他未允许的规则访问
+
+iptables -I INPUT -s 123.45.6.7 -j DROP       #屏蔽单个IP的命令
+iptables -I INPUT -s 123.0.0.0/8 -j DROP      #封整个段即从123.0.0.1到123.255.255.254的命令
+iptables -I INPUT -s 124.45.0.0/16 -j DROP    #封IP段即从123.45.0.1到123.45.255.254的命令
+iptables -I INPUT -s 123.45.6.0/24 -j DROP    #封IP段即从123.45.6.1到123.45.6.254的命令是
+
+iptables -L -n -v
+Chain INPUT (policy DROP 48106 packets, 2690K bytes)
+pkts bytes target     prot opt in     out     source               destination
+5075  589K ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0
+191K   90M ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0           tcp dpt:22
+1499K  133M ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0           tcp dpt:80
+4364K 6351M ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+6256  327K ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+pkts bytes target     prot opt in     out     source               destination
+
+Chain OUTPUT (policy ACCEPT 3382K packets, 1819M bytes)
+pkts bytes target     prot opt in     out     source               destination
+5075  589K ACCEPT     all  --  *      lo      0.0.0.0/0            0.0.0.0/0
+
+iptables -L -n --line-numbers
+
+iptables -D INPUT 8
+
+tcpdump
+
+tcpdump -i eth1
+
+tcpdump host sundown
+
+tcpdump host 210.27.48.1
+
+tcpdump host helios and \( hot or ace \)
+
+tcpdump host 210.27.48.1 and \ (210.27.48.2 or 210.27.48.3 \)
+
+tcpdump ip host ace and not helios
+
+tcpdump ip host 210.27.48.1 and ! 210.27.48.2
+
+tcpdump -i eth0 src host hostname
+
+tcpdump -i eth0 dst host hostname
+
+tcpdump tcp port 23 host 210.27.48.1
+
+tcpdump udp port 123
+
+tcpdump net ucb-ether
+
+tcpdump 'gateway snup and (port ftp or ftp-data)'
+
+tcpdump ip and not net localnet
+
+iptables-restor < iptables.bak
+
+[root@localhost ~]# host www.linuxde.net
+www.linuxde.net is an alias for host.1.linuxde.net.
+host.1.linuxde.net has address 100.42.212.8
+
+[root@localhost ~]# host -a www.linuxde.net
+Trying "www.linuxde.net"
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 34671
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;www.linuxde.net.               IN      ANY
+
+;; ANSWER SECTION:
+www.linuxde.net.        463     IN      CNAME   host.1.linuxde.net.
+
+Received 54 bytes from 202.96.104.15#53 in 0 ms
+
+ip6tables -nl --line-numbers
+
+vi /etc/sysconfig/ip6tables
+
+*filter
+:INPUT accept [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:RH-Firewall-1-INPUT - [0:0]
+-A INPUT -j RH-Firewall-1-INPUT
+-A FORWARD -j RH-Firewall-1-INPUT
+-A RH-Firewall-1-INPUT -i lo -j ACCEPT
+-A RH-Firewall-1-INPUT -p icmpv6 -j ACCEPT
+-A RH-Firewall-1-INPUT -p 50 -j ACCEPT
+-A RH-Firewall-1-INPUT -p 51 -j ACCEPT
+-A RH-Firewall-1-INPUT -p udp --dport 5353 -d ff02::fb -j ACCEPT
+-A RH-Firewall-1-INPUT -p udp -m udp --dport 631 -j ACCEPT
+-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 631 -j ACCEPT
+-A RH-Firewall-1-INPUT -p udp -m udp --dport 32768:61000 -j ACCEPT
+-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 32768:61000 ! --syn -j ACCEPT
+-A RH-Firewall-1-INPUT -m tcp -p tcp --dport 22 -j ACCEPT
+-A RH-Firewall-1-INPUT -j reject --reject-with icmp6-adm-prohibited
+COMMIT
+
+-A RH-Firewall-1-INPUT -m tcp -p tcp --dport 80 -j ACCEPT
+
+-A RH-Firewall-1-INPUT -m tcp -p tcp --dport 53 -j ACCEPT
+-A RH-Firewall-1-INPUT -m udp -p tcp --dport 53 -j ACCEPT
+
+-A RH-Firewall-1-INPUT -m tcp -p tcp --dport 443 -j ACCEPT
+
+-A RH-Firewall-1-INPUT -m tcp -p tcp --dport 25 -j ACCEPT
+
+-A RH-Firewall-1-INPUT -j REJECT --reject-with icmp6-adm-prohibited
+COMMIT
+
+-A RH-Firewall-1-INPUT -j LOG
+-A RH-Firewall-1-INPUT -j DROP
+COMMIT
+
+# service ip6tables restart
+
+# ip6tables -vnL --line-numbers
+
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+num   pkts bytes target     prot opt in     out     source               destination
+1    42237 3243K RH-Firewall-1-INPUT  all      *      *       ::/0                 ::/0
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+num   pkts bytes target     prot opt in     out     source               destination
+1        0     0 RH-Firewall-1-INPUT  all      *      *       ::/0                 ::/0
+Chain OUTPUT (policy ACCEPT 12557 packets, 2042K bytes)
+num   pkts bytes target     prot opt in     out     source               destination
+Chain RH-Firewall-1-INPUT (2 references)
+num   pkts bytes target     prot opt in     out     source               destination
+1        6   656 ACCEPT     all      lo     *       ::/0                 ::/0
+2    37519 2730K ACCEPT     icmpv6    *      *       ::/0                 ::/0
+3        0     0 ACCEPT     esp      *      *       ::/0                 ::/0
+4        0     0 ACCEPT     ah       *      *       ::/0                 ::/0
+5      413 48385 ACCEPT     udp      *      *       ::/0                 ff02::fb/128       udp dpt:5353
+6        0     0 ACCEPT     udp      *      *       ::/0                 ::/0               udp dpt:631
+7        0     0 ACCEPT     tcp      *      *       ::/0                 ::/0               tcp dpt:631
+8      173 79521 ACCEPT     udp      *      *       ::/0                 ::/0               udp dpts:32768:61000
+9        0     0 ACCEPT     tcp      *      *       ::/0                 ::/0               tcp dpts:32768:61000 flags:!0x16/0x02
+10       0     0 ACCEPT     tcp      *      *       ::/0                 ::/0               tcp dpt:22
+11       0     0 ACCEPT     tcp      *      *       ::/0                 ::/0               tcp dpt:80
+12       0     0 ACCEPT     tcp      *      *       ::/0                 ::/0               tcp dpt:53
+13    4108  380K ACCEPT     udp      *      *       ::/0                 ::/0               udp dpt:53
+14      18  4196 REJECT     all      *      *       ::/0                 ::/0
+
+:ICMPv6 - [0:0]
+# Approve certain ICMPv6 types and all outgoing ICMPv6
+# http://forum.linode.com/viewtopic.php?p=39840#39840
+-A INPUT -p icmpv6 -j ICMPv6
+-A ICMPv6 -p icmpv6 --icmpv6-type echo-request -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type destination-unreachable -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type packet-too-big -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type time-exceeded -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type parameter-problem -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type router-solicitation -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type router-advertisement -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type neighbour-solicitation -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type neighbour-advertisement -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type redirect -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 141 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 142 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 148 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 149 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 130 -s fe80::/10 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 131 -s fe80::/10 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 132 -s fe80::/10 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 143 -s fe80::/10 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 151 -s fe80::/10 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 152 -s fe80::/10 -j ACCEPT
+-A ICMPv6 -p icmpv6 --icmpv6-type 153 -s fe80::/10 -j ACCEPT
+-A ICMPv6 -j RETURN
+-A OUTPUT -p icmpv6 -j ACCEPT
+
+[root@localhost ~]# iptables-save -t filter > iptables.bak
+[root@localhost ~]# cat iptables.bak
+# Generated by iptables-save v1.3.5 on Thu Dec 26 21:25:15 2013
+*filter
+:INPUT DROP [48113:2690676]
+:FORWARD accept [0:0]
+:OUTPUT ACCEPT [3381959:1818595115]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A OUTPUT -o lo -j ACCEPT
+COMMIT
+
+iperf -u -s
+
+iperf -u -c 192.168.1.1 -b 100M -t 60
+
+iperf -u -c 192.168.1.1 -b 5M -P 30 -t 60
+
+iperf -u -c 192.168.1.1 -b 100M -d -t 60
+
+iperf -s
+
+iperf -c 192.168.1.1 -t 60
+
+iperf -c 192.168.1.1  -P 30 -t 60
+
+iperf -c 192.168.1.1  -d -t 60
+
+tracepath www.58.com
+1:  192.168.2.10 (192.168.2.10)                           20.150ms pmtu 1500
+1:  unknown (192.168.2.1)                                  9.343ms
+2:  221.6.45.33 (221.6.45.33)                             34.430ms
+3:  221.6.9.81 (221.6.9.81)                               19.263ms
+4:  122.96.66.37 (122.96.66.37)                           54.372ms
+5:  219.158.96.149 (219.158.96.149)                      asymm  6 128.526ms
+6:  123.126.0.66 (123.126.0.66)                          138.281ms
+7:  124.65.57.26 (124.65.57.26)                          166.244ms
+8:  61.148.154.98 (61.148.154.98)                        103.723ms
+9:  202.106.42.102 (202.106.42.102)                      asymm 10  78.099ms
+10:  210.77.139.150 (210.77.139.150)                      asymm  9 199.930ms
+11:  211.151.104.6 (211.151.104.6)                        asymm 10 121.965ms
+12:  no reply
+13:  211.151.111.30 (211.151.111.30)                      asymm 12 118.989ms reached
+Resume: pmtu 1500 hops 13 back 12
+
+[root@localhost ~]# nslookup www.linuxde.net
+Server:         202.96.104.15
+Address:        202.96.104.15#53
+
+Non-authoritative answer:
+www.linuxde.net canonical name = host.1.linuxde.net.
+Name:   host.1.linuxde.net
+Address: 100.42.212.8
+
+ssh-copy-id user@server
+ssh-copy-id -i ~/.ssh/id_rsa.pub user@server
+
+[root@AY1307311912260196fcZ ~]# ping www.linuxde.net
+PING host.1.linuxde.net (100.42.212.8) 56(84) bytes of data.
+64 bytes from 100-42-212-8.static.webnx.com (100.42.212.8): icmp_seq=1 ttl=50 time=177 ms
+64 bytes from 100-42-212-8.static.webnx.com (100.42.212.8): icmp_seq=2 ttl=50 time=178 ms
+64 bytes from 100-42-212-8.static.webnx.com (100.42.212.8): icmp_seq=3 ttl=50 time=174 ms
+64 bytes from 100-42-212-8.static.webnx.com (100.42.212.8): icmp_seq=4 ttl=50 time=177 ms
+...按Ctrl+C结束
+
+--- host.1.linuxde.net ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 2998ms
+rtt min/avg/max/mdev = 174.068/176.916/178.182/1.683 ms
+
+[root@localhost2 tmp]# nc -lp 1234 > install.log
+
+[root@localhost1 ~]# ll install.log
+-rw-r–r–   1 root root 39693 12月 20   2007 install.log
+
+[root@localhost1 ~]# nc -w 1 192.168.228.222 1234 < install.log
+
+nc -l -p 1234 | dd of=/dev/sda
+
+dd if=/dev/sda | nc 192.168.228.222 1234
+
+nc -v -w 1 192.168.228.222 -z 1-1000
+localhost2 [192.168.228.222] 22 (ssh) open
+
+while true; do
+nc -l -p 80 -q 1 < somepage.html;
+done
+
+[root@localhost2 tmp]# nc -lp 1234
+
+[root@localhost1 ~]# nc 192.168.228.222 1234
+
+[root@localhost2 tmp]# nc -l 1234 | tar xzvf -
+
+[root@localhost1 ~]# ll -d nginx-0.6.34
+drwxr-xr-x 8 1000 1000 4096 12-23 17:25 nginx-0.6.34
+
+[root@localhost1 ~]# tar czvf – nginx-0.6.34 | nc 192.168.228.222 1234
+
+[root@localhost ~]# arping www.baidu.com
+ARPING 220.181.111.147 from 173.231.43.132 eth0
+Unicast reply from 220.181.111.147 [00:D0:03:bc:48:00]  1.666ms
+Unicast reply from 220.181.111.147 [00:D0:03:BC:48:00]  1.677ms
+Unicast reply from 220.181.111.147 [00:D0:03:BC:48:00]  1.691ms
+Unicast reply from 220.181.111.147 [00:D0:03:BC:48:00]  1.728ms
+Unicast reply from 220.181.111.147 [00:D0:03:BC:48:00]  1.626ms
+Unicast reply from 220.181.111.147 [00:D0:03:BC:48:00]  1.292ms
+Unicast reply from 220.181.111.147 [00:D0:03:BC:48:00]  1.429ms
+Unicast reply from 220.181.111.147 [00:D0:03:BC:48:00]  2.042ms
+Sent 8 probes (1 broadcast(s))
+Received 8 response(s)
+
+traceroute www.58.com
+traceroute to www.58.com (211.151.111.30), 30 hops max, 40 byte packets
+1  unknown (192.168.2.1)  3.453 ms  3.801 ms  3.937 ms
+2  221.6.45.33 (221.6.45.33)  7.768 ms  7.816 ms  7.840 ms
+3  221.6.0.233 (221.6.0.233)  13.784 ms  13.827 ms 221.6.9.81 (221.6.9.81)  9.758 ms
+4  221.6.2.169 (221.6.2.169)  11.777 ms 122.96.66.13 (122.96.66.13)  34.952 ms 221.6.2.53 (221.6.2.53)  41.372 ms
+5  219.158.96.149 (219.158.96.149)  39.167 ms  39.210 ms  39.238 ms
+6  123.126.0.194 (123.126.0.194)  37.270 ms 123.126.0.66 (123.126.0.66)  37.163 ms  37.441 ms
+7  124.65.57.26 (124.65.57.26)  42.787 ms  42.799 ms  42.809 ms
+8  61.148.146.210 (61.148.146.210)  30.176 ms 61.148.154.98 (61.148.154.98)  32.613 ms  32.675 ms
+9  202.106.42.102 (202.106.42.102)  44.563 ms  44.600 ms  44.627 ms
+10  210.77.139.150 (210.77.139.150)  53.302 ms  53.233 ms  53.032 ms
+11  211.151.104.6 (211.151.104.6)  39.585 ms  39.502 ms  39.598 ms
+12  211.151.111.30 (211.151.111.30)  35.161 ms  35.938 ms  36.005 ms
+
+ssh-agent
+
+[root@localhost ~]# dig www.linuxde.net
+
+; <<>> DiG 9.3.6-P1-RedHat-9.3.6-20.P1.el5_8.1 <<>> www.linuxde.net
+;; global options:  printcmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 2115
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;www.linuxde.net.               IN      A
+
+;; ANSWER SECTION:
+www.linuxde.net.        0       IN      CNAME   host.1.linuxde.net.
+host.1.linuxde.net.     0       IN      A       100.42.212.8
+
+;; AUTHORITY SECTION:
+linuxde.net.            8       IN      NS      f1g1ns2.dnspod.net.
+linuxde.net.            8       IN      NS      f1g1ns1.dnspod.net.
+
+;; Query time: 0 msec
+;; SERVER: 202.96.104.15#53(202.96.104.15)
+;; WHEN: Thu Dec 26 11:14:37 2013
+;; MSG SIZE  rcvd: 121
+
+[root@localhost ~]# arp -v
+Address                  HWtype  HWaddress           Flags Mask            Iface
+192.168.0.134            ether   00:21:5E:C7:4D:88   C                     eth1
+115.238.144.129          ether   38:22:D6:2F:B2:F1   C                     eth0
+Entries: 2      Skipped: 0      Found: 2
+
+ssh-add ~/.ssh/id_dsa
+
+ssh-add -d ~/.ssh/id_xxx.pub
+
+ssh-add -l
+
+yum install nmap
+
+[root@localhost ~]# nmap www.linuxde.net
+
+Starting Nmap 4.11 ( http://www.insecure.org/nmap/ ) at 2013-12-28 00:06 CST
+Interesting ports on 100-42-212-8.static.webnx.com (100.42.212.8):
+Not shown: 1678 filtered ports
+PORT   STATE service
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap finished: 1 IP address (1 host up) scanned in 45.870 seconds
+
+netstat -a     #列出所有端口
+netstat -at    #列出所有tcp端口
+netstat -au    #列出所有udp端口
+
+netstat -l        #只显示监听端口
+netstat -lt       #只列出所有监听 tcp 端口
+netstat -lu       #只列出所有监听 udp 端口
+netstat -lx       #只列出所有监听 UNIX 端口
+
+netstat -s   显示所有端口的统计信息
+netstat -st   显示TCP端口的统计信息
+netstat -su   显示UDP端口的统计信息
+
+
+netstat -pt
+
+netstat -an
+
+netsat -a --numeric-ports
+netsat -a --numeric-hosts
+netsat -a --numeric-users
+
+netstat -c   #每隔一秒输出网络信息
+
+netstat --verbose
+
+netstat: no support for `AF IPX' on this system.
+netstat: no support for `AF AX25' on this system.
+netstat: no support for `AF X25' on this system.
+netstat: no support for `AF NETROM' on this system.
+
+netstat -r
+
+netstat -ap | grep ssh
+
+netstat -an | grep ':80'
+
+netstat -i
+
+netstat -ntu | grep :80 | awk '{print $5}' | cut -d: -f1 | awk '{++ip[$1]} END {for(i in ip) print ip[i],"\t",i}' | sort -nr
+
+netstat -nt | grep -e 127.0.0.1 -e 0.0.0.0 -e ::: -v | awk '/^tcp/ {++state[$NF]} END {for(i in state) print i,"\t",state[i]}'
+
+netstat -anpo | grep "php-cgi" | wc -l
+
+ethool eth0
+
+ethtool -A tx off eth0
+
+ethtool -i eth0
+
+ethtool -K eth0 rx off
+
+ethtool -p eth0 10
+
+ethtool –S eth0
+
+ethtool -s eth0 speed 100
+
+
+[root@localhost ~]# mii-tool -v eth0
+eth0: negotiated 100baseTx-FD, link ok
+product info: vendor 00:50:ef, model 60 rev 8
+basic mode:   autonegotiation enabled
+basic status: autonegotiation complete, link ok
+capabilities: 100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD
+advertising:  100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD flow-control
+link partner: 100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD
+
+[root@localhost ~]# mii-tool -F 100baseTx-FD
+[root@localhost ~]# mii-tool -v eth0
+eth0: 100 Mbit, full duplex, link ok
+product info: vendor 00:00:00, model 0 rev 0
+basic mode:   100 Mbit, full duplex
+basic status: link ok
+capabilities: 100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD
+advertising:  100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD
+
+[root@localhost ~]# ethtool -s eth0 speed 100 duplex full
+
+ifdown eth0  #禁用eth0
+
+dhclient -r     #释放IP
+dhclient        #获取IP
+
+[root@AY1307311912260196fcZ ~]# hostname
+AY1307311912260196fcZ
+
+ifup eth0   #激活eth0
+
+[root@AY1307311912260196fcZ ~]# domainname -v
+getdomainname()=`(none)'
+(none)
+
+[root@AY1307311912260196fcZ ~]# domainname
+www.linuxde.net
+
+[root@AY1307311912260196fcZ ~]# domainname -v
+getdomainname()=`www.linuxde.net'
+www.linuxde.net
+
+[root@AY1307311912260196fcZ ~]# dnsdomainname -v
+gethostname()=`AY1307311912260196fcZ'
+Resolving `AY1307311912260196fcZ' ...
+Result: h_name=`AY1307311912260196fcZ'
+Result: h_addr_list=`10.160.7.81'
+
+[root@localhost ~]# ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:16:3E:00:1E:51
+inet addr:10.160.7.81  Bcast:10.160.15.255  Mask:255.255.240.0
+UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+RX packets:61430830 errors:0 dropped:0 overruns:0 frame:0
+TX packets:88534 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:1000
+RX bytes:3607197869 (3.3 GiB)  TX bytes:6115042 (5.8 MiB)
+
+lo        Link encap:Local Loopback
+inet addr:127.0.0.1  Mask:255.0.0.0
+UP LOOPBACK RUNNING  MTU:16436  Metric:1
+RX packets:56103 errors:0 dropped:0 overruns:0 frame:0
+TX packets:56103 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:0
+RX bytes:5079451 (4.8 MiB)  TX bytes:5079451 (4.8 MiB)
+
+ifconfig eth0 up
+ifconfig eth0 down
+
+ifconfig eth0 add 33ffe:3240:800:1005::2/64    #为网卡eth0配置IPv6地址
+ifconfig eth0 del 33ffe:3240:800:1005::2/64    #为网卡eth0删除IPv6地址
+
+ifconfig eth0 hw ether 00:AA:BB:CC:dd:EE
+
+[root@localhost ~]# ifconfig eth0 192.168.2.10
+[root@localhost ~]# ifconfig eth0 192.168.2.10 netmask 255.255.255.0
+[root@localhost ~]# ifconfig eth0 192.168.2.10 netmask 255.255.255.0 broadcast 192.168.2.255
+
+ifconfig eth0 arp    #开启网卡eth0 的arp协议
+ifconfig eth0 -arp   #关闭网卡eth0 的arp协议
+
+ifconfig eth0 mtu 1500    #设置能通过的最大数据包大小为 1500 bytes
+
+[root@localhost ~]# route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+112.124.12.0    *               255.255.252.0   U     0      0        0 eth1
+10.160.0.0      *               255.255.240.0   U     0      0        0 eth0
+192.168.0.0     10.160.15.247   255.255.0.0     UG    0      0        0 eth0
+172.16.0.0      10.160.15.247   255.240.0.0     UG    0      0        0 eth0
+10.0.0.0        10.160.15.247   255.0.0.0       UG    0      0        0 eth0
+default         112.124.15.247  0.0.0.0         UG    0      0        0 eth1
+
+[root@localhost ~]# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+112.124.12.0    0.0.0.0         255.255.252.0   U     0      0        0 eth1
+10.160.0.0      0.0.0.0         255.255.240.0   U     0      0        0 eth0
+192.168.0.0     10.160.15.247   255.255.0.0     UG    0      0        0 eth0
+172.16.0.0      10.160.15.247   255.240.0.0     UG    0      0        0 eth0
+10.0.0.0        10.160.15.247   255.0.0.0       UG    0      0        0 eth0
+0.0.0.0         112.124.15.247  0.0.0.0         UG    0      0        0 eth1
+
+route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0    #增加一条到达244.0.0.0的路由。
+
+route add -net 224.0.0.0 netmask 240.0.0.0 reject     #增加一条屏蔽的路由，目的地址为224.x.x.x将被拒绝。
+
+route del -net 224.0.0.0 netmask 240.0.0.0
+route del -net 224.0.0.0 netmask 240.0.0.0 reject
+
+route del default gw 192.168.120.240
+route add default gw 192.168.120.240
+
+smbclient -L 198.168.0.1 -U username%password
+
+smbclient //192.168.0.1/tmp  -U username%password
+
+smbclient -c "ls"  //192.168.0.1/tmp  -U username%password
+
+smbclient //192.168.0.1/tmp  -U username%password
+smb:/>ls
+
+smbclient -c "mkdir share1" //192.168.0.1/tmp -U username%password
+
+nfsstat -c
+
+nfsstat -cn
+
+nfsstat -r
+
+nfsstat –s
+
+htpasswd -bc .passwd www.linuxde.net php
+
+htpasswd -b .passwd Jack 123456
+
+htpasswd -nb Jack 123456
+
+htpasswd -D .passwd Jack
+
+htpasswd -D .passwd Jack
+htpasswd -b .passwd Jack 123456
+
+mysqldump -u 用户名 -p 数据库名 > 导出的文件名
+mysqldump -u linuxde -p smgp_apps_linuxde > linuxde.sql
+
+mysqldump -u 用户名 -p 数据库名 表名> 导出的文件名
+mysqldump -u linuxde -p smgp_apps_linuxde users > linuxde_users.sql
+
+mysqldump -u linuxde -p -d --add-drop-table smgp_apps_linuxde > linuxde_db.sql

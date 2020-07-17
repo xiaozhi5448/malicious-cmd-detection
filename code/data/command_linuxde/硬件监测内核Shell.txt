@@ -1,0 +1,3404 @@
+
+# 假定 $remote_server, $my_user_id, $my_password, 和$my_command 已经读入。
+# 向远程服务器请求打开一个telnet会话，并等待服务器询问用户名
+spawn telnet $remote_server
+expect "username:"
+
+# 输入用户名，并等待服务器询问密码
+send "$my_user_id\r"
+expect "password:"
+
+# 输入密码，并等待键入需要运行的命令
+send "$my_password\r"
+expect "%"
+
+# 输入预先定好的密码，等待运行结果
+send "$my_command\r"
+expect "%"
+
+# 将运行结果存入到变量中，显示出来或者写到磁盘中
+set results $expect_out(buffer)
+
+# 退出telnet会话，等待服务器的退出提示EOF
+send "exit\r"
+expect eof
+
+
+# 向远程服务器请求打开一个FTP会话，并等待服务器询问用户名
+spawn ftp $remote_server
+expect "username:"
+
+# 输入用户名，并等待服务器询问密码
+send "$my_user_id\r"
+expect "password:"
+
+# 输入密码，并等待FTP提示符的出现
+send "$my_password\r"
+expect "ftp>"
+
+# 切换到二进制模式，并等待FTP提示符的出现
+send "bin\r"
+expect "ftp>"
+
+# 关闭ftp的提示符
+send "prompt\r"
+expect "ftp>"
+
+# 下载所有文件
+send "mget *\r"
+expect "ftp>"
+
+# 退出此次ftp会话，并等待服务器的退出提示EOF
+send "bye\r"
+expect eof
+
+
+$ mmove autorun.bat test        #移动文件到目录test中
+
+mattrib a:
+
+mattrib -h -s -r a:msdos.sys
+
+mattrib -r -/ a:*.*
+
+mdel a:autoexec.bat .
+
+lixi@lixi-desktop:~$ ping -T tsandaddr www.ustc.edu.cn -c 1
+PING www.ustc.edu.cn (202.38.64.9) 56(124) bytes of data.
+64 bytes from 202.38.64.9: icmp_seq=1 ttl=62 time=0.823 ms
+TS:     lixi-desktop.local (210.45.74.25)    12522473 absolute
+210.45.74.1    -251
+local-gw.ustc.edu.cn (202.38.64.126)    248
+202.38.64.9    -857514
+Unrecorded hops: 3
+
+--- www.ustc.edu.cn ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.823/0.823/0.823/0.000 ms
+
+lixi@lixi-desktop:~# ./clockdiff -o 202.38.64.9
+..................................................
+host=202.38.64.9 rtt=1(0)ms/1ms delta=-857517ms/-857517ms Wed Dec 17 11:28:30 2008
+
+lixi@lixi-desktop:~# ./clockdiff 202.38.64.9
+.
+host=202.38.64.9 rtt=750(187)ms/0ms delta=-857517ms/-857517ms Wed Dec 17 11:28:35 2008
+
+lixi@lixi-desktop:~#./clockdiff gigagate1.Princeton.EDU
+..................................................
+host=gigagate1.Princeton.EDU rtt=307(21)ms/271ms delta=-5ms/-5ms Wed Dec 17 11:50:16 2008
+
+# pssh -h ip.txt -i uptime
+[1] 11:15:03 [SUCCESS] Mar.mars.he
+11:15:11 up 4 days, 16:25,  1 user,  load average: 0.00, 0.00, 0.00
+[2] 11:15:03 [SUCCESS] Jan.mars.he
+11:15:12 up 3 days, 23:26,  0 users,  load average: 0.00, 0.00, 0.00
+[3] 11:15:03 [SUCCESS] Feb.mars.he
+11:15:12 up 4 days, 16:26,  2 users,  load average: 0.08, 0.02, 0.01
+
+# pssh -h IP.txt -i "/usr/local/mysql/bin/mysql -e 'show slave status \G'"|grep Running:
+Slave_IO_Running: yes
+Slave_SQL_Running: Yes
+Slave_IO_Running: Yes
+Slave_SQL_Running: Yes
+Slave_IO_Running: Yes
+Slave_SQL_Running: Yes
+
+# pssh -h IP.txt -i -o /tmp/pssh/ uptime
+[1] 11:19:47 [SUCCESS] Feb.mars.he
+11:19:55 up 4 days, 16:31,  2 users,  load average: 0.02, 0.03, 0.00
+[2] 11:19:47 [SUCCESS] Jan.mars.he
+11:19:56 up 3 days, 23:30,  0 users,  load average: 0.01, 0.00, 0.00
+[3] 11:19:47 [SUCCESS] Mar.mars.he
+11:19:56 up 4 days, 16:30,  1 user,  load average: 0.00, 0.00, 0.00
+
+# ll /tmp/pssh/
+总用量 12
+-rw-r--r--. 1 root root 70 12月  1 11:19 Feb.mars.he
+-rw-r--r--. 1 root root 70 12月  1 11:19 Jan.mars.he
+-rw-r--r--. 1 root root 69 12月  1 11:19 Mar.mars.he
+
+# cat /tmp/pssh/*
+11:19:55 up 4 days, 16:31,  2 users,  load average: 0.02, 0.03, 0.00
+11:19:56 up 3 days, 23:30,  0 users,  load average: 0.01, 0.00, 0.00
+11:19:56 up 4 days, 16:30,  1 user,  load average: 0.00, 0.00, 0.00
+
+ngrep -W byline -d lo port 18080
+
+ngrep -W byline -d eth0 port 80
+
+ngrep '[a-zA-Z]' -t -W byline -d any tcp port 18080
+
+ngrep -d3 -N -q \.flv
+interface: \Device\TNT_40_1_{670F6B50-0A13-4BAB-9D9E-994A833F5BA9} (10.132.0.0/2
+55.255.192.0)
+match: \.flv
+
+T(6) 10.132.34.23:24860 -> 61.142.208.154:80 [AP]
+GET /f59.c31.56.com/flvdownload/12/19/ggyg7741@56.com_56flv_zhajm_119556973
+97.flv HTTP/1.1..accept: */*..Referer: http://www.56.com/flashApp/v_player_
+site.swf..x-flash-version: 9,0,45,0..UA-CPU: x86..Accept-Encoding: gzip, de
+flate..User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET
+CLR 2.0.50727; .NET CLR 3.0.04506.30)..host: f59.r.56.com..Connection: Keep
+-Alive..Cookie: whistoryview=23423759-23635627-23423344-23171935-23058374-2
+3081156-23207350-22395727-; geoip=............; wl_all_s=y....
+
+T(6) 2007/11/25 15:56:12.192619 10.132.34.23:26365 -> 59.151.21.101:80 [AP]
+GET /aa.flv HTTP/1.1.
+Accept: */*.
+Accept-Language: zh-cn.
+UA-CPU: x86.
+Accept-Encoding: gzip, deflate.
+User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.5072
+7; .NET CLR 3.0.04506.30).
+Host: www.google.cn.
+Connection: Keep-Alive.
+Cookie: PREF=id=a0b2932c336477e9:TB=4:NW=1:TM=1187877372:LM=1187956074:S=Y1Fzndp
+rT3vFo7ac; SID=DQAAAHcAAABJCEXeOVLHu2rIfb5BfKP3GG9PbhJDEkXsLTV8y0f_lvSd2Y46Q0FPt
+83CnEs9rxA1xBDM9mLR8-ckWeScyOQA8PyYnX5u5OjFvjfRbDg_FDZfwxhRzqS9KPZv26pjnsUxs0FDM
+1xpJ5AgDn38pXtlCdkksJ0-cbiIWoA61oHWMg; NID=7=AvJxn5B6YOLLxoYz4LLzhIbNsQUQiulRS6U
+JGxdBniQBmXm99y7L-NBNORN82N3unmZSGHFPfePVHnLK2MjYjglyXZhU9x7ETXNBnY3NurNijHDhJ7K
+yi7E53UBOcv4V.
+
+[root@li229-122 ~]# speedtest-cli --list | grep China
+1185) China Unicom (Changchun, China) [10534.35 km]
+3784) China Mobile (Urumqi, China) [10581.15 km]
+2667) Beijing Normal University (Beijing, China) [11117.03 km]
+2529) Beijing Normal University (Beijing, China) [11117.03 km]
+2816) Capital Online Data service (Beijing, China) [11117.03 km]
+4354) SXmobile (Taiyuan, China) [11383.17 km]
+3973) China Telecom (Lanzhou, China) [11615.43 km]
+3633) China Telecom (Shanghai, China) [11983.37 km]
+3927) China Mobile Jiangsu Co., Ltd. (Suzhou, China) [11989.27 km]
+2461) China Unicom (Chengdu, China) [12213.35 km]
+1028) Shepherd Software (Xiamen, China) [12785.57 km]
+1628) Xiamen Guangdian Xinxu (Xiamen, China) [12785.57 km]
+3891) GZinternet (Guangzhou, China) [13005.36 km]
+3871) SZWCDMA (Shenzhen, China) [13059.20 km]
+3819) SZU (Shenzhen, China) [13059.20 km]
+1536) STC (Hong Kong, China) [13088.37 km]
+1890) Telin (Hong Kong, China) [13088.37 km]
+
+3633) China Telecom (Shanghai, China) [11983.37 km]
+
+3633: 服务器id
+china telecom：isp，这里是中国电信
+shanghai,china ：服务器所在地址
+11983.37 km：两台服务器地理位置之间距离，我这台机器在美国，和上海相距11983.37公里，很远呐.
+
+[root@li229-122 ~]# speedtest-cli --server=3633 --share
+Retrieving speedtest.net configuration...
+Retrieving speedtest.net server list...
+Testing from Linode (173.255.219.122)...
+Hosted by China Telecom (Shanghai) [11983.37 km]: 23.603 ms
+Testing download speed........................................
+Download: 24.84 Mbit/s
+Testing upload speed..................................................
+Upload: 4.57 Mbit/s
+Share results: http://www.speedtest.net/result/3240988007.png
+
+sudo vdfuse -f /path/to/file.vdi /path/to/mountpoint
+
+mount /path/to/mountpoint/Partition1 /path/to/someother/mountpoint
+
+[root@localhost ~]# yes testline
+
+testline
+testline
+testline
+testline
+testline
+testline
+testline
+testline
+...一直重复打印 testline，按Ctrl+C结束。
+
+service sshd start
+启动 sshd： [确定]
+
+rsync -vzrtopg --progress -e ssh --delete work@172.16.78.192:/www/* /databack/experiment/rsync
+work@172.16.78.192's password:
+receiving file list ...
+5 files to consider
+test/
+a
+0 100% 0.00kB/s 527:35:41 (1, 20.0% of 5)
+b
+67 100% 65.43kB/s 0:00:00 (2, 40.0% of 5)
+c
+0 100% 0.00kB/s 527:35:41 (3, 60.0% of 5)
+dd
+100663296 100% 42.22MB/s 0:00:02 (4, 80.0% of 5)
+sent 96 bytes received 98190 bytes 11563.06 bytes/sec
+total size is 100663363 speedup is 1024.19
+
+vi /etc/xinetd.d/rsync
+
+#default: off
+# description: The rsync server is a good addition to an ftp server, as it \
+# allows crc checksumming etc.
+service rsync {
+disable = no
+socket_type = stream
+wait = no
+user = root
+server = /usr/bin/rsync
+server_args = --daemon
+log_on_failure += USERID
+}
+
+/etc/init.d/xinetd restart
+停止 xinetd： [确定]
+启动 xinetd： [确定]
+
+vi /etc/rsyncd.conf
+
+uid=root
+gid=root
+max connections=4
+log file=/var/log/rsyncd.log
+pid file=/var/run/rsyncd.pid
+lock file=/var/run/rsyncd.lock
+secrets file=/etc/rsyncd.passwd
+hosts deny=172.16.78.0/22
+
+[www]
+comment= backup web
+path=/www
+read only = no
+exclude=test
+auth users=work
+
+echo "work:abc123" > /etc/rsyncd.passwd
+chmod 600 /etc/rsyncd.passwd
+
+rsync -avz --progress --delete work@172.16.78.192::www /databack/experiment/rsync
+
+Password:
+receiving file list ...
+6 files to consider
+./ files...
+a
+0 100% 0.00kB/s 528:20:41 (1, 50.0% of 6)
+b
+67 100% 65.43kB/s 0:00:00 (2, 66.7% of 6)
+c
+0 100% 0.00kB/s 528:20:41 (3, 83.3% of 6)
+dd
+100663296 100% 37.49MB/s 0:00:02 (4, 100.0% of 6)
+sent 172 bytes received 98276 bytes 17899.64 bytes/sec
+total size is 150995011 speedup is 1533.75
+
+rsync -avz --progress /databack/experiment/rsync/ work@172.16.78.192::www
+
+Password:
+building file list ...
+6 files to consider
+./
+a
+b
+67 100% 0.00kB/s 0:00:00 (2, 66.7% of 6)
+c
+sent 258 bytes received 76 bytes 95.43 bytes/sec
+total size is 150995011 speedup is 452080.87
+
+[root@localhost ~]# whoami
+root
+
+[root@localhost ~]# id -un
+root
+
+date +"%Y-%m-%d"
+2009-12-07
+
+date -d "1 day ago" +"%Y-%m-%d"
+2012-11-19
+
+date -d "2 second" +"%Y-%m-%d %H:%M.%S"
+2012-11-20 14:21.31
+
+date -d "1970-01-01 1234567890 seconds" +"%Y-%m-%d %H:%m:%S"
+2009-02-13 23:02:30
+
+date -d "2009-12-12" +"%Y/%m/%d %H:%M.%S"
+2009/12/12 00:00.00
+
+date -d "Dec 5, 2009 12:00:37 AM" +"%Y-%m-%d %H:%M.%S"
+2009-12-05 00:00.37
+
+date -d "Dec 5, 2009 12:00:37 AM 2 year ago" +"%Y-%m-%d %H:%M.%S"
+2007-12-05 00:00.37
+
+date +%Y%m%d                   //显示前天年月日
+date -d "+1 day" +%Y%m%d       //显示前一天的日期
+date -d "-1 day" +%Y%m%d       //显示后一天的日期
+date -d "-1 month" +%Y%m%d     //显示上一月的日期
+date -d "+1 month" +%Y%m%d     //显示下一月的日期
+date -d "-1 year" +%Y%m%d      //显示前一年的日期
+date -d "+1 year" +%Y%m%d      //显示下一年的日期
+
+date -s                        //设置当前时间，只有root权限才能设置，其他只能查看
+date -s 20120523               //设置成20120523，这样会把具体时间设置成空00:00:00
+date -s 01:01:01               //设置具体时间，不会对日期做更改
+date -s "01:01:01 2012-05-23"  //这样可以设置全部时间
+date -s "01:01:01 20120523"    //这样可以设置全部时间
+date -s "2012-05-23 01:01:01"  //这样可以设置全部时间
+date -s "20120523 01:01:01"    //这样可以设置全部时间
+
+#!/bin/bash
+
+start=$(date +%s)
+nmap man.linuxde.net &> /dev/null
+
+end=$(date +%s)
+difference=$(( end - start ))
+echo $difference seconds.
+
+[root@localhost ~]# users
+root root
+
+[root@localhost ~]# consoletype
+pty
+
+[root@localhost ~]# hostid
+007f0100
+
+info info
+
+?键：它就会显示info的常用快捷键。
+N键：显示（相对于本节点的）下一节点的文档内容。
+P键：显示（相对于本节点的）前一节点的文档内容。
+U键：进入当前命令所在的主题。
+M键：敲M键后输入命令的名称就可以查看该命令的帮助文档了。
+G键：敲G键后输入主题名称，进入该主题。
+L键：回到上一个访问的页面。
+SPACE键：向前滚动一页。
+BACKUP或DEL键：向后滚动一页。
+Q：退出info。
+
+？     显示帮助窗口
+
+在帮助窗口中：
+Ctrl-x 0          关闭帮助窗口
+Ctrl-x Ctrl-c    关闭整个 Info
+
+q      退出 info
+n      打开与本 Node 关联的下一个 Node
+p      打开与本 Node 关联的前一个 Node
+u      打开与本 Node 关联的上一个 Node
+l      回到上一次访问的 Node
+m或g   选择一个菜单项（Node 的名字）
+输入指定菜单的名字后按回车，打开指定菜单项关联的 Node
+空格键 下一页（PageDown 也可以，下一页从当前页的最后两行开始算起）
+下一个 Node （若当前页在 Node 文档的末尾）
+Del 键 上一页（PageUp 也可以，上一页从当前页的开始两行开始算起）
+上一个 Node （若当前页 Node 文档的开始）
+
+b 或 t 或 Home   文档的开始（b 是 begining 的意思）
+e 或 End         文档的末尾（b 是 ending 的意思）
+Ctrl-l    刷新当前页，若当前文档显示情况有问题时
+Ctrl-g    取消所键入的指令
+
+
+#!/bin/bash
+
+b=''
+for ((i=0;$i<=100;i++))
+do
+printf "Progress:[%-100s]%d%%\r" $b $i
+sleep 0.1
+b=#$b
+done
+echo
+
+[root@localhost ~]# md5sum insert.sql
+bcda6cb5c704664f989703ac5a88f112  insert.sql
+
+md5sum testfile > testfile.md5
+
+md5sum testfile -c testfile.md5
+
+forsort: OK
+
+forsort: FAILED
+md5sum: WARNING: 1 of 1 computed checksum did NOT match
+
+md5sum -w -c testfile.md5
+
+md5sum: testfile.md5: 1: improperly formatted MD5 checksum line
+md5sum: testfile.md5: no properly formatted MD5 checksum lines found
+
+[root@localhost ~]# mesg y    #允许系统用户将信息直接显示在你的屏幕上。
+[root@localhost ~]# mesg n    #不允许系统用户将信息直接显示在你的屏幕上。
+
+[root@localhost ~]# mtools     #显示所有支持的指令名称
+Supported commands:
+mattrib, mbadblocks, mcat, mcd, mclasserase, mcopy, mdel, mdeltree
+mdir, mdoctorfat, mdu, mformat, minfo, mlabel, mmd, mmount
+mpartition, mrd, mread, mmove, mren, mshowfat, mtoolstest, mtype
+mwrite, mzip
+
+
+repquota -a
+
+stty iuclc     #开启
+stty -iuclc    #恢复
+
+stty olcuc    #开启
+stty -olcuc   #恢复
+
+stty size
+
+stty eof "string"
+
+stty -echo   #禁止回显
+stty echo    #打开回显
+
+stty -echo;read;stty echo;read
+
+stty igncr     #开启
+stty -igncr    #恢复
+
+timeout_read()
+{
+timeout=$1
+old_stty_settings=`stty -g`　　#save current settings
+stty -icanon min 0 time 100　　#set 10seconds,not 100seconds
+eval read varname　　          #=read $varname
+stty "$old_stty_settings"　　  #recover settings
+}
+
+read -t 10 varname
+
+label=//ext3 defaults 1 1
+/dev/hda7 /usr ext3 defaults 1 1
+
+e2label /dev/hdax /new
+mkdir /new
+
+label=/new  /new  ext3  defaults  1 1
+
+findfs LABEL=/boot
+/dev/hda1
+
+tune2fs -c 30 /dev/hda1      设置强制检查前文件系统可以挂载的次数
+tune2fs -c -l /dev/hda1      关闭强制检查挂载次数限制。
+tune2fs -i 10 /dev/hda1      10天后检查
+tune2fs -i 1d /dev/hda1      1天后检查
+tune2fs -i 3w /dev/hda1      3周后检查
+tune2fs -i 6m /dev/hda1      半年后检查
+tune2fs -i 0 /dev/hda1       禁用时间检查
+tune2fs -j /dev/hda1         添加日志功能，将ext2转换成ext3文件系统
+tune2fs -r 40000 /dev/hda1   调整/dev/hda1分区的保留空间为40000个磁盘块
+tune2fs -o acl,user_xattr /dev/hda1       设置/dev/hda1挂载选项，启用Posix Access Control Lists和用户指定的扩展属性
+
+mkswap -c /dev/hdb4 （-c是检查有无坏块）
+swapon -v /dev/hdb4
+swapon -s
+Filename                                type            Size    Used    Priority
+/dev/hda5                               partition       506008 96      -1
+/dev/hdb4                               partition       489972 0       -2
+
+resize2fs /dev/vbirdvg/vbirdlv
+resize2fs 1.39 (29-May-2006)
+Filesystem at /dev/vbirdvg/vbirdlv is mounted on /mnt/lvm; on-line resizing
+Performing an on-line resize of /dev/vbirdvg/vbirdlv to 2191360 (4k) blocks.
+The filesystem on /dev/vbirdvg/vbirdlv is now 2191360 blocks long.
+
+[root@linux ~]# quotacheck -avug
+quotacheck: Scanning /dev/hdb1 [/disk2] done
+quotacheck: Checked 3 directories and 4 files
+
+
+[root@linux ~]# quotacheck -avug -m
+
+mkfs -V -t msdos -c /dev/hda5
+
+mkfs -t ext3 /dev/sda6     //将sda6分区格式化为ext3格式
+mkfs -t ext2 /dev/sda7     //将sda7分区格式化为ext2格式
+
+umount -v /dev/sda1
+/dev/sda1 umounted
+
+umount -v /mnt/mymount/
+/tmp/diskboot.img umounted
+
+umount -v /mnt/mymount/
+umount: /mnt/mymount: device is busy
+umount: /mnt/mymount: device is busy
+
+lsof | grep mymount         查找mymount分区里打开的文件
+bash   9341  francois  cwd   DIR   8,1   1024    2 /mnt/mymount
+
+umount -vl /mnt/mymount/     执行延迟卸载
+
+eject /dev/cdrom      卸载并弹出CD
+
+[root@localhost ~]# quotastats
+Kernel quota version: 6.5.1
+Number of dquot lookups: 0
+Number of dquot drops: 0
+Number of dquot reads: 0
+Number of dquot writes: 0
+Number of quotafile syncs: 21
+Number of dquot cache hits: 0
+Number of allocated dquots: 0
+Number of free dquots: 0
+Number of in use dquot entries (user/group): 0
+
+[root@localhost ~]# groupadd qgroup
+[root@localhost ~]# useradd -m -g qgroup quser1
+[root@localhost ~]# useradd -m -g qgroup quser2
+[root@localhost ~]# passwd quser1
+[root@localhost ~]# passwd quser2
+[root@localhost ~]# df     ===>  自己找一个合适的分区来做实验，这里用/disk2
+Filesystem             1K-blocks        Used      Available   Use% Mounted on
+/dev/hda1              5952252   3193292     2451720     57%     /
+/dev/hdb1            28267608       77904   26730604       1%     /disk2
+/dev/hda5              9492644     227252     8775412       3%     /disk1
+
+[root@localhost ~]# vi /etc/fstab
+LABEL=/             /                ext3      defaults                                     1 1
+LABEL=/disk1    /disk1        ext3      defaults                                      1 2
+LABEL=/disk2    /disk2        ext3      defaults,usrquota,grpquota       1 2
+/dev/hda3         swap         swap     defaults                                     0 0
+
+[root@localhost ~]# umount /dev/hdb1
+[root@localhost ~]# mount -a
+[root@localhost ~]# grep '/disk2' /etc/mtab
+/dev/hdb1 /disk2 ext3 rw,usrquota,grpquota 0 0
+
+[root@localhost ~]# mount -o remount /disk2
+
+[root@localhost ~]# quotacheck -avug
+quotacheck: Scanning /dev/hdb1 [/disk2] done
+quotacheck: Checked 3 directories and 4 files
+
+[root@localhost ~]# ll /disk2
+-rw-------  1 root root  6144 Sep  6 11:44 aquota.group
+-rw-------  1 root root  6144 Sep  6 11:44 aquota.user
+
+[root@localhost ~]# cd /disk2
+[root@localhost ~]# ln -s aquota.user quota.user
+[root@localhost ~]# ln -s aquota.group quota.group
+
+[root@localhost ~]# quotaon -avug
+/dev/hdb1 [/disk2]: group quotas turned on
+/dev/hdb1 [/disk2]: user quotas turned on    ===>  看到turned on，才是真的成功！
+
+[root@localhost ~]# edquota -u quser1
+Disk quotas for user quser1 (uid 502):
+Filesystem    blocks    soft    hard   inodes   soft   hard
+/dev/hdb1           0     45000    50000         0      0      0
+[root@localhost ~]# edquota -p quser1 quser2      ===>  直接复制给quser2
+
+[root@localhost ~]# edquota -t
+Grace period before enforcing soft limits for users:
+time units may be: days, hours, minutes, or seconds
+Filesystem             Block grace period     Inode grace period
+/dev/hdb1                     1days                  7days
+
+[root@localhost ~]# quota -vu quser1 quser2
+Disk quotas for user quser1 (uid 502):
+Filesystem  blocks   quota      limit   grace   files   quota   limit   grace
+/dev/hdb1         0    45000    50000                   0       0       0
+Disk quotas for user quser2 (uid 503):
+Filesystem  blocks   quota      limit   grace   files   quota   limit   grace
+/dev/hdb1         0    45000    50000                   0       0       0
+
+[root@localhost ~]# edquota -g qgroup
+Disk quotas for group qgroup (gid 502):
+Filesystem     blocks       soft       hard    inodes   soft   hard
+/dev/hdb1            0      80000   90000           0      0      0
+
+[root@localhost ~]# quota -vg qgroup
+Disk quotas for group qgroup (gid 502):
+Filesystem   blocks    quota      limit      grace    files   quota   limit   grace
+/dev/hdb1         0     80000   90000                       0        0        0
+
+vi /etc/fstab
+
+/dev/sda5 /home ext2 defaults 1 2
+/dev/sda7 /www ext2 defaults 1 2
+
+/dev/sda5 /home ext2 defaults，usrquota 1 2
+
+/dev/sda7 /www ext2 defaults，grpquota 1 2
+
+LABEL=/ / ext2 defaults,usrquota,grpquota 1 1
+
+example:quotacheck / ; quotacheck /home
+
+edquota -u lanf
+
+Quotas for user lanf:
+/dev/sda5:blocks in use:0,limits(soft = 0,hard = 0)
+inodes in use:0,limits(soft = 0,hard = 0)
+
+Quotas for user lanf:
+/dev/sda5:blocks in use:0,limits(soft = 102400,hard = 409800)
+inodes in use:0,limits(soft = 0,hard = 0)
+
+/dev/sda5:blocks in use:0,limits(soft = 102400,hard = 409800)
+inodes in use:0,limits(soft = 12800,hard = 51200)
+
+edquota -p lanf -u Jack Tom Chen
+
+edquota -g webterm1
+
+edquota -t
+
+time units may be:days,hours,minutes,or seconds
+Grace period before enforcing soft limits for users:
+/dev/sda5:block grace period:0 days,file grace period:0 days
+
+Time units may be:days,hours,minutes,or seconds
+Grace period before enforcing soft limits for users:
+/dev/sda5:block grace period:2 days,file grace period:6 hours
+
+setquota –u / 2000 2500 100 110 bye2000
+
+setquota [ -u|-g ] 装载点 软块数 硬块数 软文件数 硬文件数 用户名/组名
+
+quota -u lanf
+
+Disk quotas for user lanf(uid 503):
+Filesystem blocks quota limit grace file quota limit grace
+/dev/sda5 3 102400 409800 1 12800 51200
+
+swapoff /dev/sda2
+
+mountpoint /mnt
+/mnt is a mountpoint
+
+mountpoint /usr/local
+/usr/local is not a mountpoint
+
+mountpoint -d /mnt
+8:5
+
+mountpoint -x /dev/sda9
+8:9
+
+dumpe2fs /dev/hda1
+dumpe2fs 1.39 (29-May-2006)
+Filesystem volume name:   /
+last mounted on:          <not available>
+Filesystem UUID:          845ccd40-1f3b-4729-a63d-cb80f51b082a
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype needs_recovery sparse_super large_file
+Default mount options:    user_xattr acl
+Filesystem state:         clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              5242880
+Block count:              5241817
+Reserved block count:     262090
+free blocks:              4434157
+Free inodes:              5170836
+First block:              0
+Block size:               4096
+Fragment size:            4096
+Reserved GDT blocks:      1022
+Blocks per group:         32768
+Fragments per group:      32768
+Inodes per group:         32768
+Inode blocks per group:   1024
+Filesystem created:       Sun Mar 24 02:09:14 2013
+Last mount time:          Thu Aug  1 16:42:07 2013
+Last write time:          Thu Aug  1 16:42:07 2013
+Mount count:              10
+Maximum mount count:      -1
+Last checked:             Sun Mar 24 02:09:14 2013
+Check interval:           0 (<none>)
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+First inode:              11
+Inode size:               128
+Journal inode:            8
+First orphan inode:       3735559
+Default directory hash:   tea
+Directory Hash Seed:      e3f7162e-1194-4161-805d-763db89dbc69
+Journal backup:           inode blocks
+Journal size:             128M
+
+Group 0: (Blocks 0-32767)
+Primary superblock at 0, Group descriptors at 1-2
+Reserved GDT blocks at 3-1024
+Block bitmap at 1025 (+1025), Inode bitmap at 1026 (+1026)
+Inode table at 1027-2050 (+1027)
+0 free blocks, 32757 free inodes, 2 directories
+Free blocks:
+Free inodes: 12-32768
+
+...
+
+e2fsck -a -y /dev/sda1
+
+mount -t auto /dev/cdrom /mnt/cdrom
+mount: mount point /mnt/cdrom does not exist           /mnt/cdrom目录不存在，需要先创建。
+
+cd /mnt
+-bash: cd: /mnt: No such file or directory
+
+mkdir -p /mnt/cdrom    创建/mnt/cdrom目录
+ls
+bin   dev  home    lib         media  mnt  proc  sbin     srv  tmp  var
+boot  etc  initrd  lost+found  misc   opt  root  selinux  sys  usr
+
+mount -t auto /dev/cdrom /mnt/cdrom     挂载cdrom
+mount: block device /dev/cdrom is write-protected, mounting read-only     挂载成功
+
+ll /mnt/cdrom    查看cdrom里面内容
+total 859
+dr-xr-xr-x  4 root root   2048 Sep  4  2005 CentOS
+-r--r--r--  2 root root   8859 Mar 19  2005 centosdocs-man.css
+-r--r--r--  9 root root  18009 Mar  1  2005 GPL
+dr-xr-xr-x  2 root root 241664 May  7 02:32 headers
+dr-xr-xr-x  4 root root   2048 May  7 02:23 images
+dr-xr-xr-x  2 root root   4096 May  7 02:23 isolinux
+dr-xr-xr-x  2 root root  18432 May  2 18:50 NOTES
+-r--r--r--  2 root root   5443 May  7 01:49 RELEASE-NOTES-en.html
+dr-xr-xr-x  2 root root   2048 May  7 02:34 repodata
+-r--r--r--  9 root root   1795 Mar  1  2005 rpm-GPG-KEY
+-r--r--r--  2 root root   1795 Mar  1  2005 RPM-GPG-KEY-centos4
+-r--r--r--  1 root root 571730 May  7 01:39 yumgroups.xml
+
+mke2fs -q /dev/hda1
+
+fsck -y /dev/hda2
+
+fsck
+
+[root@AY1307311912260196fcZ satools]# sh -x check_ssh_login.sh
++ DEFINE=30
++ cat /var/log/secure
++ awk '/Failed/ {++ip[$(NF-3)]} END {for (i in ip) print i"="ip[i]}'
+++ cat /root/satools/black.txt
++ for i in '`cat /root/satools/black.txt`'
+++ echo 121.42.0.16=1427
+++ awk -F= '{print $1}'
++ IP=121.42.0.16
+++ echo 121.42.0.16=1427
+++ awk -F= '{print $2}'
++ NUM=1427
++ '[' 1427 -gt 30 ']'
++ grep 121.42.0.16 /etc/hosts.deny
++ '[' 1 -gt 0 ']'
++ echo sshd:121.42.0.16
++ echo vsftpd:121.42.0.16
++ for i in '`cat /root/satools/black.txt`'
+++ echo 121.42.0.72=276
+++ awk -F= '{print $1}'
++ IP=121.42.0.72
+++ awk -F= '{print $2}'
+++ echo 121.42.0.72=276
++ NUM=276
++ '[' 276 -gt 30 ']'
++ grep 121.42.0.72 /etc/hosts.deny
++ '[' 1 -gt 0 ']'
++ echo sshd:121.42.0.72
++ echo vsftpd:121.42.0.72
+
+#!/bin/bash
+let a=5+4 b=9-3
+echo $a $b
+
+#!/bin/bash
+let "t1 = ((a = 5 + 3, b = 7 - 1, c = 15 - 4))"
+echo "t1 = $t1, a = $a, b = $b"
+
+command echo Linux            #调用执行shell内部指令
+
+Linux
+
+#seq -f"%3g" 9 11
+9
+10
+11
+
+#sed -f"%03g" 9 11
+#seq -f"str%03g" 9 11
+str009
+str010
+str011
+
+seq -w 98 101
+098
+099
+100
+101
+
+seq -s" " -f"str%03g" 9 11
+str009 str010 str011
+
+seq -s"`echo -e "/t"`" 9 11
+
+seq -s"`echo -e "\n"`" 9 11
+19293949596979899910911
+
+#!/bin/bash
+printf $(tput setaf 2; tput bold)'color show\n\n'$(tput sgr0)
+
+for((i=0; i<=7; i++)); do
+echo $(tput setaf $i)"show me the money"$(tput sgr0)
+done
+
+printf '\n'$(tput setaf 2; tput setab 0; tput bold)'background color show'$(tput sgr0)'\n\n'
+
+for((i=0,j=7; i<=7; i++,j--)); do
+echo $(tput setaf $i; tput setab $j; tput bold)"show me the money"$(tput sgr0)
+done
+
+exit 0
+
+#!/bin/bash
+
+# $1 str       print string
+# $2 color     0-7 设置颜色
+# $3 bgcolor   0-7 设置背景颜色
+# $4 bold      0-1 设置粗体
+# $5 underline 0-1 设置下划线
+
+function format_output(){
+str=$1
+color=$2
+bgcolor=$3
+bold=$4
+underline=$5
+normal=$(tput sgr0)
+
+case "$color" in
+0|1|2|3|4|5|6|7)
+setcolor=$(tput setaf $color;) ;;
+*)
+setcolor="" ;;
+esac
+
+case "$bgcolor" in
+0|1|2|3|4|5|6|7)
+setbgcolor=$(tput setab $bgcolor;) ;;
+*)
+setbgcolor="" ;;
+esac
+
+if [ "$bold" = "1" ]; then
+setbold=$(tput bold;)
+else
+setbold=""
+fi
+
+if [ "$underline" = "1" ]; then
+setunderline=$(tput smul;)
+else
+setunderline=""
+fi
+
+printf "$setcolor$setbgcolor$setbold$setunderline$str$normal\n"
+}
+
+format_output "Yesterday Once more" 2 5 1 1
+
+exit 0
+
+#!/bin/bash
+# clear the screen
+tput clear
+# Move cursor to screen location X,Y (top left is 0,0)
+tput cup 3 15
+# set a foreground colour using ANSI escape
+tput setaf 3
+echo "XYX Corp LTD."
+tput sgr0
+tput cup 5 17
+# Set reverse video mode
+tput rev
+echo "M A I N - M E N U"
+tput sgr0
+tput cup 7 15
+echo "1. User Management"
+tput cup 8 15
+echo "2. service Management"
+tput cup 9 15
+echo "3. Process Management"
+tput cup 10 15
+echo "4. Backup"
+# Set bold mode
+tput bold
+tput cup 12 15
+read -p "Enter your choice [1-4] " choice
+tput clear
+tput sgr0
+tput rc
+
+exit 0
+
+declare mylove='Visual C++'   #定义新环境变量
+
+set -a mylove                 #设置为环境变量
+
+env | grep mylove             #显示环境变量值
+
+[root@localhost ~]# man -k who
+at.allow [at]        (5)  - determine who can submit jobs via at or batch
+at.deny [at]         (5)  - determine who can submit jobs via at or batch
+jwhois               (1)  - client for the whois service
+jwhois              (rpm) - Internet whois/nicname client.
+Net::LDAP::Extension::whoami (3pm)  - LDAP Who am I? Operation
+w                    (1)  - Show who is logged on and what they are doing
+who                  (1p)  - display who is on the system
+who                  (1)  - show who is logged on
+whoami               (1)  - print effective userid
+
+[root@localhost ~]# apropos who
+at.allow [at]        (5)  - determine who can submit jobs via at or batch
+at.deny [at]         (5)  - determine who can submit jobs via at or batch
+jwhois               (1)  - client for the whois service
+jwhois              (rpm) - Internet whois/nicname client.
+Net::LDAP::Extension::WhoAmI (3pm)  - LDAP Who am I? Operation
+w                    (1)  - Show who is logged on and what they are doing
+who                  (1p)  - display who is on the system
+who                  (1)  - show who is logged on
+whoami               (1)  - print effective userid
+
+apropos -a emacs vi
+
+bind -x '"\C-l":ls -l'    #直接按 CTRL+L 就列出目录
+
+[root@localhost ~]# showkey -a
+
+Press any keys - Ctrl-D will terminate this program
+
+^[[A     27 0033 0x1b  上
+91 0133 0x5b
+65 0101 0x41
+^[[B     27 0033 0x1b  下
+91 0133 0x5b
+66 0102 0x42
+^[[D     27 0033 0x1b  左
+91 0133 0x5b
+68 0104 0x44
+^[[C     27 0033 0x1b 右
+91 0133 0x5b
+67 0103 0x43
+32 0040 0x20
+^M       13 0015 0x0d 字母M
+^C        3 0003 0x03 Ctrl-C
+^D        4 0004 0x04 Ctrl-D 退出
+
+bg 1            #后台执行任务号为1的任务
+
+find / -name password &     #后台执行任务
+
+[root@localhost ~]# fc -l -10     #显示10条历史命令
+1039     type -a grep
+1040     export
+1041     history 10
+1042     ulimit -a
+1043     shopt
+1044     help ls
+1045     help env
+1046     help short
+1047     help shopt
+1048     showkey -a
+
+fc 1040                    #编辑第1040条历史命令
+
+[root@localhost ~]# ulimit -a
+core file size          (blocks, -c) 0           #core文件的最大值为100 blocks。
+data seg size           (kbytes, -d) unlimited   #进程的数据段可以任意大。
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited   #文件可以任意大。
+pending signals                 (-i) 98304       #最多有98304个待处理的信号。
+max locked memory       (kbytes, -l) 32          #一个任务锁住的物理内存的最大值为32KB。
+max memory size         (kbytes, -m) unlimited   #一个任务的常驻物理内存的最大值。
+open files                      (-n) 1024        #一个任务最多可以同时打开1024的文件。
+pipe size            (512 bytes, -p) 8           #管道的最大空间为4096字节。
+POSIX message queues     (bytes, -q) 819200      #POSIX的消息队列的最大值为819200字节。
+real-time priority              (-r) 0
+stack size              (kbytes, -s) 10240       #进程的栈的最大值为10240字节。
+cpu time               (seconds, -t) unlimited   #进程使用的CPU时间。
+max user processes              (-u) 98304       #当前用户同时打开的进程（包括线程）的最大个数为98304。
+virtual memory          (kbytes, -v) unlimited   #没有限制进程的最大地址空间。
+file locks                      (-x) unlimited   #所能锁住的文件的最大个数没有限制。
+
+[root@localhost ~]# readonly     #显示只读变量
+declare -ar BASH_VERSINFO='([0]="3" [1]="2" [2]="25" [3]="1" [4]="release" [5]="i686-redhat-linux-gnu")'
+declare -ir EUID="0"
+declare -ir PPID="31436"
+declare -r SHELLOPTS="braceexpand:emacs:hashall:histexpand:history:interactive-comments:monitor"
+declare -ir UID="0"
+
+[root@localhost ~]# readonly test='ok'         #定义只读变量并初始化
+
+[root@localhost ~]# test='my'                 #试图修改只读变量的值
+-bash: test: readonly variable
+
+read 1987name
+从标准输入读取输入并赋值给变量1987name。
+
+read first last
+从标准输入读取输入到第一个空格或者回车，将输入的第一个单词放到变量first中，并将该行其他的输入放在变量last中。
+
+read
+从标准输入读取一行并赋值给特定变量REPLY。
+
+read -a arrayname
+把单词清单读入arrayname的数组里。
+
+read -p "text"
+打印提示（text），等待输入，并将输入存储在REPLY中。
+
+read -r line
+允许输入包含反斜杠。
+
+read -t 3
+指定读取等待时间为3秒。
+
+read -n 2 var
+从输入中读取两个字符并存入变量var，不需要按回车读取。
+
+read -d ":" var
+用定界符“:”结束输入行。
+
+#read 1987name        #等待读取输入，直到回车后表示输入完毕，并将输入赋值给变量answer
+HelloWorld            #控制台输入Hello
+
+#echo $1987name       #打印变量
+HelloWorld
+
+#read one two three
+1 2 3                   #在控制台输入1 2 3，它们之间用空格隔开。
+
+#echo "one = $one, two = $two, three = $three"
+one = 1, two = 2, three = 3
+
+#read                  #等待控制台输入，并将结果赋值给特定内置变量REPLY。
+This is REPLY          #在控制台输入该行。
+
+
+#echo $REPLY           #打印输出特定内置变量REPLY，以确认是否被正确赋值。
+
+This is REPLY
+
+#read -p "Enter your name: "            #输出文本提示，同时等待输入，并将结果赋值给REPLY。
+Enter you name: stephen                 #在提示文本之后输入stephen
+
+#echo $REPLY
+stephen
+
+#read -a friends
+Tim Tom Helen
+
+#echo "They are ${friends[0]}, ${friends[1]} and ${friends[2]}."
+They are Tim, Tom and Helen.
+
+#!/bin/bash
+read -p "输入密码：" -s pwd
+echo
+echo password read, is "$pwd"
+
+#!/bin/bash
+stty -echo
+read -p "输入密码：" pwd
+stty echo
+echo
+echo 输入完毕。
+
+read v1 v3          #读取变量值
+
+Linux c+            #输入数据
+
+echo $v1 $v3       #输出变量的值
+
+Linux c+           #输出变量值
+
+shopt           #输出所有可以设置的shell操作选项
+cdable_vars     off
+cdspell         off
+checkhash       off
+checkwinsize    on
+cmdhist         on
+dotglob         off
+execfail        off
+expand_aliases  on
+extdebug        off
+...
+
+shopt -s cdspell          #开启cd拼写检查
+
+cdspell on                #开启cdspell选项
+
+[root@localhost ~]# enable -a
+enable .
+enable :
+enable [
+enable alias
+enable bg
+enable bind
+enable break
+enable builtin
+enable caller
+enable cd
+enable command
+enable compgen
+enable complete
+enable continue
+enable declare
+enable dirs
+enable disown
+enable echo
+enable enable
+enable eval
+enable exec
+enable exit
+enable export
+enable false
+enable fc
+enable fg
+enable getopts
+enable hash
+enable help
+enable history
+enable jobs
+enable kill
+enable let
+enable local
+enable logout
+enable popd
+enable printf
+enable pushd
+enable pwd
+enable read
+enable readonly
+enable return
+enable set
+enable shift
+enable shopt
+enable source
+enable suspend
+enable test
+enable times
+enable trap
+enable true
+enable type
+enable typeset
+enable ulimit
+enable umask
+enable unalias
+enable unset
+enable wait
+
+jobs -l               #显示当前系统的任务列表
+
+[1] + 1903 运行中          find / -name password &
+
+wait %1       #等待作业号为3的作业完成
+
+find / -name password
+
+declare test='man.linuxde.net'    #定义并初始化shell变量
+
+echo $test                        #输出shell变量的值
+
+man.linuxde.net
+
+builtin alias                 #执行shell内部指令
+alias cp='cp -i'
+alias l.='ls -d .* --color=tty'
+alias ll='ls -l --color=tty'
+alias ls='ls --color=tty'
+alias mv='mv -i'
+alias rm='rm -i'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+
+[root@localhost ~]# history 10
+92  ls
+93  cd ..
+94  ls
+95  exit
+96  ls -a
+97  cd .ssh/
+98  ls
+99  cat known_hosts
+100  exit
+101  history 10
+
+[root@localhost ~]# exit
+logout
+
+cd $(dirname $0) || exit 1
+
+if [ "$#" -ne "2" ]; then
+echo "usage: $0 <area> <hours>"
+exit 2
+fi
+
+trap "rm -f tmpfile; echo Bye." EXIT
+
+./mycommand.sh
+EXCODE=$?
+if [ "$EXCODE" == "0" ]; then
+echo "O.K"
+fi
+
+[root@localhost ~]# export
+declare -x G_BROKEN_FILENAMES="1"
+declare -x HISTSIZE="1000"
+declare -x HOME="/root"
+declare -x hostname="localhost"
+declare -x INPUTRC="/etc/inputrc"
+declare -x LANG="zh_CN.UTF-8"
+declare -x LESSOPEN="|/usr/bin/lesspipe.sh %s"
+declare -x logname="root"
+declare -x LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:"
+declare -x mail="/var/spool/mail/root"
+declare -x OLDPWD
+declare -x PATH="/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin"
+declare -x pwd="/root"
+declare -x SHELL="/bin/bash"
+declare -x SHLVL="1"
+declare -x SSH_CLIENT="192.168.2.111 2705 22"
+declare -x SSH_CONNECTION="192.168.2.111 2705 192.168.2.2 22"
+declare -x SSH_TTY="/dev/pts/0"
+declare -x TERM="linux"
+declare -x USER="root"
+
+help shopt                #获取shopt命令的帮助信息
+shopt: shopt [-pqsu] [-o long-option] optname [optname...]
+Toggle the values of variables controlling optional behavior.
+The -s flag means to enable (set) each OPTNAME; the -u flag
+unsets each OPTNAME.  The -q flag suppresses output; the exit
+status indicates whether each OPTNAME is set or unset.  The -o
+option restricts the OPTNAMEs to those defined for use with
+`set -o'.  With no options, or with the -p option, a list of all
+settable options is displayed, with an indication of whether or
+not each is set.
+
+echo Linux C++           #输出指定信息
+
+Linux C++                #输出信息
+
+exec -c echo Linux C++          #调用命令
+
+Linux C++                       #使用指定指令输出信息
+
+[root@localhost ~]# env
+hostname=LinServ-1
+TERM=linux
+SHELL=/bin/bash
+HISTSIZE=1000
+SSH_CLIENT=192.168.2.111 2705 22
+SSH_TTY=/dev/pts/0
+USER=root
+LS_COLORS=no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:
+mail=/var/spool/mail/root
+PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+INPUTRC=/etc/inputrc
+pwd=/root
+LANG=zh_CN.UTF-8
+SHLVL=1
+HOME=/root
+logname=root
+SSH_CONNECTION=192.168.2.111 2705 192.168.2.2 22
+LESSOPEN=|/usr/bin/lesspipe.sh %s
+G_BROKEN_FILENAMES=1
+_=/bin/env
+
+unset -v mylove         #删除指定的环境变量
+
+kill -l
+1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
+5) SIGTRAP      6) SIGABRT      7) SIGBUS       8) SIGFPE
+9) SIGKILL     10) SIGUSR1     11) SIGSEGV     12) SIGUSR2
+13) SIGPIPE     14) SIGALRM     15) SIGTERM     16) SIGSTKFLT
+17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
+21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU
+25) SIGXFSZ     26) SIGVTALRM   27) SIGPROF     28) SIGWINCH
+29) SIGIO       30) SIGPWR      31) SIGSYS      34) SIGRTMIN
+35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3  38) SIGRTMIN+4
+39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12
+47) SIGRTMIN+13 48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14
+51) SIGRTMAX-13 52) SIGRTMAX-12 53) SIGRTMAX-11 54) SIGRTMAX-10
+55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7  58) SIGRTMAX-6
+59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+63) SIGRTMAX-1  64) SIGRTMAX
+
+HUP     1    终端断线
+INT     2    中断（同 Ctrl + C）
+QUIT    3    退出（同 Ctrl + \）
+TERM   15    终止
+KILL    9    强制终止
+CONT   18    继续（与STOP相反， fg/bg命令）
+STOP   19    暂停（同 Ctrl + Z）
+
+ps -ef | grep vim
+root      3268  2884  0 16:21 pts/1    00:00:00 vim install.log
+root      3370  2822  0 16:21 pts/0    00:00:00 grep vim
+
+kill 3268
+kill 3268
+-bash: kill: (3268) - 没有那个进程
+
+alias 新的命令='原命令 -选项/参数'
+
+alias -p
+alias cp='cp -i'
+alias l.='ls -d .* --color=tty'
+alias ll='ls -l --color=tty'
+alias ls='ls --color=tty'
+alias mv='mv -i'
+alias rm='rm -i'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+
+[root@localhost ~]# type ls
+ls is aliased to `ls --color=tty'
+
+[root@localhost ~]# type cd
+cd is a shell builtin
+
+[root@localhost ~]# type date
+date is /bin/date
+
+[root@localhost ~]# type mysql
+mysql is /usr/bin/mysql
+
+[root@localhost ~]# type nginx
+-bash: type: nginx: not found
+
+[root@localhost ~]# type if
+if is a shell keyword
+
+[root@localhost ~]# type which
+which is aliased to `alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+
+[root@localhost ~]# type -a cd
+cd is a shell builtin
+
+[root@localhost ~]# type -a grep
+grep is /bin/grep
+
+unalias cc            #取消已经设置的命令别名
+
+cc：no input files
+
+fg 1          #将任务转换到前台执行
+
+find / -name password       #前台执行命令
+
+echo -e "\e[1;31mThis is red text\e[0m"
+This is red text
+
+echo -e "\e[1;42mGreed Background\e[0m"
+Greed Background
+
+echo -e "\033[37;31;5mMySQL Server Stop...\033[39;49;0m"
+
+
+lsof
+command     PID USER   FD      type             DEVICE     SIZE       NODE NAME
+init          1 root  cwd       DIR                8,2     4096          2 /
+init          1 root  rtd       DIR                8,2     4096          2 /
+init          1 root  txt       REG                8,2    43496    6121706 /sbin/init
+init          1 root  mem       REG                8,2   143600    7823908 /lib64/ld-2.5.so
+init          1 root  mem       REG                8,2  1722304    7823915 /lib64/libc-2.5.so
+init          1 root  mem       REG                8,2    23360    7823919 /lib64/libdl-2.5.so
+init          1 root  mem       REG                8,2    95464    7824116 /lib64/libselinux.so.1
+init          1 root  mem       REG                8,2   247496    7823947 /lib64/libsepol.so.1
+init          1 root   10u     FIFO               0,17                1233 /dev/initctl
+migration     2 root  cwd       DIR                8,2     4096          2 /
+migration     2 root  rtd       DIR                8,2     4096          2 /
+migration     2 root  txt   unknown                                        /proc/2/exe
+ksoftirqd     3 root  cwd       DIR                8,2     4096          2 /
+ksoftirqd     3 root  rtd       DIR                8,2     4096          2 /
+ksoftirqd     3 root  txt   unknown                                        /proc/3/exe
+migration     4 root  cwd       DIR                8,2     4096          2 /
+migration     4 root  rtd       DIR                8,2     4096          2 /
+migration     4 root  txt   unknown                                        /proc/4/exe
+ksoftirqd     5 root  cwd       DIR                8,2     4096          2 /
+ksoftirqd     5 root  rtd       DIR                8,2     4096          2 /
+ksoftirqd     5 root  txt   unknown                                        /proc/5/exe
+events/0      6 root  cwd       DIR                8,2     4096          2 /
+events/0      6 root  rtd       DIR                8,2     4096          2 /
+events/0      6 root  txt   unknown                                        /proc/6/exe
+events/1      7 root  cwd       DIR                8,2     4096          2 /
+
+[guest@localhost tmp]$ ltrace ./a.out
+__libc_start_main(0x80484aa, 1, 0xbfc07744, 0x8048550, 0x8048540 <unfinished ...>
+printf("no1:%d \t no2:%d \t diff:%d\n", 10, 6, 4no1:10 no2:6 diff:4 ) = 24
+printf("no1:%d \t no2:%d \t diff:%d\n", 9, 7, 2no1:9 no2:7 diff:2 ) = 23
+printf("no1:%d \t no2:%d \t diff:%d\n", 8, 8, 0no1:8 no2:8 diff:0 ) = 23
+--- SIGFPE (Floating point exception) ---
++++ killed by SIGFPE +++
+
+[guest@localhost tmp]$ ltrace -T ./a.out
+__libc_start_main(0x80484aa, 1, 0xbf81d394, 0x8048550, 0x8048540 <unfinished ...>
+printf("no1:%d \t no2:%d \t diff:%d\n", 10, 6, 4no1:10 no2:6 diff:4 ) = 24 <0.000972>
+printf("no1:%d \t no2:%d \t diff:%d\n", 9, 7, 2no1:9 no2:7 diff:2 ) = 23 <0.000155>
+printf("no1:%d \t no2:%d \t diff:%d\n", 8, 8, 0no1:8 no2:8 diff:0 ) = 23 <0.000153>
+--- SIGFPE (Floating point exception) ---
++++ killed by SIGFPE +++
+
+[guest@localhost tmp]$ ltrace -S ./a.out
+SYS_brk(NULL) = 0x9e20000
+SYS_access(0xa4710f, 4, 0xa4afc0, 0, 0xa4b644) = 0
+SYS_open("/etc/ld.so.preload", 0, 02) = 3
+SYS_fstat64(3, 0xbfbd7a94, 0xa4afc0, -1, 3) = 0
+SYS_mmap2(0, 17, 3, 2, 3) = 0xb7f2a000
+SYS_close(3) = 0
+SYS_open("/lib/libcwait.so", 0, 00) = 3
+SYS_read(3, "\177ELF\001\001\001", 512) = 512
+SYS_fstat64(3, 0xbfbd76fc, 0xa4afc0, 4, 0xa4b658) = 0
+SYS_mmap2(0, 4096, 3, 34, -1) = 0xb7f29000
+SYS_mmap2(0, 5544, 5, 2050, 3) = 0x423000
+SYS_mmap2(0x424000, 4096, 3, 2066, 3) = 0x424000
+.............省去若干行
+
+Total DISK read:       0.00 B/s | Total DISK write:       0.00 B/s
+TID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN     IO>    command
+1 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % init [3]
+2 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [kthreadd]
+3 rt/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [migration/0]
+4 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [ksoftirqd/0]
+5 rt/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [watchdog/0]
+6 rt/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [migration/1]
+7 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [ksoftirqd/1]
+8 rt/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [watchdog/1]
+9 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [events/0]
+10 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [events/1]
+11 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [khelper]
+2572 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % [bluetooth]
+
+[root@flow_video]# ifstat -tT
+time           eth0                eth1                eth2                eth3               Total
+HH:MM:ss   KB/s in  KB/s out   KB/s in  KB/s out   KB/s in  KB/s out   KB/s in  KB/s out   KB/s in  KB/s out
+16:53:04      0.84      0.62   1256.27   1173.05      0.12      0.18      0.00      0.00   1257.22   1173.86
+16:53:05      0.57      0.40      0.57      0.76      0.00      0.00      0.00      0.00      1.14      1.17
+16:53:06      1.58      0.71      0.42      0.78      0.00      0.00      0.00      0.00      2.01      1.48
+16:53:07      0.57      0.40      1.91      2.61      0.00      0.00      0.00      0.00      2.48      3.01
+16:53:08      0.73      0.40    924.02   1248.91      0.00      0.00      0.00      0.00    924.76   1249.31
+
+vmstat 3
+procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu------
+r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+0  0    320  42188 167332 1534368    0    0     4     7    1    0  0  0 99  0  0
+0  0    320  42188 167332 1534392    0    0     0     0 1002   39  0  0 100  0  0
+0  0    320  42188 167336 1534392    0    0     0    19 1002   44  0  0 100  0  0
+0  0    320  42188 167336 1534392    0    0     0     0 1002   41  0  0 100  0  0
+0  0    320  42188 167336 1534392    0    0     0     0 1002   41  0  0 100  0  0
+
+
+[root@localhost ~]# time ls
+anaconda-ks.cfg  install.log  install.log.syslog  satools  text
+
+real    0m0.009s
+user    0m0.002s
+sys     0m0.007s
+
+
+/usr/bin/time -o outfile.txt ls
+
+
+/usr/bin/time -a -o outfile.txt ls
+
+
+/usr/bin/time -f "time: %U" ls
+
+
+[root@iZ23uulau1tZ ~]# dstat -tsp --socket --fs
+----system---- ----swap--- ---procs--- ------sockets------ --filesystem-
+date/time   | used  free|run blk new|tot tcp udp raw frg|files  inodes
+26-07 09:23:48|   0     0 |  0   0 0.0|104   8   5   0   0|  704   6488
+26-07 09:23:49|   0     0 |  0   0   0|104   8   5   0   0|  704   6488
+26-07 09:23:50|   0     0 |  0   0   0|104   8   5   0   0|  704   6489
+26-07 09:23:51|   0     0 |  0   0   0|104   8   5   0   0|  704   6489
+26-07 09:23:52|   0     0 |  0   0   0|104   8   5   0   0|  704   6489
+26-07 09:23:53|   0     0 |  0   0   0|104   8   5   0   0|  704   6489
+
+[root@iZ23uulau1tZ ~]# dstat -tsp --socket --fs --output /tmp/ds.csv
+----system---- ----swap--- ---procs--- ------sockets------ --filesystem-
+date/time   | used  free|run blk new|tot tcp udp raw frg|files  inodes
+26-07 09:25:31|   0     0 |  0   0 0.0|104   8   5   0   0|  736   6493
+26-07 09:25:32|   0     0 |  0   0   0|104   8   5   0   0|  736   6493
+26-07 09:25:33|   0     0 |  0   0   0|104   8   5   0   0|  736   6493
+26-07 09:25:34|   0     0 |  0   0   0|104   8   5   0   0|  736   6493
+26-07 09:25:35|   0     0 |  0   0   0|104   8   5   0   0|  736   6494
+26-07 09:25:36|   0     0 |  0   0   0|104   8   5   0   0|  736   6494
+
+[root@iZ23uulau1tZ ~]# dstat --list
+internal:
+aio, cpu, cpu24, disk, disk24, disk24old, epoch, fs, int, int24, io, ipc, load, lock, mem, net, page, page24, proc, raw, socket, swap, swapold, sys, tcp, time, udp, unix, vm
+/usr/share/dstat:
+battery, battery-remain, cpufreq, dbus, disk-util, fan, freespace, gpfs, gpfs-ops, helloworld, innodb-buffer, innodb-io, innodb-ops, lustre, memcache-hits, mysql-io, mysql-keys, mysql5-cmds, mysql5-conn, mysql5-io, mysql5-keys,
+net-packets, nfs3, nfs3-ops, nfsd3, nfsd3-ops, ntp, postfix, power, proc-count, rpc, rpcd, sendmail, snooze, thermal, top-bio, top-cpu, top-cputime, top-cputime-avg, top-io, top-latency, top-latency-avg, top-mem, top-oom, utmp,
+vm-memctl, vmk-hba, vmk-int, vmk-nic, vz-cpu, vz-io, vz-ubc, wifi
+
+# filename test.c
+#include <stdio.h>
+
+int main()
+{
+int a;
+scanf("%d", &a);
+printf("%09d\n", a);
+return 0;
+}
+
+strace ./test
+
+// 直接执行test的结果
+oracle@orainst[orcl]:~ $./test
+
+// 执行的结果
+99
+000000099
+
+// 通过strace执行test的结果
+oracle@orainst[orcl]:~ $strace ./test
+
+// strace的trace结果
+execve("./test", ["./test"], [/* 41 vars */]) = 0
+uname({sys="Linux", node="orainst.desktop.mycompany.com", ...}) = 0
+brk(0)                                  = 0x8078000
+fstat64(3, {st_mode=S_IFREG|0644, st_size=65900, ...}) = 0
+old_mmap(NULL, 65900, PROT_READ, MAP_PRIVATE, 3, 0) = 0xbf5ef000
+close(3)                                = 0
+open("/lib/tls/libc.so.6", O_RDONLY)    = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\200X\1"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1571692, ...}) = 0
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xbf5ee000
+old_mmap(NULL, 1275340, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0xa02000
+old_mmap(0xb34000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x132000) = 0xb34000
+old_mmap(0xb37000, 9676, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xb37000
+close(3)                                = 0
+set_thread_area({entry_number:-1 -> 6, base_addr:0xbf5ee740, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
+munmap(0xbf5ef000, 65900)               = 0
+fstat64(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xbf5ff000
+read(0, 99
+"99\n", 1024)                   = 3
+fstat64(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xbf5fe000
+write(1, "000000099\n", 10000000099
+)             = 10
+munmap(0xbf5fe000, 4096)                = 0
+exit_group(0)                           = ?
+
+killall test
+
+oracle@orainst[orcl]:~
+$strace ./test
+
+execve("./test", ["./test"], [/* 41 vars */]) = 0
+uname({sys="Linux", node="orainst.desktop.mycompany.com", ...}) = 0
+brk(0)                                  = 0x9ae2000
+old_mmap(NULL, 65900, PROT_READ, MAP_PRIVATE, 3, 0) = 0xbf5ef000
+close(3)                                = 0
+open("/lib/tls/libc.so.6", O_RDONLY)    = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\200X\1"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1571692, ...}) = 0
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xbf5ee000
+old_mmap(NULL, 1275340, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x2e9000
+old_mmap(0x41b000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x132000) = 0x41b000
+old_mmap(0x41e000, 9676, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x41e000
+close(3)                                = 0
+set_thread_area({entry_number:-1 -> 6, base_addr:0xbf5ee740, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
+munmap(0xbf5ef000, 65900)               = 0
+fstat64(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xbf5ff000
+read(0, 0xbf5ff000, 1024)               = ? ERESTARTSYS (To be restarted)
+--- SIGTERM (Terminated) @ 0 (0) ---
++++ killed by SIGTERM +++
+
+oracle@orainst[orcl]:~
+$strace -c ./test
+
+execve("./test", ["./test"], [/* 41 vars */]) = 0
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+45.90    0.000140           5        27        25 open
+34.43    0.000105           4        24        21 stat64
+7.54    0.000023           5         5           old_mmap
+2.62    0.000008           8         1           munmap
+1.97    0.000006           6         1           uname
+1.97    0.000006           2         3           fstat64
+1.64    0.000005           3         2         1 read
+1.31    0.000004           2         2           close
+0.98    0.000003           3         1           brk
+0.98    0.000003           3         1           mmap2
+0.66    0.000002           2         1           set_thread_area
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000305                    68        47 total
+
+
+# 这两个命令都是将strace结果输出到文件test.txt中
+strace -c -o test.txt ./test
+strace -c ./test  2>test.txt
+
+oracle@orainst[orcl]:~
+$strace -T ./test
+
+// 这里只摘录部分结果
+read(0, 1
+"1\n", 1024)                    = 2 <2.673455>
+fstat64(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0 <0.000014>
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xbf5fe000 <0.000017>
+write(1, "000000001\n", 10000000001
+)             = 10 <0.000016>
+munmap(0xbf5fe000, 4096)                = 0 <0.000020>
+exit_group(0)                           = ?
+
+strace -s 20 ./test
+
+read(0, 2222222222222222222222222      // 我们输入的2一共有25个
+"22222222222222222222"..., 1024) = 26  // 而我们看到的结果中2只有20个
+
+strace -p pid
+
+ps -ef|grep lgwr
+
+oracle    5912     1  0 Nov12 ?        00:14:56 ora_lgwr_orcl
+
+strace -tt -s 10 -o lgwr.txt -p 5912
+
+grep pwrite\(20 lgwr.txt
+
+select member, v$log.status from v$log, v$logfile
+where v$log.group#=v$logfile.group#;
+
+MEMBER                                             STATUS
+-------------------------------------------------- ----------------
+/db/databases/orcl/redo-01-a/redo-t01-g03-m1.log    INACTIVE
+/db/databases/orcl/redo-03-a/redo-t01-g03-m2.log    INACTIVE
+/db/databases/orcl/redo-02-a/redo-t01-g02-m1.log    CURRENT
+/db/databases/orcl/redo-04-a/redo-t01-g02-m2.log    CURRENT
+/db/databases/orcl/redo-01-a/redo-t01-g01-m1.log    INACTIVE
+/db/databases/orcl/redo-03-a/redo-t01-g01-m2.log    INACTIVE
+/db/databases/orcl/redo-02-a/redo-t01-g04-m1.log    INACTIVE
+/db/databases/orcl/redo-04-a/redo-t01-g04-m2.log    INACTIVE
+
+ll /proc/.5912/fd/
+
+lrwx------    1 oracle   dba            64 Dec 30 10:55 18 -> /db/databases/orcl/redo-01-a/redo-t01-g01-m1.log
+lrwx------    1 oracle   dba            64 Dec 30 10:55 19 -> /db/databases/orcl/redo-03-a/redo-t01-g01-m2.log
+lrwx------    1 oracle   dba            64 Dec 30 10:55 20 -> /db/databases/orcl/redo-02-a/redo-t01-g02-m1.log
+lrwx------    1 oracle   dba            64 Dec 30 10:55 21 -> /db/databases/orcl/redo-04-a/redo-t01-g02-m2.log
+lrwx------    1 oracle   dba            64 Dec 30 10:55 22 -> /db/databases/orcl/redo-01-a/redo-t01-g03-m1.log
+lrwx------    1 oracle   dba            64 Dec 30 10:55 23 -> /db/databases/orcl/redo-03-a/redo-t01-g03-m2.log
+lrwx------    1 oracle   dba            64 Dec 30 10:55 24 -> /db/databases/orcl/redo-02-a/redo-t01-g04-m1.log
+lrwx------    1 oracle   dba            64 Dec 30 10:55 25 -> /db/databases/orcl/redo-04-a/redo-t01-g04-m2.log
+
+11:13:55.603245 pwrite(20, "\1\"\0\0J!"..., 1536, 4363264) = 1536
+11:13:55.603569 pwrite(21, "\1\"\0\0J!"..., 1536, 4363264) = 1536
+11:13:55.606888 pwrite(20, "\1\"\0\0M!"..., 1536, 4364800) = 1536
+11:13:55.607172 pwrite(21, "\1\"\0\0M!"..., 1536, 4364800) = 1536
+11:13:55.607934 pwrite(20, "\1\"\0\0P!"..., 1536, 4366336) = 1536
+11:13:55.608199 pwrite(21, "\1\"\0\0P!"..., 1536, 4366336) = 1536
+11:13:55.610260 pwrite(20, "\1\"\0\0S!"..., 1536, 4367872) = 1536
+11:13:55.610530 pwrite(21, "\1\"\0\0S!"..., 1536, 4367872) = 1536
+11:14:00.602446 pwrite(20, "\1\"\0\0V!"..., 1536, 4369408) = 1536
+11:14:00.602750 pwrite(21, "\1\"\0\0V!"..., 1536, 4369408) = 1536
+11:14:00.606386 pwrite(20, "\1\"\0\0Y!"..., 1536, 4370944) = 1536
+11:14:00.606676 pwrite(21, "\1\"\0\0Y!"..., 1536, 4370944) = 1536
+11:14:00.607900 pwrite(20, "\1\"\0\0\\"..., 1024, 4372480) = 1024
+11:14:00.608161 pwrite(21, "\1\"\0\0\\"..., 1024, 4372480) = 1024
+11:14:00.608816 pwrite(20, "\1\"\0\0^!"..., 1024, 4373504) = 1024
+11:14:00.609071 pwrite(21, "\1\"\0\0^!"..., 1024, 4373504) = 1024
+11:14:00.611142 pwrite(20, "\1\"\0\0`!"..., 1536, 4374528) = 1536
+11:14:00.611454 pwrite(21, "\1\"\0\0`!"..., 1536, 4374528) = 1536
+11:14:05.602804 pwrite(20, "\1\"\0\0c!"..., 1024, 4376064) = 1024
+11:14:05.603119 pwrite(21, "\1\"\0\0c!"..., 1024, 4376064) = 1024
+11:14:05.607731 pwrite(20, "\1\"\0\0e!"..., 1024, 4377088) = 1024
+11:14:05.608020 pwrite(21, "\1\"\0\0e!"..., 1024, 4377088) = 1024
+11:14:05.608690 pwrite(20, "\1\"\0\0g!"..., 1024, 4378112) = 1024
+11:14:05.608962 pwrite(21, "\1\"\0\0g!"..., 1024, 4378112) = 1024
+11:14:05.611022 pwrite(20, "\1\"\0\0i!"..., 1536, 4379136) = 1536
+11:14:05.611283 pwrite(21, "\1\"\0\0i!"..., 1536, 4379136) = 1536
+
+fuser /etc/passwd
+
+fuser -u /etc/filesystems
+
+fuser -k -x -u -c /dev/hd1  或者  fuser -kxuc /home
+
+fuser -d /usr文件
+
+tload -d 1
+0.08, 0.02,0.01
+0.04, 0.01, 0.00
+0.04, 0.01, 0.00
+0.04, 0.01,0.00
+0.06, 0.02, 0.00
+
+dd if=/dev/zero of=floppy.img bs=512 count=2880
+
+losetup /dev/loop1 floppy.img
+
+mount /dev/loop0 /tmp
+
+umount /tmp
+losetup -d /dev/loop1
+
+hwclock –systohc
+hwclock --systohc –-utc
+
+hwclock
+
+cat /etc/default/rcS
+UTC=yes
+
+cat /etc/sysconfig/clock
+ZONE="America/Los_Angeles"
+UTC=false
+ARC=false
+
+iostat -x /dev/sda1
+Linux 2.6.18-164.el5xen (localhost.localdomain)
+2010年03月26日
+
+avg-cpu:  %user   %nice %system %iowait
+%steal   %idle
+0.11    0.02    0.18    0.35
+0.03    99.31
+
+Device:         tps   Blk_read/s    Blk_wrtn/s
+Blk_read   Blk_wrtn
+sda1                0.02          0.08
+0.00          2014               4
+
+mpstat
+Linux 2.6.9-5.31AXsmp (builder.redflag-linux.com) 12/16/2005
+09:38:46 AM CPU %user %nice %system %iowait %irq %soft %idle intr/s
+09:38:48 AM all 23.28 0.00 1.75     0.50 0.00 0.00 74.47 1018.59
+
+mpstat -P ALL 2 3
+Linux 2.6.18-164.el5 (server.sys.com)    01/04/2010
+09:34:20 PM CPU   %user   %nice    %sys %iowait    %irq   %soft %steal   %idle    intr/s
+09:34:22 PM all    0.00    0.00    0.00    0.00    0.00    0.00    0.00 100.00   1001.49
+09:34:22 PM    0    0.00    0.00    0.50    0.00    0.00    0.00    0.00   99.50   1001.00
+09:34:22 PM    1    0.00    0.00    0.00    0.00    0.00    0.00    0.00 100.00      0.00
+
+cat 1.img &
+
+mpstat
+Linux 2.6.18-164.el5 (server.sys.com)    01/04/2010
+10:17:31 PM CPU   %user   %nice    %sys %iowait    %irq   %soft %steal   %idle    intr/s
+10:17:31 PM all    0.07    0.02    0.25    0.21    0.01    0.04    0.00   99.40   1004.57
+
+mpstat
+Linux 2.6.18-164.el5 (server.sys.com)    01/04/2010
+10:17:35 PM CPU   %user   %nice    %sys %iowait    %irq   %soft %steal   %idle    intr/s
+10:17:35 PM all    0.07    0.02    0.25    0.21    0.01    0.04    0.00   99.39   1004.73
+
+mpstat 3 10
+Linux 2.6.18-164.el5 (server.sys.com)    01/04/2010
+10:17:55 PM CPU   %user   %nice    %sys %iowait    %irq   %soft %steal   %idle    intr/s
+10:17:58 PM all   13.12    0.00   20.93    0.00    1.83    9.80    0.00   54.32   2488.08
+10:18:01 PM all   10.82    0.00   19.30    0.83    1.83    9.32    0.00   57.90   2449.83
+10:18:04 PM all   10.95    0.00   20.40    0.17    1.99    8.62    0.00   57.88   2384.05
+10:18:07 PM all   10.47    0.00   18.11    0.00    1.50    8.47    0.00   61.46   2416.00
+10:18:10 PM all   11.81    0.00   22.63    0.00    1.83   11.98    0.00   51.75   2210.60
+10:18:13 PM all    6.31    0.00   10.80    0.00    1.00    5.32    0.00   76.58   1795.33
+10:18:19 PM all    1.75    0.00    3.16    0.75    0.25    1.25    0.00   92.85   1245.18
+10:18:22 PM all   11.94    0.00   19.07    0.00    1.99    8.29    0.00   58.71   2630.46
+10:18:25 PM all   11.65    0.00   19.30    0.50    2.00    9.15    0.00   57.40   2673.91
+10:18:28 PM all   11.44    0.00   21.06    0.33    1.99   10.61    0.00   54.56   2369.87
+Average:     all    9.27    0.00   16.18    0.30    1.50    7.64    0.00   65.11   2173.54
+
+free -m
+total       used       free     shared    buffers     cached
+Mem:          2016       1973         42          0        163       1497
+-/+ buffers/cache:        312       1703
+Swap:         4094          0       4094
+
+total：内存总数；
+used：已经使用的内存数；
+free：空闲的内存数；
+shared：当前已经废弃不用；
+buffers Buffer：缓存内存数；
+cached Page：缓存内存数。
+
+(-buffers/cache) used内存数：第一部分Mem行中的 used – buffers – cached
+(+buffers/cache) free内存数: 第一部分Mem行中的 free + buffers + cached
+
+lspci
+00:00.0 host bridge: Intel Corporation Mobile 945GM/PM/GMS, 943/940GML and 945GT Express Memory Controller Hub (rev 03)
+00:02.0 VGA compatible controller: Intel Corporation Mobile 945GM/GMS, 943/940GML Express Integrated Graphics Controller (rev 03)
+00:02.1 Display controller: Intel Corporation Mobile 945GM/GMS/GME, 943/940GML Express Integrated Graphics Controller (rev 03)
+00:1b.0 Audio device: Intel Corporation N10/ICH 7 Family High Definition Audio Controller (rev 02)
+00:1c.0 PCI bridge: Intel Corporation N10/ICH 7 Family PCI Express Port 1 (rev 02)
+00:1c.1 PCI bridge: Intel Corporation N10/ICH 7 Family PCI Express Port 2 (rev 02)
+......
+
+sudo setpci -s 00:02.0 F4.B=FF
+
+sudo setpci -s 00:02.0 F4.B=CC
+
+[root@LinServ-1 ~]# uptime -V    #显示uptime命令版本信息
+procps version 3.2.7
+
+[root@LinServ-1 ~]# uptime
+15:31:30 up 127 days,  3:00,  1 user,  load average: 0.00, 0.00, 0.00
+
+15:31:30             //系统当前时间
+up 127 days,  3:00   //主机已运行时间,时间越大，说明你的机器越稳定。
+1 user               //用户连接数，是总连接数而不是用户数
+load average: 0.00, 0.00, 0.00         // 系统平均负载，统计最近1，5，15分钟的系统平均负载
+
+sar -r
+Linux 2.4.20-8 (www.linuxde.net)    20130503
+12:00:01 AM kbmemfree kbmemused  %memused
+kbmemshrd kbbuffers  kbcached
+12:10:00 AM    240468   1048252     81.34
+0    133724    485772
+12:20:00 AM    240508   1048212     81.34
+0    134172    485600
+…
+08:40:00 PM    934132    354588     27.51
+0     26080    185364
+Average:       324346    964374     74.83
+0     96072    467559
+
+sar -o temp 60 10
+
+top - 09:44:56 up 16 days, 21:23,  1 user,  load average: 9.59, 4.75, 1.92
+Tasks: 145 total,   2 running, 143 sleeping,   0 stopped,   0 zombie
+Cpu(s): 99.8%us,  0.1%sy,  0.0%ni,  0.2%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+Mem:   4147888k total,  2493092k used,  1654796k free,   158188k buffers
+Swap:  5144568k total,       56k used,  5144512k free,  2013180k cached
+
+查看服务器型号：dmidecode | grep 'Product Name'
+查看主板的序列号：dmidecode |grep 'Serial Number'
+查看系统序列号：dmidecode -s system-serial-number
+查看内存信息：dmidecode -t memory
+查看OEM信息：dmidecode -t 11
+
+[root@localhost ~]# dmidecode -t processor
+# dmidecode 2.11
+SMBIOS 2.5 present.
+
+Handle 0x0001, DMI type 4, 40 bytes
+Processor Information
+Socket Designation: Node 1 Socket 1
+Type: Central Processor
+Family: Xeon MP
+Manufacturer: Intel(R) Corporation
+id: C2 06 02 00 FF FB EB BF
+Signature: Type 0, Family 6, Model 44, Stepping 2
+Flags:
+FPU (Floating-point unit on-chip)
+VME (Virtual mode extension)
+DE (Debugging extension)
+PSE (Page size extension)
+TSC (time stamp counter)
+MSR (Model specific registers)
+PAE (Physical address extension)
+MCE (Machine check exception)
+CX8 (CMPXCHG8 instruction supported)
+APIC (On-chip APIC hardware supported)
+SEP (Fast system call)
+MTRR (Memory type range registers)
+PGE (Page global enable)
+MCA (Machine check architecture)
+CMOV (Conditional move instruction supported)
+PAT (Page attribute table)
+PSE-36 (36-bit page size extension)
+CLFSH (CLFLUSH instruction supported)
+DS (Debug store)
+ACPI (ACPI supported)
+MMX (MMX technology supported)
+FXSR (FXSAVE and FXSTOR instructions supported)
+SSE (Streaming SIMD extensions)
+SSE2 (Streaming SIMD extensions 2)
+ss (Self-snoop)
+HTT (Multi-threading)
+TM (Thermal monitor supported)
+PBE (Pending break enabled)
+Version: Intel(R) Xeon(R) CPU           E5620  @ 2.40GHz
+Voltage: 1.2 V
+External Clock: 5866 MHz
+Max Speed: 4400 MHz
+Current Speed: 2400 MHz
+Status: Populated, Enabled
+Upgrade: ZIF Socket
+L1 Cache Handle: 0x0002
+L2 Cache Handle: 0x0003
+L3 Cache Handle: 0x0004
+Serial Number: Not Specified
+Asset Tag: Not Specified
+Part Number: Not Specified
+Core Count: 4
+Core Enabled: 4
+Thread Count: 8
+Characteristics:
+64-bit capable
+
+Handle 0x0055, DMI type 4, 40 bytes
+Processor Information
+Socket Designation: Node 1 Socket 2
+Type: Central Processor
+Family: Xeon MP
+Manufacturer: Not Specified
+ID: 00 00 00 00 00 00 00 00
+Signature: Type 0, Family 0, Model 0, Stepping 0
+Flags: None
+Version: Not Specified
+Voltage: 1.2 V
+External Clock: 5866 MHz
+Max Speed: 4400 MHz
+Current Speed: Unknown
+Status: Unpopulated
+Upgrade: ZIF Socket
+L1 Cache Handle: Not Provided
+L2 Cache Handle: Not Provided
+L3 Cache Handle: Not Provided
+Serial Number: Not Specified
+Asset Tag: Not Specified
+Part Number: Not Specified
+Characteristics: None
+
+cdrecord -scanbus
+scsibus0:
+0,0,0     0) *
+0,1,0     1) *
+0,2,0     2) *
+0,3,0     3) 'HP      ' 'CD-Writer+ 9200 ' '1.0c' Removable CD-ROM
+
+cdrecord -v -eject speed=4 dev=0,3,0 backup.iso
+
+cdrecord --dev=0,3,0 --blank=fast
+
+[root@localhost ~]# systool
+Supported sysfs buses:
+acpi
+i2c
+ide
+pci_express
+pci
+pcmcia
+platform
+pnp
+scsi
+serio
+usb
+Supported sysfs classes:
+backlight
+cpuid
+dma_v3
+firmware
+graphics
+hidraw
+hwmon
+i2c-adapter
+input
+leds
+mem
+misc
+msr
+net
+pci_bus
+pcmcia_socket
+printer
+raw
+sas_device
+sas_end_device
+sas_expander
+sas_host
+sas_phy
+sas_port
+scsi_device
+scsi_disk
+scsi_generic
+scsi_host
+sound
+tty
+usb_device
+usb_endpoint
+usb_host
+vc
+vtconsole
+Supported sysfs devices:
+acpi
+pci0000:00
+platform
+pnp0
+sequencer2
+sequencer
+seq
+system
+timer
+Supported sysfs modules:
+8250
+acpi_memhotplug
+ac
+asus_acpi
+ata_piix
+auth_rpcgss
+backlight
+battery
+button
+cifs
+cpufreq
+crypto_api
+dell_wmi
+dm_log
+dm_mem_cache
+dm_message
+dm_mirror
+dm_mod
+dm_multipath
+dm_raid45
+dm_region_hash
+dock
+e1000e
+edac_mc
+ehci_hcd
+exportfs
+ext3
+hwmon
+i2c_core
+i2c_ec
+i2c_i801
+i7core_edac
+i8042
+ip_conntrack_netbios_ns
+ip_conntrack
+ip_tables
+iptable_filter
+ipv6
+it821x
+jbd
+joydev
+keyboard
+libata
+lockd
+lp
+md_mod
+mousedev
+mpt2sas
+nfnetlink
+nfs_acl
+nfsd
+nls_utf8
+ohci_hcd
+parport_pc
+parport
+pci_hotplug
+pcmcia
+pcmcia_core
+pcspkr
+piix
+power_meter
+printk
+processor
+psmouse
+rsrc_nonstatic
+sbs
+scsi_dh
+scsi_mod
+scsi_transport_sas
+sd_mod
+serio_raw
+sg
+shpchp
+snd_hda_intel
+snd_hwdep
+snd_mixer_oss
+snd_page_alloc
+snd_pcm_oss
+snd_pcm
+snd_seq_device
+snd_seq_dummy
+snd_seq_midi_event
+snd_seq_oss
+snd_seq
+snd_timer
+snd
+soundcore
+sunrpc
+tcp_bic
+tpm_bios
+tpm_tis
+tpm
+uhci_hcd
+usbcore
+usbhid
+video
+wmi
+x_tables
+xfrm_nalgo
+xt_limit
+xt_state
+xt_tcpudp
+yenta_socket
+
+sysctl kern.maxfiles=5000
+kern.maxfiles: 2088 -> 5000
+
+sysctl -w kernel.sysrq=0
+sysctl -w kernel.core_uses_pid=1
+sysctl -w net.ipv4.conf.default.accept_redirects=0
+sysctl -w net.ipv4.conf.default.accept_source_route=0
+sysctl -w net.ipv4.conf.default.rp_filter=1
+sysctl -w net.ipv4.tcp_syncookies=1
+sysctl -w net.ipv4.tcp_max_syn_backlog=2048
+sysctl -w net.ipv4.tcp_fin_timeout=30
+sysctl -w net.ipv4.tcp_synack_retries=2
+sysctl -w net.ipv4.tcp_keepalive_time=3600
+sysctl -w net.ipv4.tcp_window_scaling=1
+sysctl -w net.ipv4.tcp_sack=1
+
+# Controls source route verification
+# Default should work for all interfaces
+net.ipv4.conf.default.rp_filter = 1
+# net.ipv4.conf.all.rp_filter = 1
+# net.ipv4.conf.lo.rp_filter = 1
+# net.ipv4.conf.eth0.rp_filter = 1
+
+# Disables IP source routing
+# Default should work for all interfaces
+net.ipv4.conf.default.accept_source_route = 0
+# net.ipv4.conf.all.accept_source_route = 0
+# net.ipv4.conf.lo.accept_source_route = 0
+# net.ipv4.conf.eth0.accept_source_route = 0
+
+# Controls the System Request debugging functionality of the kernel
+kernel.sysrq = 0
+
+# Controls whether core dumps will append the PID to the core filename.
+# Useful for debugging multi-threaded applications.
+kernel.core_uses_pid = 1
+
+# Increase maximum amount of memory allocated to shm
+# Only uncomment if needed!
+# kernel.shmmax = 67108864
+
+# Disable ICMP Redirect Acceptance
+# Default should work for all interfaces
+net.ipv4.conf.default.accept_redirects = 0
+# net.ipv4.conf.all.accept_redirects = 0
+# net.ipv4.conf.lo.accept_redirects = 0
+# net.ipv4.conf.eth0.accept_redirects = 0
+
+# enable Log Spoofed Packets, Source Routed Packets, Redirect Packets
+# Default should work for all interfaces
+net.ipv4.conf.default.log_martians = 1
+# net.ipv4.conf.all.log_martians = 1
+# net.ipv4.conf.lo.log_martians = 1
+# net.ipv4.conf.eth0.log_martians = 1
+
+# Decrease the time default value for tcp_fin_timeout connection
+net.ipv4.tcp_fin_timeout = 25
+
+# Decrease the time default value for tcp_keepalive_time connection
+net.ipv4.tcp_keepalive_time = 1200
+
+# Turn on the tcp_window_scaling
+net.ipv4.tcp_window_scaling = 1
+
+# Turn on the tcp_sack
+net.ipv4.tcp_sack = 1
+
+# tcp_fack should be on because of sack
+net.ipv4.tcp_fack = 1
+
+# Turn on the tcp_timestamps
+net.ipv4.tcp_timestamps = 1
+
+# Enable TCP SYN Cookie Protection
+net.ipv4.tcp_syncookies = 1
+
+# Enable ignoring broadcasts request
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+# Enable bad error message Protection
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+
+# make more local ports available
+# net.ipv4.ip_local_port_range = 1024 65000
+
+# set TCP Re-Ordering value in kernel to ‘5′
+net.ipv4.tcp_reordering = 5
+
+# Lower syn retry rates
+net.ipv4.tcp_synack_retries = 2
+net.ipv4.tcp_syn_retries = 3
+
+# Set Max SYN Backlog to ‘2048′
+net.ipv4.tcp_max_syn_backlog = 2048
+
+# Various Settings
+net.core.netdev_max_backlog = 1024
+
+# Increase the maximum number of skb-heads to be cached
+net.core.hot_list_length = 256
+
+# Increase the tcp-time-wait buckets pool size
+net.ipv4.tcp_max_tw_buckets = 360000
+
+# This will increase the amount of memory available for socket input/output queues
+net.core.rmem_default = 65535
+net.core.rmem_max = 8388608
+net.ipv4.tcp_rmem = 4096 87380 8388608
+net.core.wmem_default = 65535
+net.core.wmem_max = 8388608
+net.ipv4.tcp_wmem = 4096 65535 8388608
+net.ipv4.tcp_mem = 8388608 8388608 8388608
+net.core.optmem_max = 40960
+
+# Disable ping requests
+net.ipv4.icmp_echo_ignore_all = 1
+
+/sbin/sysctl -p
+/sbin/sysctl -w net.ipv4.route.flush=1
+
+lsmod | head -5
+Module                  Size  Used by
+ipv6                  272801  15
+xfrm_nalgo             13381  1 ipv6
+crypto_api             12609  1 xfrm_nalgo
+ip_conntrack_ftp       11569  0
+
+get_module ipv6
+refcnt               : 15
+srcversion           : 8CC9C024755B4483E56C0EF
+
+Parameters:
+autoconf             : 1
+disable              : 0
+disable_ipv6         : 0
+Sections:
+.altinstr_replacement : 0xf8f1a3cf
+.altinstructions     : 0xf8f1d03c
+.bss                 : 0xf8f36000
+.data.read_mostly    : 0xf8f34d20
+.data                : 0xf8f2f7a0
+.exit.text           : 0xf8f1a234
+.gnu.linkonce.this_module : 0xf8f34e00
+.init.data           : 0xf8a16a60
+.init.text           : 0xf8a16000
+.module_sig          : 0xf8f37960
+.rodata.str1.1       : 0xf8f1ae46
+.rodata              : 0xf8f1a420
+.smp_locks           : 0xf8f1d150
+.strtab              : 0xf8f29840
+.symtab              : 0xf8f24000
+.text                : 0xf8ef5000
+__kcrctab            : 0xf8f1de70
+__kcrctab_gpl        : 0xf8f1d9cc
+__ksymtab            : 0xf8f1dd78
+__ksymtab_gpl        : 0xf8f1d954
+__ksymtab_strings    : 0xf8f1da44
+__param              : 0xf8f1da08
+__versions           : 0xf8f1df00
+
+slabtop
+
+Active / Total Objects (% used)    : 897519 / 1245930 (72.0%)
+Active / Total Slabs (% used)      : 38605 / 38605 (100.0%)
+Active / Total Caches (% used)     : 94 / 145 (64.8%)
+Active / Total Size (% used)       : 129558.22K / 153432.58K (84.4%)
+Minimum / Average / Maximum Object : 0.01K / 0.12K / 128.00K
+
+OBJS ACTIVE  USE OBJ SIZE  SLABS OBJ/SLAB CACHE SIZE NAME
+440136 171471  38%    0.05K   6113       72     24452K buffer_head
+190086 148576  78%    0.05K   2437       78      9748K selinux_inode_security
+151840 146366  96%    0.48K  18980        8     75920K ext3_inode_cache
+144333 144143  99%    0.02K    711      203      2844K avtab_node
+130529 128488  98%    0.13K   4501       29     18004K dentry_cache
+99214  99071  99%    0.03K    878      113      3512K size-32
+43834  28475  64%    0.27K   3131       14     12524K radix_tree_node
+17818   9450  53%    0.06K    302       59      1208K size-64
+4602   4562  99%    0.05K     59       78       236K sysfs_dir_cache
+3220   2855  88%    0.08K     70       46       280K vm_area_struct
+2460   2114  85%    0.12K     82       30       328K size-128
+1564   1461  93%    0.04K     17       92        68K Acpi-Operand
+1540   1540 100%    0.33K    140       11       560K inode_cache
+1524    466  30%    0.01K      6      254        24K anon_vma
+1440    515  35%    0.05K     20       72        80K avc_node
+1440   1154  80%    0.19K     72       20       288K filp
+1170   1023  87%    0.05K     15       78        60K ext3_xattr
+845    724  85%    0.02K      5      169        20K Acpi-Namespace
+638    315  49%    0.35K     58       11       232K proc_inode_cache
+450    434  96%    0.25K     30       15       120K size-256
+424    386  91%    0.50K     53        8       212K size-512
+312    107  34%    0.05K      4       78        16K delayacct_cache
+306    284  92%    0.43K     34        9       136K shmem_inode_cache
+303    108  35%    0.04K      3      101        12K pid
+300    261  87%    0.19K     15       20        60K skbuff_head_cache
+300    300 100%    0.12K     10       30        40K bio
+260    260 100%   32.00K    260        1      8320K size-32768
+254      6   2%    0.01K      1      254         4K revoke_table
+236     55  23%    0.06K      4       59        16K fs_cache
+216    203  93%    1.00K     54        4       216K size-1024
+214    214 100%    2.00K    107        2       428K size-2048
+203     83  40%    0.02K      1      203         4K biovec-1
+
+[root@localhost ~]# dmesg | head
+Linux version 2.6.18-348.6.1.el5 (mockbuild@builder17.centos.org) (gcc version 4.1.2 20080704 (Red Hat 4.1.2-54)) #1 SMP Tue May 21 15:34:22 EDT 2013
+BIOS-provided physical RAM map:
+BIOS-e820: 0000000000010000 - 000000000009f400 (usable)
+BIOS-e820: 000000000009f400 - 00000000000a0000 (reserved)
+BIOS-e820: 00000000000f0000 - 0000000000100000 (reserved)
+BIOS-e820: 0000000000100000 - 000000007f590000 (usable)
+BIOS-e820: 000000007f590000 - 000000007f5e3000 (ACPI NVS)
+BIOS-e820: 000000007f5e3000 - 000000007f5f0000 (ACPI data)
+BIOS-e820: 000000007f5f0000 - 000000007f600000 (reserved)
+BIOS-e820: 00000000e0000000 - 00000000e8000000 (reserved)
+
+[root@localhost ~]# modinfo sg
+filename:    /lib/modules/2.6.9-42.ELsmp/kernel/drivers/scsi/sg.ko
+author:     Douglas Gilbert
+description:  SCSI generic (sg) driver
+license:    GPL
+version:    3.5.31 B0B0CB1BB59F0669A1F0D6B
+parm:      def_reserved_size:size of buffer reserved for each fd
+parm:      allow_dio:allow direct I/O (default: 0 (disallow))
+alias:     char-major-21-*
+vermagic:    2.6.9-42.ELsmp SMP 686 REGPARM 4KSTACKS gcc-3.4
+depends:    scsi_mod
+
+[root@localhost ~]# lspci
+00:00.0 host bridge: Intel Corporation 5500 I/O Hub to ESI Port (rev 22)
+00:01.0 PCI bridge: Intel Corporation 5520/5500/X58 I/O Hub PCI Express Root Port 1 (rev 22)
+00:02.0 PCI bridge: Intel Corporation 5520/5500/X58 I/O Hub PCI Express Root Port 2 (rev 22)
+00:03.0 PCI bridge: Intel Corporation 5520/5500/X58 I/O Hub PCI Express Root Port 3 (rev 22)
+00:07.0 PCI bridge: Intel Corporation 5520/5500/X58 I/O Hub PCI Express Root Port 7 (rev 22)
+00:08.0 PCI bridge: Intel Corporation 5520/5500/X58 I/O Hub PCI Express Root Port 8 (rev 22)
+00:09.0 PCI bridge: Intel Corporation 5520/5500/X58 I/O Hub PCI Express Root Port 9 (rev 22)
+00:0a.0 PCI bridge: Intel Corporation 5520/5500/X58 I/O Hub PCI Express Root Port 10 (rev 22)
+00:10.0 PIC: Intel Corporation 5520/5500/X58 Physical and Link Layer Registers Port 0 (rev 22)
+00:10.1 PIC: Intel Corporation 5520/5500/X58 Routing and Protocol Layer Registers Port 0 (rev 22)
+00:11.0 PIC: Intel Corporation 5520/5500 Physical and Link Layer Registers Port 1 (rev 22)
+00:11.1 PIC: Intel Corporation 5520/5500 Routing & Protocol Layer Register Port 1 (rev 22)
+00:14.0 PIC: Intel Corporation 5520/5500/X58 I/O Hub System Management Registers (rev 22)
+00:14.1 PIC: Intel Corporation 5520/5500/X58 I/O Hub GPIO and Scratch Pad Registers (rev 22)
+00:14.2 PIC: Intel Corporation 5520/5500/X58 I/O Hub Control Status and RAS Registers (rev 22)
+00:14.3 PIC: Intel Corporation 5520/5500/X58 I/O Hub Throttle Registers (rev 22)
+00:16.0 System peripheral: Intel Corporation 5520/5500/X58 Chipset QuickData Technology Device (rev 22)
+00:16.1 System peripheral: Intel Corporation 5520/5500/X58 Chipset QuickData Technology Device (rev 22)
+00:16.2 System peripheral: Intel Corporation 5520/5500/X58 Chipset QuickData Technology Device (rev 22)
+00:16.3 System peripheral: Intel Corporation 5520/5500/X58 Chipset QuickData Technology Device (rev 22)
+00:16.4 System peripheral: Intel Corporation 5520/5500/X58 Chipset QuickData Technology Device (rev 22)
+00:16.5 System peripheral: Intel Corporation 5520/5500/X58 Chipset QuickData Technology Device (rev 22)
+00:16.6 System peripheral: Intel Corporation 5520/5500/X58 Chipset QuickData Technology Device (rev 22)
+00:16.7 System peripheral: Intel Corporation 5520/5500/X58 Chipset QuickData Technology Device (rev 22)
+00:1a.0 USB controller: Intel Corporation 82801JI (ICH10 Family) USB UHCI Controller #4
+00:1a.1 USB controller: Intel Corporation 82801JI (ICH10 Family) USB UHCI Controller #5
+00:1a.7 USB controller: Intel Corporation 82801JI (ICH10 Family) USB2 EHCI Controller #2
+00:1b.0 Audio device: Intel Corporation 82801JI (ICH10 Family) HD Audio Controller
+00:1c.0 PCI bridge: Intel Corporation 82801JI (ICH10 Family) PCI Express Root Port 1
+00:1c.4 PCI bridge: Intel Corporation 82801JI (ICH10 Family) PCI Express Root Port 5
+00:1c.5 PCI bridge: Intel Corporation 82801JI (ICH10 Family) PCI Express Root Port 6
+00:1d.0 USB controller: Intel Corporation 82801JI (ICH10 Family) USB UHCI Controller #1
+00:1d.1 USB controller: Intel Corporation 82801JI (ICH10 Family) USB UHCI Controller #2
+00:1d.2 USB controller: Intel Corporation 82801JI (ICH10 Family) USB UHCI Controller #3
+00:1d.3 USB controller: Intel Corporation 82801JI (ICH10 Family) USB UHCI Controller #6
+00:1d.7 USB controller: Intel Corporation 82801JI (ICH10 Family) USB2 EHCI Controller #1
+00:1e.0 PCI bridge: Intel Corporation 82801 PCI Bridge (rev 90)
+00:1f.0 ISA bridge: Intel Corporation 82801JIR (ICH10R) lpc Interface Controller
+00:1f.2 IDE interface: Intel Corporation 82801JI (ICH10 Family) 4 port SATA IDE Controller #1
+00:1f.3 SMBus: Intel Corporation 82801JI (ICH10 Family) SMBus Controller
+00:1f.5 IDE interface: Intel Corporation 82801JI (ICH10 Family) 2 port SATA IDE Controller #2
+01:01.0 VGA compatible controller: ASPEED Technology, Inc. ASPEED Graphics Family (rev 10)
+02:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
+03:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
+04:00.0 Serial Attached SCSI controller: LSI Logic / Symbios Logic SAS2008 PCI-Express Fusion-MPT SAS-2 [Falcon] (rev 03)
+
+Bus 005 Device 001: id 0000:0000
+Bus 001 Device 001: ID 0000:0000
+Bus 004 Device 001: ID 0000:0000
+Bus 003 Device 001: ID 0000:0000
+Bus 002 Device 006: ID 15d9:0a37
+Bus 002 Device 001: ID 0000:0000
+
+006        usb_device.devnum
+/sys/devices/pci0000:00/0000:00:1d.1/usb2/2-2/devnum
+
+15d9    usb_device_descriptor.idVendor
+0a37    usb_device_descriptor.idProduct
+/sys/devices/pci0000:00/0000:00:1d.1/usb2/2-2/idVendor
+
+arch
+x86_64
+
+[root@localhost ~]# uname    #单独使用uname命令时相当于uname -s
+Linux
+
+[root@localhost ~]# uname -a
+Linux localhost 2.6.18-348.6.1.el5 #1 SMP Tue May 21 15:34:22 EDT 2013 i686 i686 i386 GNU/Linux
+
+[root@localhost ~]# uname -m
+i686
+
+[root@localhost ~]# uname -n
+localhost
+
+[root@localhost ~]# uname -r
+2.6.18-4-686
+
+[root@localhost ~]# uname -s
+Linux
+
+[root@localhost ~]# uname -v
+#1 SMP Tue May 21 15:34:22 EDT 2013
+
+[root@localhost ~]# uname -p
+i686
+
+[root@localhost ~]# uname -i
+i386
+
+[root@localhost ~]# uname -o
+GNU/Linux
+
+[root@localhost ~]# uname --version
+uname (GNU coreutils) 5.97
+Copyright (C) 2006 free Software Foundation, Inc.
+这是自由软件。您可以按照 GNU GPL 协议 <http://www.gnu.org/licenses/gpl.html> 的条款再发布此软件的副本，但我们无法保证相关法律不对这一情形进行限制。
+
+由 David MacKenzie 编写。
+
+[root@localhost boot]# lsmod | grep raid1
+raid1                  25153  0
+
+[root@localhost boot]# rmmod raid1
+[root@localhost boot]# lsmod | grep raid1
+
+depmod -b /home/windsome/EMMA3PF-KernelSource-20080626/install_pos -e -F ./boot/System.map -v 2.6.18_pro500-bcm91250-mips2_fp_be -A -a
+
+genkernel.sh (at linux-2.6.18_pro500)
+#######
+export INSTALL_ROOT_EMMA3PF="/home/windsome/EMMA3PF-KernelSource-20080626/install_pos"
+export INSTALL_MOD_EMMA3PF="/home/windsome/EMMA3PF-KernelSource-20080626/install_pos"
+rm /home/windsome/EMMA3PF-KernelSource-20080626/install_pos/lib -rf
+rm /home/windsome/EMMA3PF-KernelSource-20080626/install_pos/boot/* -rf
+cd <linux_src_dir>
+make
+make modules_install
+cp vmlinux System.map /home/windsome/EMMA3PF-KernelSource-20080626/install_pos/boot/ -p
+cd /home/windsome/EMMA3PF-KernelSource-20080626/install_pos
+depmod -b /home/windsome/EMMA3PF-KernelSource-20080626/install_pos -e -F ./boot/System.map -v 2.6.18_pro500-bcm91250-mips2_fp_be -A -a
+
+[root@localhost ~]# lvresize -L +200M /dev/vg1000/lvol0     #将逻辑卷空间增加200M
+
+Extending logical volume lvol0 to 280.00 MB
+Logical volume lvol0 successfully resized
+
+modprobe -c
+
+alias symbol:ip_conntrack_unregister_notifier ip_conntrack
+
+modprobe -l
+
+/lib/modules/2.6.18-348.6.1.el5/kernel/net/netfilter/xt_statistic.ko
+
+modprobe vfat
+
+modprobe -r 模块名
+
+[root@localhost boot]# insmod /lib/modules/2.6.
+18-8.el5/kernel/drivers/md/raid1.ko
+
+[root@localhost boot]# lsmod | grep raid1
+raid1                  25153  0
+
+[root@localhost ~]# vgremove vg1000    #删除卷组"vg1000"
+Volume group "vg1000" successfully removed
+
+lsblk
+
+NAME   MAJ:MIN rm   SIZE RO type mountpoint
+sda      8:0    0 232.9G  0 disk
+├─sda1   8:1    0  46.6G  0 part /
+├─sda2   8:2    0     1K  0 part
+├─sda5   8:5    0   190M  0 part /boot
+├─sda6   8:6    0   3.7G  0 part [SWAP]
+├─sda7   8:7    0  93.1G  0 part /data
+└─sda8   8:8    0  89.2G  0 part /personal
+sr0     11:0    1  1024M  0 rom
+
+lsblk -a
+
+lsblk -m
+
+lsblk -b /dev/sda
+
+等价于
+
+lsblk --bytes /dev/sda
+
+lsblk -nl
+
+lsblk -S
+
+lsblk -s
+
+[root@LinServ-1 ~]# lsmod
+Module                  Size  Used by
+ipv6                  272801  15
+xfrm_nalgo             13381  1 ipv6
+crypto_api             12609  1 xfrm_nalgo
+ip_conntrack_ftp       11569  0
+xt_limit                6721  2
+xt_state                6209  2
+ip_conntrack           53665  2 ip_conntrack_ftp,xt_state
+nfnetlink              10713  1 ip_conntrack
+xt_tcpudp               7105  6
+xt_multiport            7233  1
+iptable_filter          7105  1
+ip_tables              17029  1 iptable_filter
+x_tables               17349  5 xt_limit,xt_state,xt_tcpudp,xt_multiport,ip_tables
+dm_mirror              24393  0
+dm_multipath           27213  0
+scsi_dh                12481  1 dm_multipath
+video                  21193  0
+backlight              10049  1 video
+sbs                    18533  0
+power_meter            16461  0
+hwmon                   7365  1 power_meter
+i2c_ec                  9025  1 sbs
+dell_wmi                8401  0
+wmi                    12137  1 dell_wmi
+button                 10705  0
+battery                13637  0
+asus_acpi              19289  0
+ac                      9157  0
+lp                     15849  0
+snd_hda_intel         401453  0
+snd_seq_dummy           7877  0
+snd_seq_oss            32577  0
+snd_seq_midi_event     11073  1 snd_seq_oss
+snd_seq                49585  5 snd_seq_dummy,snd_seq_oss,snd_seq_midi_event
+snd_seq_device         11725  3 snd_seq_dummy,snd_seq_oss,snd_seq
+snd_pcm_oss            42817  0
+snd_mixer_oss          19009  1 snd_pcm_oss
+snd_pcm                72517  2 snd_hda_intel,snd_pcm_oss
+ide_cd                 40161  0
+snd_timer              24517  2 snd_seq,snd_pcm
+tpm_tis                16713  0
+r8169                  43077  0
+snd_page_alloc         14281  2 snd_hda_intel,snd_pcm
+tpm                    19041  1 tpm_tis
+i2c_i801               12737  0
+mii                     9409  1 r8169
+serio_raw              10693  0
+i2c_core               24897  2 i2c_ec,i2c_i801
+snd_hwdep              12869  1 snd_hda_intel
+tpm_bios               11073  1 tpm
+cdrom                  36577  1 ide_cd
+pcspkr                  7105  0
+parport_pc             29669  1
+sg                     36973  0
+snd                    57797  9 snd_hda_intel,snd_seq_oss,snd_seq,snd_seq_device,snd_pcm_oss,snd_mixer_oss,snd_pcm,snd_timer,snd_hwdep
+parport                37513  2 lp,parport_pc
+soundcore              11553  1 snd
+dm_raid45              67273  0
+dm_message              6977  1 dm_raid45
+dm_region_hash         15681  1 dm_raid45
+dm_log                 14785  3 dm_mirror,dm_raid45,dm_region_hash
+dm_mod                 63993  4 dm_mirror,dm_multipath,dm_raid45,dm_log
+dm_mem_cache            9537  1 dm_raid45
+ata_piix               23749  4
+libata                158085  1 ata_piix
+sd_mod                 25409  6
+scsi_mod              144277  4 scsi_dh,sg,libata,sd_mod
+ext3                  126281  3
+jbd                    57705  1 ext3
+uhci_hcd               25421  0
+ohci_hcd               24937  0
+ehci_hcd               34509  0
+
+pvs                    #输出物理卷信息报表
+
+PV         VG     fmt  Attr PSize   PFree
+/dev/sdb1  vg1000 lvm2 --   100.00M 100.00M
+/dev/sdb2         lvm2 --   101.98M 101.98M
+
+sudo blkid
+
+sudo blkid -s UUID /dev/sda5
+
+sudo blkid -s UUID
+
+sudo blkid -s LABEL /dev/sda5
+
+sudo blkid -s LABEL
+
+sudo blkid -s TYPE
+
+sudo blkid -o device
+
+sudo blkid -o list
+
+[root@localhost ~]# lvextend -L +100M /dev/vg1000/lvol0    #为了解决增加100M空间
+
+Extending logical volume lvol0 to 300.00 MB
+Logical volume lvol0 successfully resized
+
+[root@localhost test]# du
+608 ./test6
+308 ./test4
+4 ./scf/lib
+4 ./scf/service/deploy/product
+4 ./scf/service/deploy/info
+12 ./scf/service/deploy
+16 ./scf/service
+4 ./scf/doc
+4 ./scf/bin
+32 ./scf
+8 ./test3
+1288 .
+
+[root@localhost test]# du log2012.log
+300 log2012.log
+
+[root@localhost test]# du scf
+4 scf/lib
+4 scf/service/deploy/product
+4 scf/service/deploy/info
+12 scf/service/deploy
+16 scf/service
+4 scf/doc
+4 scf/bin
+32 scf
+
+[root@localhost test]# du log30.tar.gz log31.tar.gz
+4 log30.tar.gz
+4 log31.tar.gz
+
+[root@localhost test]# du -s
+1288 .
+
+[root@localhost test]# du -s scf
+32 scf
+
+[root@localhost test]# cd ..
+[root@localhost soft]# du -s test
+1288 test
+
+[root@localhost ~]# lvscan     #扫描所有的逻辑卷
+
+ACTIVE          '/dev/vg1000/lvol0' [200.00 MB] inherit
+
+[root@localhost ~]# lvremove /dev/vg1000/lvol0    #删除逻辑卷"lvol0"
+
+Do you really want to remove active logical
+volume "lvol0"? [y/n]: y    #确认删除
+Logical volume "lvol0" successfully removed
+
+[root@localhost ~]# lvreduce -L -50M /dev/vg1000/lvol0     #将逻辑卷的空间大小减少50M
+
+......省略部分输出内容......
+Do you really want to reduce lvol0? [y/n]: y  #确认操作
+Reducing logical volume lvol0 to 252.00 MB
+Logical volume lvol0 successfully resized
+
+pvck -v /dev/sdb1    #检查物理卷元数据
+Scanning /dev/sdb1
+Found label on /dev/sdb1, sector 1, type=LVM2 001
+Found text metadata area: offset=4096, size=192512
+Found LVM2 metadata record at offset=125952,
+size=70656, offset2=0 size2=0
+
+pvchange -x n /dev/sdb1     #禁止分配"/dev/sdb1"上的PE
+
+Physical volume "/dev/sdb1" changed
+1 physical volume changed / 0 physical volumes not changed
+
+pvremove /dev/sdb2 #删除物理卷
+Labels on physical volume "/dev/sdb2" successfully wiped
+
+
+[root@localhost ~]# lvdisplay /dev/vg1000/lvol0     #显示逻辑卷属性
+
+--- Logical volume ---
+LV Name                /dev/vg1000/lvol0
+......省略部分输出内容......
+Block device           253:0
+
+free -m
+total used free shared buffers cached
+Mem: 377 180 197 0 19 110
+-/+ buffers/cache: 50 327
+Swap: 572 0 572
+
+swapon -s
+
+等价于
+
+cat /proc/swaps
+
+mkswap /dev/sdb2
+
+swapon /dev/sdb2
+
+/dev/sdb2 swap swap defaults 0 0
+
+dd if=/dev/zero of=/swapfile1 bs=1024 count=524288
+
+mkswap /swapfile1
+
+swapon /swapfile1
+
+/swapfile1 swap swap defaults 0 0
+
+swapoff /dev/sdb2
+
+[root@localhost ~]# vgchange -ay vg1000     #将卷组"vg1000"设置为活动状态
+
+1 logical volume(s) in volume group "vg1000" now active
+
+[root@localhost ~]# pvdisplay /dev/sdb1    #显示物理卷基本信息
+
+"/dev/sdb1" is a new physical volume of "101.94 MB"
+--- NEW Physical volume ---
+PV Name               /dev/sdb1
+....省略部分输出内容......
+PV UUID         FOXiS2-Ghaj-Z0Mf- cdVZ-pfpk- dP9p-ifIZXN
+
+[root@localhost ~]# pvscan     #扫描所有硬盘上的物理卷
+
+PV /dev/sdb1         lvm2 [101.94 MB]
+PV /dev/sdb2         lvm2 [101.98 MB]
+Total: 2 [203.92 MB] / in use: 0 [0   ] / in no VG: 2 [203.92
+MB]
+
+[root@localhost ~]# lvcreate -L 200M vg1000    #创建大小为200M的逻辑卷
+
+Logical volume "lvol0" created
+
+ls -la /dev/ttyUSB*
+crw-rw—- 1 root dialout 188, 0 2008-02-13 18:32 /dev/ttyUSB0
+mknod /dev/ttyUSB32 c 188 32
+
+[root@localhost ~]# fdisk -l
+Disk /dev/hda: 41.1 GB, 41174138880 bytes
+255 heads, 63 sectors/track, 5005 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+Device Boot      Start         End      Blocks   id  System
+/dev/hda1   *           1          13      104391   83  Linux
+/dev/hda2              14        1288    10241437+  83  Linux
+/dev/hda3            1289        1925     5116702+  83  Linux
+/dev/hda4            1926        5005    24740100    5  Extended
+/dev/hda5            1926        2052     1020096   82  Linux swap / Solaris
+/dev/hda6            2053        2235     1469916   8e  Linux LVM
+/dev/hda7            2236        2418     1469916   8e  Linux LVM
+/dev/hda8            2419        2601     1469916   8e  Linux LVM
+/dev/hda9            2602        2784     1469916   8e  Linux LVM
+
+
+[root@localhost ~]# pvscan
+No matching physical volumes found    #找不到任何的 PV 存在！
+
+[root@localhost ~]# pvcreate /dev/hda{6,7,8,9}
+Physical volume "/dev/hda6" successfully created
+Physical volume "/dev/hda7" successfully created
+Physical volume "/dev/hda8" successfully created
+Physical volume "/dev/hda9" successfully created
+
+[root@localhost ~]# pvscan
+PV /dev/hda6         lvm2 [1.40 GB]
+PV /dev/hda7         lvm2 [1.40 GB]
+PV /dev/hda8         lvm2 [1.40 GB]
+PV /dev/hda9         lvm2 [1.40 GB]
+Total: 4 [5.61 GB] / in use: 0 [0   ] / in no VG: 4 [5.61 GB]
+
+[root@localhost ~]# pvdisplay
+"/dev/hda6" is a new physical volume of "1.40 GB"
+--- NEW Physical volume ---
+PV Name               /dev/hda6  #实际的 partition 分区名称
+VG Name                          #因为尚未分配出去，所以空白！
+PV Size               1.40 GB    #就是容量说明
+Allocatable           NO         #是否已被分配，结果是 NO
+PE Size (KByte)       0          #在此 PV 內的 PE 大小
+Total PE              0          #共分割出几个 PE
+free PE               0          #沒被 LV 用掉的 PE
+Allocated PE          0          #尚可分配出去的 PE 数量
+PV UUID               Z13Jk5-RCls-UJ8B-HzDa-Gesn-atku-rf2biN
+....(底下省略)....
+
+[root@localhost ~]# pvremove /dev/sdb2
+Labels on physical volume "/dev/sdb2" successfully wiped
+
+
+[root@localhost ~]# pvchange -x n /dev/sdb1    #禁止分配指定物理卷上的PE
+Physical volume "/dev/sdb1" changed
+1 physical volume changed / 0 physical volumes not changed
+
+blockdev --setro /dev/hda4
+
+blockdev --getro /dev/hda4
+
+blockdev --setrw /dev/hda4
+
+[root@localhost tmp]# mkinitrd -v -f myinitrd.img $(uname -r)
+Creating initramfs
+WARNING: using /tmp for temporary files
+Looking for deps of module ide-disk
+Looking for deps of module ext3  jbd
+Looking for deps of module jbd
+Using modules:  ./kernel/fs/jbd/jbd.ko ./kernel/fs/ext3/ext3.ko
+/sbin/nash -> /tmp/initrd.Vz3928/bin/nash
+/sbin/insmod.static -> /tmp/initrd.Vz3928/bin/insmod
+/sbin/udev.static -> /tmp/initrd.Vz3928/sbin/udev
+/etc/udev/udev.conf -> /tmp/initrd.Vz3928/etc/udev/udev.conf
+copy from /lib/modules/2.6.9-5.EL/./kernel/fs/jbd/jbd.ko(elf32-i386) to /tmp/initrd.Vz3928/lib/jbd.ko(elf32-i386)
+copy from /lib/modules/2.6.9-5.EL/./kernel/fs/ext3/ext3.ko(elf32-i386) to /tmp/initrd.Vz3928/lib/ext3.ko(elf32-i386)
+Loading module jbd
+Loading module ext3
+
+[root@localhost tmp]# file myinitrd.img
+myinitrd.img: gzip compressed data, from Unix, max compression
+
+[root@localhost tmp]# mv myinitrd.img  myinitrd.img.gz
+[root@localhost tmp]# gzip -d myinitrd.img.gz
+[root@localhost tmp]# file myinitrd.img
+myinitrd.img: ASCII cpio archive (SVR4 with no CRC)
+
+[root@localhost lvm]# vgchange -an vg1000    #设置卷组状态为非活动状态
+0 logical volume(s) in volume group "vg1000" now active
+
+
+[root@localhost lvm]# vgconvert -M2 vg1000    #转换卷组为"LVM2"格式
+Volume group vg1000 successfully converted
+
+[root@localhost lvm]# vgchange -ay vg1000     #设置卷组状态为活动状态
+0 logical volume(s) in volume group "vg1000" now active
+
+[root@localhost ~]# vgreduce vg2000 /dev/sdb2    #将物理卷"/dev/sdb2"从卷组"vg2000"中删除
+
+Removed "/dev/sdb2" from volume group "vg2000"
+
+hdparm /dev/sda
+/dev/sda:
+IO_support = 0 (default 16-bit)
+readonly = 0 (off)
+readahead = 256 (on)
+geometry = 19457［柱面数］/255［磁头数］/63［扇区数］, sectors = 312581808［总扇区数］, start = 0［起始扇区数］
+
+
+hdparm -g /dev/sda
+/dev/sda:
+geometry = 19457［柱面数］/255［磁头数］/63［扇区数］, sectors = 312581808［总扇区数］, start = 0［起始扇区数］
+
+hdparm -T /dev/sda
+/dev/sda:
+Timing cached reads:   4684 MB in  2.00 seconds = 2342.92 MB/sec
+
+hdparm -T /dev/xvda
+/dev/xvda:
+Timing cached reads: 11154 MB in 1.98 seconds = 5633.44 MB/sec
+
+
+hdparm -C /dev/sda
+/dev/sda:
+drive state is: standby [省电模式]
+
+hdparm -m /dev/sda
+hdparm -m    #参数值为整数值如8 /dev/sda
+
+检查：smartctl -l selftest /dev/sda
+卸载：umount /dev/sda*
+修复：badblocks /dev/sda
+
+mount -t nfs 10.0.2.2:/linuxos/rhel4.0_update3/ /mnt/nfs/
+
+cp -a /mnt/NFS/* /root/Decp -a /mnt/nfs/* /root/Desktop/rhel4.0/&sktop/rhel4.0/&
+
+find rhel4.0/ -name boot.cat | xargs rm
+
+find rhel4.0/ -name TRANS.TBL -exec rm {} \;
+
+cp /usr/share/comps/i386/.discinfo rhel4.0/
+
+mkisofs -R -J -T -v -no-emul-boot -boot-load-size 4 -boot-info-table -V RHEL4ASDVD -b isolinux/isolinux.bin -c isolinux/boot.cat -o /RHEL4AS.iso rhel4.0/
+
+[root@localhost ~]# vgscan     #扫描并显示LVM卷组列表
+
+Found volume group "vg2000" using metadata type lvm2
+Found volume group "vg1000" using metadata type lvm2
+
+[root@localhost ~]# vgcreate vg1000 /dev/sdb1 /dev/sdb2  #创建卷组"vg1000"
+
+Volume group "vg1000" successfully created
+
+[root@localhost ~]# df -h
+Filesystem Size Used Avail Use% Mounted on
+/dev/sda1 29G 3.7G  24G 14% /
+/dev/sda2 29G  22G 5.2G 81% /oracle
+tmpfs    2.0G    0 2.0G  0% /dev/shm
+
+[root@localhost ~]# cat /proc/partitions
+major minor  #blocks  name
+
+8     0  311427072 sda
+8     1   30716248 sda1
+8     2   30716280 sda2
+8     3    8193150 sda3
+8    16     976896 sdb
+8    32     976896 sdc
+
+…省略其他
+
+
+[root@localhost ~]# fdisk /dev/sda
+The number of cylinders for this disk is set to 38770.
+There is nothing wrong with that, but this is larger than 1024,
+and could in certain setups cause problems with:
+1) software that runs at boot time (e.g., old versions of lilo)
+2) booting and partitioning software from other OSs
+(e.g., DOS FDISK, OS/2 FDISK)
+
+command (m for help): p
+
+Disk /dev/sda: 318.9 GB, 318901321728 bytes
+255 heads, 63 sectors/track, 38770 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+Device Boot      Start         End      Blocks   id  System
+/dev/sda1   *           1        3824    30716248+  83  Linux
+/dev/sda2            3825        7648    30716280   83  Linux
+/dev/sda3            7649        8668     8193150   82  Linux swap / Solaris
+
+Command (m for help): n
+Command action
+e   extended
+p   primary partition (1-4)
+p
+Selected partition 4
+First cylinder (8669-38770, default 8669):
+Using default value 8669
+last cylinder or +size or +sizeM or +sizeK (8669-38770, default 38770): +100G
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+
+WARNING: Re-reading the partition table failed with error 16:
+
+Device or resource busy.
+The kernel still uses the old table.
+The new table will be used at the next reboot.
+Syncing disks.
+
+[root@localhost ~]# partprobe
+
+[root@localhost ~]# mkfs.ext3 /dev/sda4
+mke2fs 1.39 (29-May-2006)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+12222464 inodes, 24416791 blocks
+1220839 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=4294967296
+746 block groups
+32768 blocks per group, 32768 fragments per group
+16384 inodes per group
+Superblock backups stored on blocks:
+32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632,
+2654208, 4096000, 7962624, 11239424, 20480000, 23887872
+
+Writing inode tables: done
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information:
+
+done
+
+This filesystem will be automatically checked every 26 mounts or
+180 days, whichever comes first.  Use tune2fs -c or -i to override.
+[root@localhost ~]#
+
+[root@localhost ~]# e2label  /dev/sda4 /data
+[root@localhost ~]# mkdir /data
+[root@localhost ~]# mount /dev/sda4 /data
+[root@localhost ~]# df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/sda1             29753556   3810844  24406900  14% /
+/dev/sda2             29753588  11304616  16913160  41% /oracle
+tmpfs                  2023936         0   2023936   0% /dev/shm
+/dev/sda4             96132968    192312  91057300   1% /data
+
+[root@localhost ~]# vgextend vg2000 /dev/sdb2     #将物理卷"/dev/sdb2"加入卷组"vg2000"
+
+Volume group "vg2000" successfully extended
+
+badblocks -b 4096 -c 16 /dev/hda1 -o hda-badblocks-list
+
+cat hda-badblocks-list
+51249
+51250
+51251
+51253
+51254
+……
+61245
+……
+
+badblocks -b 4096 -c 1 /dev/hda1 -o hda-badblocks-list.1 63000 51000
+
+fsck.ext3 -l /tmp/hda-badblock-list.final /dev/hda1
+
+mkfs.ext3 -c /dev/hda1
+
+[root@LinServ-1 ~]# df
+文件系统               1K-块        已用     可用 已用% 挂载点
+/dev/sda2            146294492  28244432 110498708  21% /
+/dev/sda1              1019208     62360    904240   7% /boot
+tmpfs                  1032204         0   1032204   0% /dev/shm
+/dev/sdb1            2884284108 218826068 2518944764   8% /data1
+
+[root@LinServ-1 ~]# df -h
+文件系统              容量  已用 可用 已用% 挂载点
+/dev/sda2             140G   27G  106G  21% /
+/dev/sda1             996M   61M  884M   7% /boot
+tmpfs                1009M     0 1009M   0% /dev/shm
+/dev/sdb1             2.7T  209G  2.4T   8% /data1
+
+[root@LinServ-1 ~]# df -a
+文件系统               1K-块        已用     可用 已用% 挂载点
+/dev/sda2            146294492  28244432 110498708  21% /
+proc                         0         0         0   -  /proc
+sysfs                        0         0         0   -  /sys
+devpts                       0         0         0   -  /dev/pts
+/dev/sda1              1019208     62360    904240   7% /boot
+tmpfs                  1032204         0   1032204   0% /dev/shm
+/dev/sdb1            2884284108 218826068 2518944764   8% /data1
+none                         0         0         0   -  /proc/sys/fs/binfmt_misc
+
+[root@localhost ~]# fdisk /dev/sdb
+
+command (m for help): m
+Command action
+a   toggle a bootable flag
+b   edit bsd disklabel
+c   toggle the dos compatibility flag
+d   delete a partition
+l   list known partition types
+m   print this menu
+n   add a new partition
+o   create a new empty DOS partition table
+p   print the partition table
+q   quit without saving changes
+s   create a new empty Sun disklabel
+t   change a partition's system id
+u   change display/entry units
+v   verify the partition table
+w   write table to disk and exit
+x   extra functionality (experts only)
+
+Command (m for help): p
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1               1           1        8001   8e  Linux LVM
+/dev/sdb2               2          26      200812+  83  Linux
+
+Command (m for help): d
+Partition number (1-4): 1
+
+Command (m for help): d
+Selected partition 2
+
+Command (m for help): print
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+Device Boot      Start         End      Blocks   Id  System
+
+Command (m for help):
+
+Command (m for help): n
+Command action
+e   extended
+p   primary partition (1-4)
+p    //建立主分区
+Partition number (1-4): 1  //分区号
+First cylinder (1-391, default 1):  //分区起始位置
+Using default value 1
+last cylinder or +size or +sizeM or +sizeK (1-391, default 391): 100  //分区结束位置，单位为扇区
+
+Command (m for help): n  //再建立一个分区
+Command action
+e   extended
+p   primary partition (1-4)
+p
+Partition number (1-4): 2  //分区号为2
+First cylinder (101-391, default 101):
+Using default value 101
+Last cylinder or +size or +sizeM or +sizeK (101-391, default 391): +200M  //分区结束位置，单位为M
+
+Command (m for help): p
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1               1         100      803218+  83  Linux
+/dev/sdb2             101         125      200812+  83  Linux
+
+Command (m for help): n
+Command action
+e   extended
+p   primary partition (1-4)
+e  //选择扩展分区
+Partition number (1-4): 3
+First cylinder (126-391, default 126):
+Using default value 126
+Last cylinder or +size or +sizeM or +sizeK (126-391, default 391):
+Using default value 391
+
+Command (m for help): p
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1               1         100      803218+  83  Linux
+/dev/sdb2             101         125      200812+  83  Linux
+/dev/sdb3             126         391     2136645    5  Extended
+
+Command (m for help): n
+Command action
+l   logical (5 or over)
+p   primary partition (1-4)
+l //选择逻辑分区
+First cylinder (126-391, default 126):
+Using default value 126
+Last cylinder or +size or +sizeM or +sizeK (126-391, default 391): +400M
+
+Command (m for help): n
+Command action
+l   logical (5 or over)
+p   primary partition (1-4)
+l
+First cylinder (176-391, default 176):
+Using default value 176
+Last cylinder or +size or +sizeM or +sizeK (176-391, default 391):
+Using default value 391
+
+Command (m for help): p
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1               1         100      803218+  83  Linux
+/dev/sdb2             101         125      200812+  83  Linux
+/dev/sdb3             126         391     2136645    5  Extended
+/dev/sdb5             126         175      401593+  83  Linux
+/dev/sdb6             176         391     1734988+  83  Linux
+
+Command (m for help):
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+[root@localhost ~]# mkfs.ext2 /dev/sdb1
+mke2fs 1.39 (29-May-2006)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+100576 inodes, 200804 blocks
+10040 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=209715200
+7 block groups
+32768 blocks per group, 32768 fragments per group
+14368 inodes per group
+Superblock backups stored on blocks:
+32768, 98304, 163840
+
+Writing inode tables: done
+Writing superblocks and filesystem accounting information: done
+
+This filesystem will be automatically checked every 32 mounts or
+180 days, whichever comes first.  Use tune2fs -c or -i to override.
+
+[root@localhost ~]# mkfs.ext3 /dev/sdb6
+mke2fs 1.39 (29-May-2006)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+217280 inodes, 433747 blocks
+21687 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=444596224
+14 block groups
+32768 blocks per group, 32768 fragments per group
+15520 inodes per group
+Superblock backups stored on blocks:
+32768, 98304, 163840, 229376, 294912
+
+Writing inode tables: done
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+This filesystem will be automatically checked every 32 mounts or
+180 days, whichever comes first.  Use tune2fs -c or -i to override.
+[root@localhost ~]#
+
+[root@localhost ~]# mkdir /oracle
+[root@localhost ~]# mkdir /web
+[root@localhost ~]# mount /dev/sdb1 /oracle
+[root@localhost ~]# mount /dev/sdb6 /web
+
+[root@localhost ~]# df -h
+文件系统              容量  已用 可用 已用% 挂载点
+/dev/mapper/VolGroup00-LogVol00
+6.7G  2.8G  3.6G  44% /
+/dev/sda1              99M   12M   82M  13% /boot
+tmpfs                 125M     0  125M   0% /dev/shm
+/dev/sdb1             773M  808K  733M   1% /oracle
+/dev/sdb6             1.7G   35M  1.6G   3% /web
+
+[root@localhost ~]# vim /etc/fstab
+
+/dev/VolGroup00/LogVol00 /                       ext3    defaults        1 1
+LABEL=/boot             /boot                   ext3    defaults        1 2
+tmpfs                   /dev/shm                tmpfs   defaults        0 0
+devpts                  /dev/pts                devpts  gid=5,mode=620  0 0
+sysfs                   /sys                    sysfs   defaults        0 0
+proc                    /proc                   proc    defaults        0 0
+/dev/VolGroup00/LogVol01 swap                    swap    defaults        0 0
+/dev/sdb1               /oracle                 ext2    defaults        0 0
+/dev/sdb6               /web                    ext3    defaults        0 0
+
+[root@localhost ~]# fdisk -l
+Disk /dev/sda: 35.8 GB, 35862976512 bytes
+255 heads, 63 sectors/track, 4360 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Device Boot      Start         End      Blocks   id  System
+/dev/sda1   *           1          13      104391   83  Linux
+/dev/sda2              14         144     1052257+  82  Linux swap
+/dev/sda3             145        4360    33865020   83  Linux
+Disk /dev/sdb: 2147 MB, 2147483648 bytes
+255 heads, 63 sectors/track, 261 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Disk /dev/sdb doesn't contain a valid partition table
+
+[root@localhost ~]# parted /dev/sdb
+GNU Parted Copyright (C) 1998 - 2004 free Software Foundation, Inc.
+This program is free software, covered by the GNU General Public License.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+使用/dev/sdb
+(parted)mklabel gpt
+(parted)print
+/dev/sdb的磁盘几何结构：0.000-2048.000兆字节
+磁盘标签类型：gpt
+Minor   起始点       终止点 文件系统   名称                 标志
+(parted)mkpart primary 0 2048  <-----上面print显示的数字
+(parted)print
+/dev/sdb的磁盘几何结构：0.000-2048.000兆字节
+磁盘标签类型：gpt
+Minor   起始点       终止点 文件系统   名称                 标志
+1          0.017   2047.983
+(parted)quit
+
+
+[root@localhost ~]# fdisk -l
+Disk /dev/sda: 35.8 GB, 35862976512 bytes
+255 heads, 63 sectors/track, 4360 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *           1          13      104391   83  Linux
+/dev/sda2              14         144     1052257+  82  Linux swap
+/dev/sda3             145        4360    33865020   83  Linux
+WARNING: GPT (GUID Partition Table) detected on '/dev/sdb'! The util fdisk doesn't support GPT. Use GNU Parted.
+
+Disk /dev/sdb: 2147 MB, 2147483648 bytes
+255 heads, 63 sectors/track, 261 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1               1         262     2097151+  ee  EFI GPT
+Partition 1 has different physical/logical beginnings (non-Linux?):
+phys=(0, 0, 1) logical=(0,0, 2)
+Partition 1 has different physical/logical endings:
+phys=(1023, 254, 63) logical=(261, 21, 16)
+
+[root@localhost ~]# mkfs.ext3 /dev/sdb1
+mke2fs 1.35 (28-Feb-2004)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+262144 inodes, 524279 blocks
+26213 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=536870912
+16 block groups
+32768 blocks per group, 32768 fragments per group
+16384 inodes per group
+Superblock backups stored on blocks:
+32768, 98304, 163840, 229376, 294912
+Writing inode tables: done
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done
+This filesystem will be automatically checked every 28 mounts or
+180 days, whichever comes first.  Use tune2fs -c or -i to override.
+
+[root@localhost ~]# mount /dev/sdb1 /mnt
+[root@localhost ~]# df -h
+Filesystem            容量  已用 可用 已用% 挂载点
+/dev/sda3              <?xml:namespace prefix = st1 />32G  2.6G   28G   9% /
+/dev/sda1              99M   12M   82M  13% /boot
+none                  252M     0  252M   0% /dev/shm
+/dev/sdb1             2.0G   36M  1.9G   2% /mnt
+
+[root@localhost ~]# vgdisplay vg1000     #显示卷组"vg1000"的属性
+
+--- Volume group ---
+VG Name               vg1000
+......省略部分输出内容......
+free  PE / Size       50 / 200.00 MB
+VG UUID  ICprwg-ZmhA-JKYF-WYuy-jNHa-AyCN-ZS5F7B
+
+/sbin/lilo -v -v
+
+boot=/dev/hda
+map=/boot/map
+install=/boot/boot.b
+prompt
+timeout=100
+compact
+default=Linux
+image=/boot/vmlinuz-2.4.18-14
+label=Linux
+root=/dev/hdb3
+read-only
+password=linux
+other=/dev/hda
+label=WindowsXP
+
+/sbin/lilo -v -v
+
+mkbootdisk --device /dev/fd0 `uname -r`
+
+mkbootdisk --device /dev/fd0 2.2.18
+
+convertquota -u /data     //转换文件系统"/data"上的用户磁盘配额文件
+
+root (hd0,1)   /* 假设 /dev/hda2 是你的 /boot 所在的分区 */
+kernel /boot/vmlinuz-2.6.15-26-386 ro dev=/dev/hda3    /* 假设 /dev/hda3 是你的 / 所在的分区 */
+initrd /boot/initrd.img-2.6.15-26-386
+boot
