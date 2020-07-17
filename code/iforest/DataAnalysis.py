@@ -7,7 +7,7 @@ from collections import defaultdict
 import openpyxl
 import re
 logging.basicConfig(level=logging.INFO)
-data_dir = '../data/meta_data/'
+data_dir = 'data/meta_data/'
 
 def parse_data():
     commands = []
@@ -69,12 +69,10 @@ def plot_length(commands:list, title=''):
 def plot_program(programs):
     labels = []
     values = []
-    # plt.figure(figsize=(20, 20))
     for key in programs:
         labels.append(key)
         values.append(programs[key])
     plt.barh(labels, values)
-    # plt.show()
 
 if __name__ == '__main__':
     normal_commands, abnormal_commands = parse_data()

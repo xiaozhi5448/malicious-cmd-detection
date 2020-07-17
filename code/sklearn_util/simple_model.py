@@ -1,4 +1,4 @@
-from train import get_dataset, load_data, plot_learning_curve
+from sklearn_util.train import get_dataset, load_data, plot_learning_curve
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier, RadiusNeighborsClassifier
