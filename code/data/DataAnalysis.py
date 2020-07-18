@@ -25,7 +25,7 @@ def parse_program(commands):
         items = item.split(' ')
         program_path = ''
         try:
-            if items[0].endswith('bash') or 'sh' in items[0]:
+            if items[0].endswith('bash') or  items[0] == 'sh' or items[0].endswith('/sh'):
                 i = 1
                 while True:
                     if items[i].startswith('-'):

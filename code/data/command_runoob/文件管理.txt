@@ -1,45 +1,88 @@
 cat -n textfile1 > textfile2
+
 cat -b textfile1 textfile2 >> textfile3
+
 cat /dev/null > /etc/test.txt
+
 cat /dev/fd0 > OUTFILE
+
 cat IMG_FILE > /dev/fd0
+
 chattr +i /etc/resolv.conf
+
 lsattr /etc/resolv.conf
+
 chgrp -v bin log2012.log
+
 chgrp --reference=log2012.log log2013.log
+
 cksum testfile1
+
 cmp prog.o.bak prog.o
+
 prog.o.bak prog.o differ: char 4, line 1
+
 diff log2014.log log2013.log  -y -W 50
+
 diff test1 test2 | diffstat
+
 cat test1/testf.txt
+
 file install.log
+
 ls -l /var/mail
+
 find . -name "*.c"
+
 find . -type f
+
 find . -ctime -20
+
+
 find /var/log -type f -mtime +7 -ok rm {} \;
+
 find . -type f -perm 644 -exec ls -l {} \;
+
 find / -type f -size 0 -exec ls -l {} \;
+
 git
+
 gitview -c /home/rootlocal/demo.txt      #使用gitview指令观看指定文件内容
+
  who
+
 who | cut -b 3
+
 ln -s log2013.log link2013
+
 ll
+
 ln log2013.log ln2013
+
 locate -u
+
 chattr +i /etc/resolv.conf
+
 lsattr /etc/resolv.conf
+
 chattr +a /var/log/messages
+
 mattrib -h -s -r a:msdos.sys
+
 mattrib -r -/ a:*.*
+
 mdel a:autoexec.bat .
+
 mdir -/ a:\*
+
 mktemp tmp.xxxx #生成临时文件
+
 mmove autorun.bat test
+
 mread a:\* ./
+
 mdir -/ a:\*
+
  mtools
 mtoolstest
 mv aaa bbb

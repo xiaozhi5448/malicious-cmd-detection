@@ -10,10 +10,11 @@ from datetime import datetime
 import glob
 import json
 import random
+import settings
 
 data_dirs = ['data/normal_all', 'data/abnormal_all']
-meta_data_dir = 'data/meta_data/'
-dataset_bin = 'dataset_clean.pkl'
+meta_data_dir = settings.meta_data_dir
+dataset_bin = settings.dataset_bin
 
 
 def load_data():

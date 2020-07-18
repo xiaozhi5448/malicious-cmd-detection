@@ -110,7 +110,7 @@ def process_comamands():
     with open(os.path.join(output_dir, 'total.txt'), mode='w', encoding='utf-8') as outfp:
         for command in commands:
             if command:
-                outfp.write(command + '\n')
+                outfp.write(command + os.linesep)
 
 if __name__ == '__main__':
     # cata_links = parse_data()

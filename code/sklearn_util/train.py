@@ -21,15 +21,14 @@ from sklearn.cluster import KMeans
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
-
+import settings
 from data.util import load_data, get_dataset
 warnings.simplefilter(action='ignore', category=FutureWarning)
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s  %(filename)s %(lineno)d: %(levelname)s  %(message)s')
-data_dirs = ['../data/normal_all', '../data/abnormal_all']
-meta_data_dir = '../data/meta_data/'
-dataset_bin = 'dataset_clean.pkl'
-
+data_dirs = ['data/normal_all', 'data/abnormal_all']
+meta_data_dir = settings.meta_data_dir
+dataset_bin = settings.dataset_bin
 
 plt.figure(figsize=(10, 20))
 
@@ -133,9 +132,8 @@ def test_decision_tree(X, Y):
 
 def test():
     normal_data_set, abnormal_data = load_data()
-    repeat_count = len(set(abnormal_data) & set(normal_data_set))
-    logging.info("abnormal command has {} items repeat!".format(repeat_count))
-    normal_data = random.sample([item for item in normal_data_set], 1000)
+
+    normal_data = normal_data_set
     data = []
     data.extend(abnormal_data)
     data.extend(normal_data)
@@ -146,7 +144,9 @@ def test():
     X = vectorizer.fit_transform(commands)
     Y = labels
     test_svm(X, Y)
-    # test_decision_tree(X, Y)
+    test_knn(X, Y)
+    test_svm(X, Y)
+    test_decision_tree(X, Y)
 
 
 

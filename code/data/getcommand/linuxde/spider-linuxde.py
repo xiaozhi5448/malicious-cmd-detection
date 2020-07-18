@@ -137,7 +137,7 @@ def clean_data():
                         command = items[0]
                     else:
                         print("invalid command: {}".format(line.strip()))
-                    outfp.write(command + '\n')
+                    outfp.write(command + os.linesep)
 
 
 
