@@ -34,6 +34,7 @@ def knn():
 
     normal_commands = [item[0] for item in normal_commands]
     abnormal_commands = [item[0] for item in abnormal_commands]
+    abnormal_commands = random.sample(abnormal_commands, 1000)
     test_normal_commands = random.sample(normal_commands, 1000)
     train_normal_commands = set(normal_commands) - set(test_normal_commands)
     normal_commands_splited = [command.split(' ') for command in train_normal_commands]
@@ -67,6 +68,7 @@ def knn():
         test_abnormal_distances.append(min_distance)
     plot_bar(test_abnormal_distances)
     plt.show()
+
     logging.info("computing finished!")
     logging.info("test for distance bound in [1, 5]")
     for distance_bound in range(2, 6):

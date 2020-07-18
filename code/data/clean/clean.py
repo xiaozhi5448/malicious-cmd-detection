@@ -120,13 +120,15 @@ def add_abnormal_command():
         with open(filepath, 'r', encoding='utf-8') as infp:
             for line in infp:
                 abnormal_commands.append(line.strip())
+    abnormal_commands = [item for item in abnormal_commands if item.strip()]
     sudo_commands = []
     for command in abnormal_commands:
-        items = command.split(' ')
-        if items[0] != 'sudo':
-            items.insert(0, 'sudo')
-            sudo_commands.append(' '.join(items))
-    abnormal_commands = [item for item in abnormal_commands if item]
+        if command.strip():
+            items = command.split(' ')
+            if items[0] != 'sudo':
+                items.insert(0, 'sudo')
+                sudo_commands.append(' '.join(items))
+
     abnormal_commands.extend(sudo_commands)
 
     logging.info("{} abnormal command add to dataset!".format(len(abnormal_commands)))

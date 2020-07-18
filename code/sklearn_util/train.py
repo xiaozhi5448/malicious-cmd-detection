@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier, RadiusNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import svm
+from sklearn.naive_bayes import BernoulliNB, GaussianNB, MultinomialNB
 import logging
 from datetime import datetime
 import random
@@ -70,6 +71,7 @@ def test_knn(X, Y):
         logging.info("{} score: {}".format(clf[0], score))
         Y_pred = model.predict(X_test)
         print("report for {}".format(clf[0]))
+        print(cross_val_score(model, X, Y, cv=KFold(n_splits=5)))
         print(classification_report(Y_test, Y_pred))
         plt.subplot(2, 1, index+1)
         logging.info("ploting learning curve of {}".format(clf[0]))
@@ -97,6 +99,7 @@ def test_svm(X, Y):
     # estimator = clf.best_estimator_
     y_pred = clf.predict(X_test)
     logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
+    print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     print(classification_report(Y_test, y_pred))
     logging.info("ploting learning curve of svm")
     plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
@@ -126,6 +129,22 @@ def test_decision_tree(X, Y):
     logging.info("finished!")
     return estimator
 
+def test_byes(X, Y):
+    logging.info("test byes:")
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+
+    clf = MultinomialNB(alpha=0.001)
+    clf.fit(X, Y)
+    estimator = clf
+    y_pred = estimator.predict(X_test)
+    logging.info("MultinomialNB score: {}".format(clf.score(X_test, Y_test)))
+    print(classification_report(Y_test, y_pred))
+    print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
+    logging.info('ploting learn curve of MultinomialNB')
+    plot_learning_curve(clf, "MultinomialNB", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+    logging.info("finished!")
+    return estimator
+
 def test():
     normal_data_set, abnormal_data = load_data()
 
@@ -141,11 +160,13 @@ def test():
     Y = labels
     # plt.figure(figsize=(10, 15))
     # test_knn(X, Y)
+    # plt.figure(figsize=(12, 8))
+    # test_svm(X, Y)
+    # plt.show()
+    # plt.figure(figsize=(12, 8))
+    # test_decision_tree(X, Y)
     plt.figure(figsize=(12, 8))
-    test_svm(X, Y)
-    plt.show()
-    plt.figure(figsize=(12, 8))
-    test_decision_tree(X, Y)
+    test_byes(X, Y)
     plt.show()
 
 
