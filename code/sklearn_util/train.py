@@ -4,20 +4,14 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier, RadiusNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
-import joblib
 from sklearn import svm
-import glob
-import os, sys
-import json
 import logging
 from datetime import datetime
 import random
-import pickle
 from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import learning_curve
 from sklearn.model_selection import ShuffleSplit, cross_val_score, KFold
-from sklearn.cluster import KMeans
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
@@ -26,7 +20,6 @@ from data.util import load_data, get_dataset
 warnings.simplefilter(action='ignore', category=FutureWarning)
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s  %(filename)s %(lineno)d: %(levelname)s  %(message)s')
-data_dirs = ['data/normal_all', 'data/abnormal_all']
 meta_data_dir = settings.meta_data_dir
 dataset_bin = settings.dataset_bin
 
@@ -62,7 +55,7 @@ def test_knn(X, Y):
     clfs.append(('KNN', KNeighborsClassifier(n_neighbors=3)))
     clfs.append(('RadiusKNN', RadiusNeighborsClassifier(n_neighbors=3, radius=500)))
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-    for clf in clfs:
+    for index,clf in enumerate(clfs):
         t1 = datetime.now()
         logging.info("training model {} started at {}".format(clf[0], t1))
         model = clf[1]
@@ -75,6 +68,10 @@ def test_knn(X, Y):
         Y_pred = model.predict(X_test)
         print("report for {}".format(clf[0]))
         print(classification_report(Y_test, Y_pred))
+        plt.subplot(2, 1, index+1)
+        logging.info("ploting learning curve of {}".format(clf[0]))
+        plot_learning_curve(model, clf[0], X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+        logging.info("finished")
 
 def test_svm(X, Y):
 
@@ -98,27 +95,21 @@ def test_svm(X, Y):
     y_pred = clf.predict(X_test)
     logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
     print(classification_report(Y_test, y_pred))
-    plt.subplot(3, 1, 2)
+    plt.subplot(2, 1, 1)
+    logging.info("ploting learning curve of svm")
     plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+    logging.info("finished")
     return clf
 
 
 def test_decision_tree(X, Y):
     logging.info("test decision tree:")
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-    clf = GridSearchCV(DecisionTreeClassifier(), cv=5, param_grid=[
-        {
-            'criterion': ['entropy'],
-            'min_impurity_decrease': np.linspace(0, 1, 50)
-        },{
-            'criterion':['gini'],
-            'min_impurity_decrease': np.linspace(0, 0.5, 50)
-        },{
-            'max_depth': range(1, 15)
-        },{
-            'min_samples_split': range(2, 30, 2)
-        }
-    ])
+    param_grid = {
+        'max_depth': range(1, 10, 1),
+        'min_samples_leaf': range(1, 10, 2)
+    }
+    clf = GridSearchCV(DecisionTreeClassifier(), cv=5, param_grid=param_grid)
     clf.fit(X, Y)
     logging.info("best decision tree param: {}\nbest score: {}".format(clf.best_params_, clf.best_score_))
     estimator = clf.best_estimator_
@@ -126,8 +117,10 @@ def test_decision_tree(X, Y):
     logging.info("decision tree score: {}".format(clf.score(X_test, Y_test)))
     print(classification_report(Y_test, y_pred))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
-    plt.subplot(3, 1, 3)
+    plt.subplot(2, 1, 2)
+    logging.info('ploting learn curve of decision tree')
     plot_learning_curve(clf, "decision tree", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+    logging.info("finished!")
     return estimator
 
 def test():
@@ -143,26 +136,28 @@ def test():
     vectorizer = TfidfVectorizer()
     X = vectorizer.fit_transform(commands)
     Y = labels
-    test_svm(X, Y)
+    plt.figure(figsize=(10, 15))
     test_knn(X, Y)
+    plt.figure(figsize=(10, 15))
     test_svm(X, Y)
     test_decision_tree(X, Y)
+    plt.show()
 
 
 
 
-def final_svm(X, Y):
-    logging.info('report for svm: ')
-    clf = svm.SVC(kernel='rbf', gamma=0.22449)
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-    clf.fit(X_train, Y_train)
-    plt.subplot(3, 1, 1)
-    plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
-    logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
-    y_pred = clf.predict(X_test)
-    print(classification_report(Y_test, y_pred))
-
-    print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
+# def final_svm(X, Y):
+#     logging.info('report for svm: ')
+#     clf = svm.SVC(kernel='rbf', gamma=0.22449)
+#     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+#     clf.fit(X_train, Y_train)
+#     plt.subplot(3, 1, 1)
+#     plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+#     logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
+#     y_pred = clf.predict(X_test)
+#     print(classification_report(Y_test, y_pred))
+#
+#     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
 
 
 
