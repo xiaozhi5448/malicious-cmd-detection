@@ -36,7 +36,7 @@ def multi_decision_predict(classifiers:list, command:str):
 def test_multi_decision_tree(normal_commands, abnormal_commands):
     model_filename = os.path.join('data/meta_data/multi_decision_tree', 'model.m')
     # if not os.path.exists(model_filename):
-    step = len(normal_commands) // 1000
+    step = len(normal_commands) // 6000
     classifiers = []
     logging.info("total step:{}".format(step))
     for i in range(step):
