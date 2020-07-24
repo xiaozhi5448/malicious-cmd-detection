@@ -27,16 +27,23 @@ def test_ocs():
     Y = [1 if item == 0 else -1 for item in labels]
 
     normal_vecs = vectorizer.transform([item[0] for item in normal_data_set])
+    abnormal_vecs = vectorizer.transform([item[0] for item in abnormal_data])
 
 
-    X_train = normal_vecs[2000:]
+
+    X_train = normal_vecs
     X_test = list(normal_vecs[:1000])
-    y_true = [1 for _ in range(1000)]
-    X_test.extend(vectorizer.transform([item[0] for item in abnormal_data]))
+    # y_true = [1 for _ in range(1000)]
+    y_true = [1 for _ in range(normal_vecs.shape[0])]
+    X_test= abnormal_vecs
     y_true.extend([-1 for _ in range(len(abnormal_data))])
-    clf = OneClassSVM(kernel='rbf',  gamma='auto')
+    clf = OneClassSVM(kernel='linear',  gamma='auto', degree=5)
     clf.fit(X_train)
-    y_pred = [clf.predict(item)[0] for item in X_test]
+    # y_pred = ?[clf.predict(item)[0] for item in X_test]
+    y_pred_0 = clf.predict(normal_vecs)
+    y_pred_1 = clf.predict(abnormal_vecs)
+    y_pred = list(y_pred_0)
+    y_pred.extend(list(y_pred_1))
     print(classification_report(y_true, y_pred))
 
 
