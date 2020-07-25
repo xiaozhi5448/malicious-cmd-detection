@@ -3,6 +3,7 @@ from data.util import load_data
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 import random
+import numpy as np
 from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import learning_curve
@@ -37,14 +38,21 @@ def test_ocs():
     y_true = [1 for _ in range(normal_vecs.shape[0])]
     X_test= abnormal_vecs
     y_true.extend([-1 for _ in range(len(abnormal_data))])
-    clf = OneClassSVM(kernel='linear',  gamma='auto', degree=5)
-    clf.fit(X_train)
-    # y_pred = ?[clf.predict(item)[0] for item in X_test]
-    y_pred_0 = clf.predict(normal_vecs)
-    y_pred_1 = clf.predict(abnormal_vecs)
-    y_pred = list(y_pred_0)
-    y_pred.extend(list(y_pred_1))
-    print(classification_report(y_true, y_pred))
+
+    param_grid = {
+        'kernal': ['linear'],
+        'nu': np.linspace(0.001, 0.03, 30),
+        'degree': np.linspace(5, 15, 11)
+    }
+
+    clf = OneClassSVM(kernel='linear', nu=0.002, degree=2)
+    clf.fit(normal_vecs)
+    # y_pred_0 = clf.predict(normal_vecs)
+    # y_pred_1 = clf.predict(abnormal_vecs)
+    # y_pred = list(y_pred_0)
+    # y_pred.extend(list(y_pred_1))
+    y_pred = clf.predict(X)
+    print(classification_report(Y, y_pred))
 
 
 if __name__ == '__main__':
