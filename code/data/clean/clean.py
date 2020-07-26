@@ -136,6 +136,7 @@ def add_abnormal_command():
         commands_list_with_label = pkl.load(infp)
     original_normal_commands = [item[0] for item in commands_list_with_label if item[1] == 0]
     original_abnormal_commands = [item[0] for item in commands_list_with_label if item[1] == 1]
+    abnormal_commands = [item for item in abnormal_commands if item not in original_normal_commands]
     normal_programs_dict = parse_program(original_normal_commands)
     normal_programs = set(normal_programs_dict.keys())
     results_abnormal = []
