@@ -16,6 +16,10 @@ from sklearn.model_selection import ShuffleSplit, cross_val_score, KFold
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
+from sklearn import model_selection
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.pipeline import Pipeline
+from sklearn.base import TransformerMixin
 import settings
 from data.util import load_data, get_dataset
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -138,12 +142,44 @@ def test_byes(X, Y):
     estimator = clf
     y_pred = estimator.predict(X_test)
     logging.info("MultinomialNB score: {}".format(clf.score(X_test, Y_test)))
+
     print(classification_report(Y_test, y_pred))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     logging.info('ploting learn curve of MultinomialNB')
     plot_learning_curve(clf, "MultinomialNB", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
     logging.info("finished!")
     return estimator
+
+
+class DenseTransformer(TransformerMixin):
+    def fit(self, X, y=None, **fit_params):
+        return self
+
+    def transform(self, X, y=None, **fit_params):
+        return X.todense()
+
+def test_lda():
+    normal_data_set, abnormal_data = load_data()
+
+    normal_data = normal_data_set
+    data = []
+    data.extend(abnormal_data)
+    data.extend(normal_data)
+    random.shuffle(data)
+    commands = [item[0] for item in data]
+    labels = [item[1] for item in data]
+    pipeline = Pipeline([
+        ('vectorizer', TfidfVectorizer()),
+        ('to_dense', DenseTransformer()),
+        ('classifier', LinearDiscriminantAnalysis())
+    ])
+    X_train, X_test, Y_train, Y_test = train_test_split(commands, labels, test_size=0.2)
+
+    pipeline.fit(X_train, Y_train)
+    y_pred = pipeline.predict(X_test)
+    logging.info("result of LDA algorithm:")
+    print(classification_report(Y_test, y_pred))
+
 
 def test():
     normal_data_set, abnormal_data = load_data()
@@ -165,9 +201,15 @@ def test():
     # plt.show()
     # plt.figure(figsize=(12, 8))
     # test_decision_tree(X, Y)
-    plt.figure(figsize=(12, 8))
-    test_byes(X, Y)
-    plt.show()
+    # test bayes algorithm
+    # plt.figure(figsize=(12, 8))
+    # test_byes(X, Y)
+    # plt.show()
+
+    # test lda algorithm
+
+
+    test_lda()
 
 
 

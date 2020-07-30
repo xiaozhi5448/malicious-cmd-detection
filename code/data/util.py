@@ -32,6 +32,7 @@ def load_data():
     abnormal_data = [item for item in dataset if item[1] == 1]
     logging.info("abnormal data item: {}".format(len(abnormal_data)))
     normal_data_set = [item for item in dataset if item[1] == 0 and item[0] not in abnormal_data]
+    logging.info("normal data item: {}".format(len(normal_data_set)))
     return normal_data_set, abnormal_data
 
 def get_dataset():

@@ -165,8 +165,24 @@ def add_abnormal_command():
         pkl.dump(result_dataset, outfp)
     logging.info("finished")
 
+def strip_command():
+    all_command_with_label = []
+    with open('data/meta_data/dataset_clean_add_linuxde.pkl', 'rb') as infp:
+        all_command_with_label = pkl.load(infp)
+    normal_commands = [item[0].strip() for item in all_command_with_label if item[1] == 0 and item[0]]
+    abnormal_commands = [item[0].strip() for item in all_command_with_label if item[0] and item[1] == 1]
+    normal_commands.extend(['readlink', 'grep -w', 'top', 'jstat'])
+    all_data = [(command, 0) for command in normal_commands]
+    all_data.extend([(command, 1) for command in abnormal_commands])
+    with open('data/meta_data/dataset_clean_add_linuxde.pkl', 'wb') as outfp:
+        pkl.dump(all_data, outfp)
+
+    logging.info("done")
+
+
+
 
 
 
 if __name__ == '__main__':
-    add_abnormal_command()
+    strip_command()
