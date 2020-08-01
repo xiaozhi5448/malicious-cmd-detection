@@ -151,34 +151,8 @@ def test_byes(X, Y):
     return estimator
 
 
-class DenseTransformer(TransformerMixin):
-    def fit(self, X, y=None, **fit_params):
-        return self
 
-    def transform(self, X, y=None, **fit_params):
-        return X.todense()
 
-def test_lda():
-    normal_data_set, abnormal_data = load_data()
-
-    normal_data = normal_data_set
-    data = []
-    data.extend(abnormal_data)
-    data.extend(normal_data)
-    random.shuffle(data)
-    commands = [item[0] for item in data]
-    labels = [item[1] for item in data]
-    pipeline = Pipeline([
-        ('vectorizer', TfidfVectorizer()),
-        ('to_dense', DenseTransformer()),
-        ('classifier', LinearDiscriminantAnalysis())
-    ])
-    X_train, X_test, Y_train, Y_test = train_test_split(commands, labels, test_size=0.2)
-
-    pipeline.fit(X_train, Y_train)
-    y_pred = pipeline.predict(X_test)
-    logging.info("result of LDA algorithm:")
-    print(classification_report(Y_test, y_pred))
 
 
 def test():
@@ -205,11 +179,6 @@ def test():
     # plt.figure(figsize=(12, 8))
     # test_byes(X, Y)
     # plt.show()
-
-    # test lda algorithm
-
-
-    test_lda()
 
 
 
