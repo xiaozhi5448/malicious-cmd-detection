@@ -87,13 +87,27 @@ def test_lda():
         ('to_dense', DenseTransformer()),
         ('classifier', LinearDiscriminantAnalysis())
     ])
-    X_train, X_test, Y_train, Y_test = train_test_split(commands, labels, test_size=0.2)
 
-    pipeline.fit(X_train, Y_train)
-    y_pred = pipeline.predict(X_test)
+    logging.info("transform commands to vector ......")
+    vectorizer = TfidfVectorizer()
+    X = vectorizer.fit_transform(commands)
+    logging.info("transform finished!")
+    logging.info("vector shape: {}".format(X.shape))
+
+    pca_util = TruncatedSVD(n_components=4000)
+    pca_X = pca_util.fit_transform(X, labels)
+    logging.info("reduce features to : {}".format(pca_X.shape))
+
+    logging.info("split dataset")
+    X_train, X_test, Y_train, Y_test = train_test_split(pca_X, labels, test_size=0.2)
+
+    logging.info("training the model")
+    clf = LinearDiscriminantAnalysis()
+    clf.fit(X_train, Y_train)
+    y_pred = clf.predict(X_test)
     logging.info("result of LDA algorithm:")
     print(classification_report(Y_test, y_pred))
 
 
 if __name__ == '__main__':
-    test_dimension()
+    test_lda()
