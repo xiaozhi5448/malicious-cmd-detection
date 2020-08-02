@@ -4,10 +4,14 @@ import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import classification_report
 from sklearn.svm import OneClassSVM
+from sklearn.decomposition import PCA, TruncatedSVD
 from sklearn.neighbors import LocalOutlierFactor
 import sys
 import os
+import logging
 sys.path.append(os.getcwd())
+from data.util import load_data
+logging.basicConfig(level=logging.INFO)
 
 
 def test_lof(X, Y):
@@ -35,7 +39,6 @@ def test_iforest(X, Y):
 
 
 def test():
-    from data.util import load_data
     normal_data_set, abnormal_data = load_data()
     normal_data = normal_data_set
     data = []
@@ -53,12 +56,17 @@ def test():
     Y = [1 if item == 0 else -1 for item in labels]
     normal_vecs = vectorizer.transform([item[0] for item in normal_data_set])
     abnormal_vecs = vectorizer.transform([item[0] for item in abnormal_data])
+    logging.info("original vector shape:{}".format(X.shape))
+    pca_util = TruncatedSVD(n_components=3500)
+    pca_X = pca_util.fit_transform(X, Y)
+    normal_vecs = pca_util.transform(normal_vecs)
+    logging.info("reduce features to : {}".format(pca_X.shape))
     print("result for One class svm:")
-    test_ocs(X, Y, normal_vecs, abnormal_vecs)
+    test_ocs(pca_X, Y, normal_vecs, abnormal_vecs)
     print("result for iforest:")
-    test_iforest(X, Y)
+    test_iforest(pca_X, Y)
     print("result for LOF")
-    test_lof(X, Y)
+    test_lof(pca_X, Y)
 
 
 if __name__ == '__main__':

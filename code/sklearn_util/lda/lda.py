@@ -82,11 +82,6 @@ def test_lda():
     random.shuffle(data)
     commands = [item[0] for item in data]
     labels = [item[1] for item in data]
-    pipeline = Pipeline([
-        ('vectorizer', TfidfVectorizer()),
-        ('to_dense', DenseTransformer()),
-        ('classifier', LinearDiscriminantAnalysis())
-    ])
 
     logging.info("transform commands to vector ......")
     vectorizer = TfidfVectorizer()

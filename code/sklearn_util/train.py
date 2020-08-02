@@ -79,7 +79,7 @@ def test_knn(X, Y):
         print(classification_report(Y_test, Y_pred))
         plt.subplot(2, 1, index+1)
         logging.info("ploting learning curve of {}".format(clf[0]))
-        plot_learning_curve(model, clf[0], X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+        plot_learning_curve(model, clf[0], X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.5, 1])
         logging.info("finished")
 
 def test_svm(X, Y):
@@ -106,7 +106,7 @@ def test_svm(X, Y):
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     print(classification_report(Y_test, y_pred))
     logging.info("ploting learning curve of svm")
-    plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+    plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1.0])
     logging.info("finished")
     return clf
 
@@ -129,7 +129,7 @@ def test_decision_tree(X, Y):
     print(classification_report(Y_test, y_pred))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     logging.info('ploting learn curve of decision tree')
-    plot_learning_curve(clf, "decision tree", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+    plot_learning_curve(clf, "decision tree", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
     logging.info("finished!")
     return estimator
 
@@ -146,7 +146,7 @@ def test_byes(X, Y):
     print(classification_report(Y_test, y_pred))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     logging.info('ploting learn curve of MultinomialNB')
-    plot_learning_curve(clf, "MultinomialNB", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
+    plot_learning_curve(clf, "MultinomialNB", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
     logging.info("finished!")
     return estimator
 
@@ -168,17 +168,17 @@ def test():
     vectorizer = TfidfVectorizer()
     X = vectorizer.fit_transform(commands)
     Y = labels
-    # plt.figure(figsize=(10, 15))
-    # test_knn(X, Y)
-    # plt.figure(figsize=(12, 8))
-    # test_svm(X, Y)
-    # plt.show()
-    # plt.figure(figsize=(12, 8))
-    # test_decision_tree(X, Y)
+    plt.figure(figsize=(10, 15))
+    test_knn(X, Y)
+    plt.figure(figsize=(12, 8))
+    test_svm(X, Y)
+    plt.show()
+    plt.figure(figsize=(12, 8))
+    test_decision_tree(X, Y)
     # test bayes algorithm
-    # plt.figure(figsize=(12, 8))
-    # test_byes(X, Y)
-    # plt.show()
+    plt.figure(figsize=(12, 8))
+    test_byes(X, Y)
+    plt.show()
 
 
 
