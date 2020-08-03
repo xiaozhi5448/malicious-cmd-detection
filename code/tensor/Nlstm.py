@@ -13,26 +13,39 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 from sklearn.metrics import classification_report
 from data.util import load_data
+from data.clean.clean import load_commands
+import settings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s  %(filename)s %(lineno)d: %(levelname)s  %(message)s')
 
 from settings import meta_data_dir
 
-def train():
+def train(host:str=None):
     BUFFER_SIZE = 50000
     BATCH_SIZE = 128
     TAKE_SIZE = 3000
     def labeler(example, index):
         return example, tf.cast(index, tf.int64)
     logging.info("reading data from disk.......")
-    normal_commands, abnormal_commands = load_data()
+    if not host:
+        normal_commands, abnormal_commands = load_data()
+
+    elif host == 'agent1':
+        normal_commands = load_commands(os.path.join(settings.meta_data_dir, settings.agent1_dataset_cleaned_bin))
+        abnormal_commands = load_commands(os.path.join(settings.meta_data_dir, settings.original_abnormal_dataset))
+        abnormal_commands |= load_commands(os.path.join(settings.meta_data_dir, settings.addition_abnormal_dataset))
+    else:
+        normal_commands = load_commands(os.path.join(settings.meta_data_dir, settings.agent2_dataset_cleaned_bin))
+        abnormal_commands = load_commands(os.path.join(settings.meta_data_dir, settings.original_abnormal_dataset))
+        abnormal_commands |= load_commands(os.path.join(settings.meta_data_dir, settings.addition_abnormal_dataset))
+    logging.info("{} normal commands loaded from disk!".format(len(normal_commands)))
+    logging.info("{} abnormal commands loaded from disk!".format(len(abnormal_commands)))
     with open(os.path.join(meta_data_dir, 'abnormal_commands.txt'), 'w', encoding='utf-8') as outfp:
         outfp.write(os.linesep.join([item[0].strip() for item in abnormal_commands]))
     with open(os.path.join(meta_data_dir, 'normal_commands.txt'), 'w', encoding='utf-8') as outfp:
         outfp.write(os.linesep.join([item[0].strip() for item in normal_commands]))
     logging.info("loading finished!")
-
     normal_data = tf.data.TextLineDataset(os.path.join(meta_data_dir, 'normal_commands.txt'))
     abnormal_data = tf.data.TextLineDataset(os.path.join(meta_data_dir, 'abnormal_commands.txt'))
     labeled_data = normal_data.map(lambda ex: labeler(ex, 0))
@@ -104,7 +117,7 @@ def train():
                   metrics=['accuracy'])
     logging.info("lstm model built")
     logging.info("training...")
-    model.fit(train_data, epochs=3, validation_data=test_data)
+    model.fit(train_data, epochs=5, validation_data=test_data)
     logging.info("finished")
     eval_loss, eval_acc = model.evaluate(test_data)
     y_pred = model.predict(test_data)

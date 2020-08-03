@@ -22,6 +22,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.base import TransformerMixin
 import settings
 from data.util import load_data, get_dataset
+from data.clean.clean import load_commands
+import os
 warnings.simplefilter(action='ignore', category=FutureWarning)
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s  %(filename)s %(lineno)d: %(levelname)s  %(message)s')
@@ -58,7 +60,7 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None, n_jobs=1, tr
     return plt
 
 
-def test_knn(X, Y):
+def test_knn(X, Y, plot=True):
     clfs = list()
     clfs.append(('KNN', KNeighborsClassifier(n_neighbors=3)))
     clfs.append(('RadiusKNN', RadiusNeighborsClassifier(n_neighbors=3, radius=500)))
@@ -77,12 +79,14 @@ def test_knn(X, Y):
         print("report for {}".format(clf[0]))
         print(cross_val_score(model, X, Y, cv=KFold(n_splits=5)))
         print(classification_report(Y_test, Y_pred))
-        plt.subplot(2, 1, index+1)
-        logging.info("ploting learning curve of {}".format(clf[0]))
-        plot_learning_curve(model, clf[0], X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.5, 1])
-        logging.info("finished")
+        if plot:
+            plt.subplot(2, 1, index+1)
 
-def test_svm(X, Y):
+            logging.info("ploting learning curve of {}".format(clf[0]))
+            plot_learning_curve(model, clf[0], X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.5, 1])
+            logging.info("finished")
+
+def test_svm(X, Y, plot=True):
 
     logging.info("svm result:")
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
@@ -92,13 +96,14 @@ def test_svm(X, Y):
     logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     print(classification_report(Y_test, y_pred))
-    logging.info("ploting learning curve of svm")
-    plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1.0])
-    logging.info("finished")
+    if plot:
+        logging.info("ploting learning curve of svm")
+        plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1.0])
+        logging.info("finished")
     return clf
 
 
-def test_decision_tree(X, Y):
+def test_decision_tree(X, Y, plot=True):
     logging.info("test decision tree:")
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
     clf = DecisionTreeClassifier(max_depth=9, min_samples_leaf=1)
@@ -108,12 +113,13 @@ def test_decision_tree(X, Y):
     logging.info("decision tree score: {}".format(clf.score(X_test, Y_test)))
     print(classification_report(Y_test, y_pred))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
-    logging.info('ploting learn curve of decision tree')
-    plot_learning_curve(clf, "decision tree", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
-    logging.info("finished!")
+    if plot:
+        logging.info('ploting learn curve of decision tree')
+        plot_learning_curve(clf, "decision tree", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
+        logging.info("finished!")
     return estimator
 
-def test_byes(X, Y):
+def test_byes(X, Y, plot=True):
     logging.info("test byes:")
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
@@ -125,9 +131,10 @@ def test_byes(X, Y):
 
     print(classification_report(Y_test, y_pred))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
-    logging.info('ploting learn curve of MultinomialNB')
-    plot_learning_curve(clf, "MultinomialNB", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
-    logging.info("finished!")
+    if plot:
+        logging.info('ploting learn curve of MultinomialNB')
+        plot_learning_curve(clf, "MultinomialNB", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
+        logging.info("finished!")
     return estimator
 
 
@@ -160,8 +167,55 @@ def test():
     test_byes(X, Y)
     plt.show()
 
+def test_agent1():
+    logging.info("test for agent1")
+    original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
+    addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
+    normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent1_dataset_bin))
+    abnormal_commands = original_abnormal_commands | addition_abnormal_commands
+    commands = list(normal_commands)
+    commands.extend(list(abnormal_commands))
+    labels = [0 for _ in range(len(normal_commands))]
+    labels.extend([1 for _ in range(len(abnormal_commands))])
+    vectorizer = TfidfVectorizer()
+    X = vectorizer.fit_transform(commands)
+    Y = labels
+    plt.figure(figsize=(10, 15))
+    test_knn(X, Y, False)
+    plt.figure(figsize=(12, 8))
+    test_svm(X, Y, False)
+    plt.show()
+    plt.figure(figsize=(12, 8))
+    test_decision_tree(X, Y, False)
+    # test bayes algorithm
+    plt.figure(figsize=(12, 8))
+    test_byes(X, Y, False)
+    plt.show()
 
-
+def test_agent2():
+    logging.info("test for agent2")
+    original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
+    addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
+    normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent2_dataset_bin))
+    abnormal_commands = original_abnormal_commands | addition_abnormal_commands
+    commands = list(normal_commands)
+    commands.extend(list(abnormal_commands))
+    labels = [0 for _ in range(len(normal_commands))]
+    labels.extend([1 for _ in range(len(abnormal_commands))])
+    vectorizer = TfidfVectorizer()
+    X = vectorizer.fit_transform(commands)
+    Y = labels
+    plt.figure(figsize=(10, 15))
+    test_knn(X, Y, False)
+    plt.figure(figsize=(12, 8))
+    test_svm(X, Y, False)
+    plt.show()
+    plt.figure(figsize=(12, 8))
+    test_decision_tree(X, Y, False)
+    # test bayes algorithm
+    plt.figure(figsize=(12, 8))
+    test_byes(X, Y, False)
+    plt.show()
 
 # def final_svm(X, Y):
 #     logging.info('report for svm: ')
@@ -180,5 +234,7 @@ def test():
 
 
 if __name__ == '__main__':
-    test()
+    # test()
+    test_agent2()
+
 

@@ -82,6 +82,7 @@ def get_host_dataset():
                 if line.strip():
                     items = line.split(',')
                     command = ','.join(items[:-1])
+                    command = ' '.join(command.strip('\x00').split('\x00'))
                     if command.strip():
                         agent1_commands.add(command)
     logging.info("agent1 commands count:{}".format(len(agent1_commands)))
@@ -98,6 +99,7 @@ def get_host_dataset():
                 if line.strip():
                     items = line.split(',')
                     command = ','.join(items[:-1])
+                    command = ' '.join(command.strip('\x00').split('\x00'))
                     if command.strip():
                         agent2_commands.add(command)
     logging.info("agent2 commands count:{}".format(len(agent2_commands)))
