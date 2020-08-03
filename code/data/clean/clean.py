@@ -8,6 +8,7 @@ import pickle as pkl
 import os
 import logging
 import re
+import settings
 from data.DataAnalysis import parse_program
 logging.basicConfig(level=logging.INFO)
 
@@ -22,28 +23,59 @@ def ngram_distance(items1: list, items2: list, n: int = 1):
     common_items = set(joined_items1) & set(joined_items2)
     return len(joined_items1) + len(joined_items2) - 2 * len(common_items)
 
-def parse_data():
+def parse_data(dataset_bin_filepath:str='code/data/meta_data/dataset.pkl'):
     commands = []
-    with open(os.path.join(meta_data_dir, 'dataset.pkl'), 'rb') as infp:
+    with open(dataset_bin_filepath, 'rb') as infp:
         commands = pkl.load(infp)
     logging.info("total {} command items".format(len(commands)))
     abnormal_commands = [item[0] for item in commands if item[1] == 1 and item[0]]
     normal_commands = [item[0] for item in commands if item[1] == 0 and item[0] not in abnormal_commands]
     return normal_commands, abnormal_commands
 
-def clean():
-    normal_commands, abnormal_commands = parse_data()
+def dump_original_abnormal_dataset():
     abnormal_workbook = openpyxl.load_workbook(os.path.join(data_dir, 'cheat sheet.xlsx'))
     abnormal_sheet = abnormal_workbook.get_sheet_by_name("cmd")
     abnormal_command_set = set()
-
     for row in list(abnormal_sheet.rows)[1:92]:
         abnormal_command_set.add(row[0].value)
     for row in list(abnormal_sheet.rows)[116:]:
         abnormal_command_set.add(row[0].value)
 
     logging.info("{} abnormal items in abnormal cheat sheet!".format(len(abnormal_command_set)))
-    logging.info("{} abnormal items in log file".format(len(abnormal_commands)))
+    with open(os.path.join(meta_data_dir, settings.original_abnormal_dataset), 'wb') as outfp:
+        pkl.dump(abnormal_command_set, outfp)
+        logging.info("original abnormal dataset dumped to {}".format(settings.original_abnormal_dataset))
+
+def dump_addition_abnormal_dataset():
+    abnormal_commands = []
+    linuxde_filepath = 'data/command_linuxde/total.txt'
+    runoob_filepath = 'data/command_runoob/total.txt'
+    for filepath in [linuxde_filepath, runoob_filepath]:
+        with open(filepath, 'r', encoding='utf-8') as infp:
+            for line in infp:
+                abnormal_commands.append(line.strip())
+    abnormal_commands = [item for item in abnormal_commands if item.strip()]
+    sudo_commands = []
+    for command in abnormal_commands:
+        if command.strip():
+            items = command.split(' ')
+            if items[0] != 'sudo':
+                items.insert(0, 'sudo')
+                sudo_commands.append(' '.join(items))
+    abnormal_commands.extend(sudo_commands)
+    with open(os.path.join(meta_data_dir, settings.addition_abnormal_dataset), 'wb') as outfp:
+        pkl.dump(set(abnormal_commands), outfp)
+        logging.info("{} abnormal commands dumped to {}".format(len(abnormal_commands), settings.addition_abnormal_dataset))
+
+def load_commands(filepath:str):
+    with open(filepath, 'rb') as infp:
+        commands = pkl.load(infp)
+        return commands
+
+def clean(dataset_bin_filepath:str='data/meta_data/dataset.pkl'):
+    normal_commands = load_commands(dataset_bin_filepath)
+    abnormal_command_set = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
+    logging.info("{} abnormal items in abnormal cheat sheet!".format(len(abnormal_command_set)))
 
     logging.info("{} normal items in log file".format(len(normal_commands)))
     normal_command_set = set(normal_commands) - abnormal_command_set
@@ -80,15 +112,12 @@ def clean():
     logging.info("{} java items".format(len(java_commands)))
     java_command_set = set(java_commands)
     logging.info("{} java items after remove duplicated!".format(len(java_command_set)))
-    print(java_commands[0])
 
     logging.info("{} normal items after clean abnormal command".format(len(normal_command_set)))
-    commands = [(command, 0) for command in normal_command_set]
-    for command in abnormal_command_set:
-        commands.append((command, 1))
-    with open(os.path.join(meta_data_dir, 'dataset_clean.pkl'), 'wb') as outfp:
-        pkl.dump(commands, outfp)
-    logging.info("commands cleaned, dumped to meta_data/dataset_clean.pkl")
+    output_dataset_bin = '{}_clean.pkl'.format(dataset_bin_filepath.split('/')[-1].split('.')[0])
+    with open(os.path.join(meta_data_dir, output_dataset_bin), 'wb') as outfp:
+        pkl.dump(normal_command_set, outfp)
+    logging.info("commands cleaned, dumped to {}".format(output_dataset_bin))
 
 def find_program_from_command(command:str):
     if not command:
@@ -176,7 +205,6 @@ def strip_command():
     all_data.extend([(command, 1) for command in abnormal_commands])
     with open('data/meta_data/dataset_clean_add_linuxde.pkl', 'wb') as outfp:
         pkl.dump(all_data, outfp)
-
     logging.info("done")
 
 
@@ -185,4 +213,5 @@ def strip_command():
 
 
 if __name__ == '__main__':
-    strip_command()
+    clean('data/meta_data/agent1_dataset_bin.pkl')
+    clean('data/meta_data/agent2_dataset_bin.pkl')

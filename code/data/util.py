@@ -11,11 +11,11 @@ import glob
 import json
 import random
 import settings
-
+from settings import normal_output_dirs, abnormal_output_dirs, agent1_dataset_bin, agent2_dataset_bin
 data_dirs = ['data/normal_all', 'data/abnormal_all']
 meta_data_dir = settings.meta_data_dir
 dataset_bin = settings.dataset_bin
-
+logging.basicConfig(level=logging.INFO)
 
 def load_data():
     """
@@ -72,6 +72,41 @@ def get_dataset():
     logging.info("reading data finished!")
     return dataset
 
+def get_host_dataset():
+    agent1_commands = set()
+    for filename in glob.glob('data/normal_all/Agent1/*.csv'):
+        logging.info("processing file {}".format(filename))
+        with open(filename, 'r', encoding='utf-8') as infp:
+            infp.readline()
+            for line in infp:
+                if line.strip():
+                    items = line.split(',')
+                    command = ','.join(items[:-1])
+                    if command.strip():
+                        agent1_commands.add(command)
+    logging.info("agent1 commands count:{}".format(len(agent1_commands)))
+    with open(os.path.join(meta_data_dir, agent1_dataset_bin) , 'wb') as outfp:
+        pickle.dump(agent1_commands, outfp)
+        logging.info('data dumped to file {}'.format(agent1_dataset_bin))
+
+    agent2_commands = set()
+    for filename in glob.glob('data/normal_all/Agent2/*.csv'):
+        logging.info("process file {}".format(filename))
+        with open(filename, 'r', encoding='utf-8') as infp:
+            infp.readline()
+            for line in infp:
+                if line.strip():
+                    items = line.split(',')
+                    command = ','.join(items[:-1])
+                    if command.strip():
+                        agent2_commands.add(command)
+    logging.info("agent2 commands count:{}".format(len(agent2_commands)))
+    with open(os.path.join(meta_data_dir, agent2_dataset_bin), 'wb') as outfp:
+        pickle.dump(agent2_commands, outfp)
+        logging.info('data dumped to file {}'.format(agent2_dataset_bin))
+
+
+
 if __name__ == '__main__':
-    load_data()
+    get_host_dataset()
 

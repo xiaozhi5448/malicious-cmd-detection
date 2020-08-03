@@ -86,21 +86,8 @@ def test_svm(X, Y):
 
     logging.info("svm result:")
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-    # clf = GridSearchCV(svm.SVC(), cv=5, param_grid=[
-    #     {
-    #         'kernel':['rbf'],
-    #         'gamma': np.linspace(0, 1, 50)
-    #     },
-    #     {
-    #         'kernel':['poly'],
-    #         'degree': list(range(1, 10))
-    #     }
-    # ]
-    # )
     clf = svm.SVC(C=1.0, kernel='rbf', gamma=0.5)
     clf.fit(X, Y)
-    # logging.info("best svm param: {}\nbest score: {}".format(clf.best_params_, clf.best_score_))
-    # estimator = clf.best_estimator_
     y_pred = clf.predict(X_test)
     logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
@@ -114,15 +101,8 @@ def test_svm(X, Y):
 def test_decision_tree(X, Y):
     logging.info("test decision tree:")
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-    param_grid = {
-        'max_depth': range(1, 10, 1),
-        'min_samples_leaf': range(1, 10, 2)
-    }
-    # clf = GridSearchCV(DecisionTreeClassifier(), cv=5, param_grid=param_grid)
     clf = DecisionTreeClassifier(max_depth=9, min_samples_leaf=1)
     clf.fit(X, Y)
-    # logging.info("best decision tree param: {}\nbest score: {}".format(clf.best_params_, clf.best_score_))
-    # estimator = clf.best_estimator_
     estimator = clf
     y_pred = estimator.predict(X_test)
     logging.info("decision tree score: {}".format(clf.score(X_test, Y_test)))
