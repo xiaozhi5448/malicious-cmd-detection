@@ -218,16 +218,11 @@ def test(agent="", injection=False):
     pred_y = dt_res[0].predict(X)
     print(pred_y)
     print(classification_report(Y, pred_y))
-
-
     return {
         'svm': svm_res,
         'dt': dt_res,
         'bayes': bayes_res
     }
-
-
-
 
 if __name__ == '__main__':
     common_res = test()

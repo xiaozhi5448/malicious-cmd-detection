@@ -11,6 +11,7 @@ import time
 from threading import Lock
 from datetime import datetime
 import os
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import settings
 from settings import meta_data_dir
 from data.clean.clean import load_commands
@@ -19,11 +20,11 @@ random.seed(time.time())
 def ngram_distance(items1: list, items2: list, n: int = 1):
     if len(items1) < n or len(items2) < n:
         return None
-    joined_items1 = [' '.join(items1[i:i + n]) for i in range(len(items1) - n + 1)]
-    joined_items2 = [' '.join(items2[i:i + n]) for i in range(len(items2) - n + 1)]
-    common_items = set(joined_items1) & set(joined_items2)
-    distance = len(joined_items1) + len(joined_items2) - 2 * len(common_items)
-    return distance / (len(joined_items1) + len(joined_items2))
+    # joined_items1 = [' '.join(items1[i:i + n]) for i in range(len(items1) - n + 1)]
+    # joined_items2 = [' '.join(items2[i:i + n]) for i in range(len(items2) - n + 1)]
+    common_items = set(items1) & set(items2)
+    distance = len(items1) + len(items2) - 2 * len(common_items)
+    return distance / (len(items1) + len(items2))
 
 def plot_bar(distances:list):
     items = Counter(distances)
@@ -38,15 +39,14 @@ def plot_bar(distances:list):
     plt.ylabel("count")
     plt.plot(x_labels, y_values)
 
-def get_min_distance(command:str, normal_commands:list):
+def get_min_distance(command:list, normal_commands:list):
     """
 
     :param command:
     :param normal_commands:
     :return:
     """
-
-    current_distances = [ngram_distance(command.split(' '), item) for item in normal_commands]
+    current_distances = [ngram_distance(command, item) for item in normal_commands]
     min_distance = min(current_distances)
     logging.debug("distance : {}".format(min_distance))
     return min_distance
@@ -73,9 +73,27 @@ def predict(commands:list, normal_commands:list) -> list:
     logging.info("calculate finished, cost {} seconds".format((t2-t1).seconds))
     return min_distances
 
+def encode(vocabulary, command:list)->list:
+    res = []
+    for word in command:
+        try:
+            res.append(vocabulary[word])
+        except KeyError as e:
+            res.append(-1)
+    return res
+def build_vocabulary(voca:dict, commands:list):
+    vocabulary = voca
+    index = max(list(vocabulary.values())) if vocabulary else 0
+    for line in commands:
+        words = line.strip().split()
+        for word in words:
+            if word not in vocabulary:
+                index+=1
+                vocabulary[word] = index
+    return vocabulary
 
 def knn(agent=""):
-    # logging.info("loading data from bin file:{}".format(dataset_bin))
+    logging.info("loading data ......")
     if not agent:
         normal_data_set, abnormal_data = load_data()
         normal_commands = [item[0] for item in normal_data_set]
@@ -92,6 +110,12 @@ def knn(agent=""):
         addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
         normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent2_dataset_cleaned_bin))
         abnormal_commands = original_abnormal_commands | addition_abnormal_commands
+
+    logging.info('loading finished!')
+
+    vocabulary = build_vocabulary({}, normal_commands)
+    vocabulary = build_vocabulary(vocabulary, abnormal_commands)
+    logging.info("vocabulaey built finished!")
     abnormal_commands = random.sample(abnormal_commands, 500)
     test_normal_commands = random.sample(normal_commands, 500)
     train_normal_commands = set(normal_commands) - set(test_normal_commands)
@@ -100,16 +124,20 @@ def knn(agent=""):
     train_normal_commands.add('top')
     train_normal_commands.add('jstat')
     normal_commands_splited = [command.strip().split(' ') for command in train_normal_commands if command]
+    normal_commands_vecs = [encode(vocabulary, line) for line in normal_commands_splited]
     logging.info("computing distance for normal commands! total: {}".format(len(test_normal_commands)))
+    test_normal_commands_vecs = [encode(vocabulary, line.split(' ')) for line in test_normal_commands]
+    logging.info("convert command to vectors finished!")
     plt.figure(figsize=(10, 15))
     plt.subplot(2, 1, 1)
     plt.title('normal test set distance distribution')
-    test_normal_distances = predict(test_normal_commands, normal_commands_splited)
+    test_normal_distances = predict(test_normal_commands_vecs, normal_commands_vecs)
     logging.info("computing distance for abnormal commands!")
     plot_bar(test_normal_distances)
     plt.subplot(2, 1, 2)
     plt.title('abnormal test set distance distribution')
-    test_abnormal_distances = predict(abnormal_commands, normal_commands_splited)
+    abnormal_commands_vecs = [encode(vocabulary, line.split(' ')) for line in abnormal_commands]
+    test_abnormal_distances = predict(abnormal_commands_vecs, normal_commands_vecs)
     plot_bar(test_abnormal_distances)
     # plt.show()
 
