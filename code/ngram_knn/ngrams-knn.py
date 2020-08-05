@@ -6,10 +6,14 @@ from collections import Counter
 import matplotlib.pyplot as plt
 import numpy as np
 from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 import time
 from threading import Lock
 from datetime import datetime
+import os
+import settings
+from settings import meta_data_dir
+from data.clean.clean import load_commands
 random.seed(time.time())
 
 def ngram_distance(items1: list, items2: list, n: int = 1):
@@ -29,6 +33,7 @@ def plot_bar(distances:list):
     data.sort(key=lambda item: item[0])
     x_labels = [item[0] for item in data]
     y_values = [item[1] for item in data]
+    plt.xlim((0., 1.05))
     plt.xlabel("distance")
     plt.ylabel("count")
     plt.plot(x_labels, y_values)
@@ -40,8 +45,10 @@ def get_min_distance(command:str, normal_commands:list):
     :param normal_commands:
     :return:
     """
+
     current_distances = [ngram_distance(command.split(' '), item) for item in normal_commands]
     min_distance = min(current_distances)
+    logging.debug("distance : {}".format(min_distance))
     return min_distance
 
 def predict(commands:list, normal_commands:list) -> list:
@@ -70,16 +77,23 @@ def predict(commands:list, normal_commands:list) -> list:
 def knn(agent=""):
     # logging.info("loading data from bin file:{}".format(dataset_bin))
     if not agent:
-        logging.info("n-gram knn test for all commands")
-        normal_commands, abnormal_commands = load_data()
-    elif agent=='agent1':
-
-    logging.info("loading data finished!")
-
-    normal_commands = [item[0] for item in normal_commands]
-    abnormal_commands = [item[0] for item in abnormal_commands]
-    abnormal_commands = random.sample(abnormal_commands, 1000)
-    test_normal_commands = random.sample(normal_commands, 1000)
+        normal_data_set, abnormal_data = load_data()
+        normal_commands = [item[0] for item in normal_data_set]
+        abnormal_commands = [item[0] for item in abnormal_data]
+    elif agent == 'agent1':
+        logging.info("test for agent1")
+        original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
+        addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
+        normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent1_dataset_cleaned_bin))
+        abnormal_commands = original_abnormal_commands | addition_abnormal_commands
+    else:
+        logging.info("test for agent2")
+        original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
+        addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
+        normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent2_dataset_cleaned_bin))
+        abnormal_commands = original_abnormal_commands | addition_abnormal_commands
+    abnormal_commands = random.sample(abnormal_commands, 500)
+    test_normal_commands = random.sample(normal_commands, 500)
     train_normal_commands = set(normal_commands) - set(test_normal_commands)
     train_normal_commands.add('readlink')
     train_normal_commands.add('grep')
@@ -132,6 +146,8 @@ def knn(agent=""):
     plt.plot(X, normal_recall, color='red', label="normal  recall")
     plt.plot(X, normal_precision, color="green", label="normal  precision")
     plt.legend()
+    plt.grid("on")
+    plt.ylim((0.8, 1.05))
     plt.xlabel("distance")
     plt.ylabel("rate")
     plt.title("normal recall/precision")
@@ -140,6 +156,8 @@ def knn(agent=""):
     plt.plot(X, abnormal_recall, color="red", label="abnormal  recall")
     plt.plot(X, abnormal_precision, color="green", label="abnormal precision")
     plt.legend()
+    plt.grid("on")
+    plt.ylim((0.8, 1.05))
     plt.xlabel("distance")
     plt.ylabel("rate")
     plt.title("abnormal recall/precision")
@@ -149,4 +167,6 @@ def knn(agent=""):
 
 if __name__ == '__main__':
     # print(ngram_distance("readlink /proc/235072/exe ".split(), "command: /opt/java8/jre/bin/java -Dnop -DCATALINA_STARTUP_CHECKER_FLAG=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/temp1a0b/HwEoLrLlOd.tcatpid -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Dorg.apache.catalina.security.SecurityListener.UMASK=0077 -Dopenas.catalina.out.log.file.control=off -Dfile.encoding=UTF-8 -Dopenas.accesslog.control=on -Dopenas.tomcat.flow.control=false -Dopenas.tomcat.flow.control.socket.reuseaddr=true -Dopenas.tomcat.flow.control.reject.timeout=1000 -server -XX:+UseParallelGC -XX:ParallelGCThreads=16 -XX:+UseAdaptiveSizePolicy -Xms3072m -Xmx5760m -XX:NewRatio=4 -XX:PermSize=512m -XX:MaxPermSize=1024m -Xloggc:/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/logs/tomcatdump/tomcat_gc_200502144203.log -XX:+PrintGCDetails -XX:ErrorFile=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/logs/tomcatdump/tomcat_error_200502144203.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10M -Djava.security.egd=file:/dev/./urandom -Dsun.rmi.dgc.server.gcInterval=0x7FFFFFFFFFFFFFE -Dsun.rmi.dgc.client.gcInterval=0x7FFFFFFFFFFFFFE -Dopenas.log.close.interval=3600000 -Dopenas.log.debug.level=error -Djava.endorsed.dirs= -classpath /opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/bin/bootstrap.jar:/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/bin/tomcat-juli.jar -Dcatalina.base=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7 -Dcatalina.home=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7 -Djava.io.tmpdir=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/temp org.apache.catalina.startup.Bootstrap start ".split()))
-    knn()
+    knn('agent1')
+    knn('agent2')
+

@@ -30,7 +30,8 @@ def train(host:str=None):
     logging.info("reading data from disk.......")
     if not host:
         normal_commands, abnormal_commands = load_data()
-
+        normal_commands = [item[0] for item in normal_commands if item[0]]
+        abnormal_commands = [item[0] for item in abnormal_commands if item[0]]
     elif host == 'agent1':
         normal_commands = load_commands(os.path.join(settings.meta_data_dir, settings.agent1_dataset_cleaned_bin))
         abnormal_commands = load_commands(os.path.join(settings.meta_data_dir, settings.original_abnormal_dataset))
@@ -42,9 +43,9 @@ def train(host:str=None):
     logging.info("{} normal commands loaded from disk!".format(len(normal_commands)))
     logging.info("{} abnormal commands loaded from disk!".format(len(abnormal_commands)))
     with open(os.path.join(meta_data_dir, 'abnormal_commands.txt'), 'w', encoding='utf-8') as outfp:
-        outfp.write(os.linesep.join([item[0].strip() for item in abnormal_commands]))
+        outfp.write(os.linesep.join([item.strip() for item in abnormal_commands]))
     with open(os.path.join(meta_data_dir, 'normal_commands.txt'), 'w', encoding='utf-8') as outfp:
-        outfp.write(os.linesep.join([item[0].strip() for item in normal_commands]))
+        outfp.write(os.linesep.join([item.strip() for item in normal_commands]))
     logging.info("loading finished!")
     normal_data = tf.data.TextLineDataset(os.path.join(meta_data_dir, 'normal_commands.txt'))
     abnormal_data = tf.data.TextLineDataset(os.path.join(meta_data_dir, 'abnormal_commands.txt'))
@@ -117,7 +118,7 @@ def train(host:str=None):
                   metrics=['accuracy'])
     logging.info("lstm model built")
     logging.info("training...")
-    model.fit(train_data, epochs=5, validation_data=test_data)
+    model.fit(train_data, epochs=3, validation_data=test_data)
     logging.info("finished")
     eval_loss, eval_acc = model.evaluate(test_data)
     y_pred = model.predict(test_data)
@@ -130,4 +131,5 @@ def train(host:str=None):
     print('\nEval loss: {}, Eval accuracy: {}'.format(eval_loss, eval_acc))
     print(classification_report(y_true, pred_labels))
 if __name__ == '__main__':
-    train()
+    train('agent1')
+    train('agent2')

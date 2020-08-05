@@ -70,6 +70,7 @@ def dump_addition_abnormal_dataset():
 def load_commands(filepath:str):
     with open(filepath, 'rb') as infp:
         commands = pkl.load(infp)
+        logging.info("load {} commands".format(len(commands)))
         return commands
 
 def clean(dataset_bin_filepath:str='data/meta_data/dataset.pkl'):

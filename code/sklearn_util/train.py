@@ -109,14 +109,15 @@ def test_svm(X, Y, plot=True):
     clf.fit(X, Y)
     y_pred = clf.predict(X_test)
     logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
-    print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
+    # print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     report_res = classification_report(Y_test, y_pred)
     print(report_res)
+
     if plot:
         logging.info("ploting learning curve of svm")
         plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1.0])
         logging.info("finished")
-    return report_res
+    return clf, report_res
 
 
 def test_decision_tree(X, Y, plot=True):
@@ -129,12 +130,12 @@ def test_decision_tree(X, Y, plot=True):
     logging.info("decision tree score: {}".format(clf.score(X_test, Y_test)))
     report_res = classification_report(Y_test, y_pred)
     print(report_res)
-    print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
+    # print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     if plot:
         logging.info('ploting learn curve of decision tree')
         plot_learning_curve(clf, "decision tree", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
         logging.info("finished!")
-    return report_res
+    return clf, report_res
 
 def test_bayes(X, Y, plot=True):
     logging.info("test byes:")
@@ -147,133 +148,88 @@ def test_bayes(X, Y, plot=True):
     logging.info("MultinomialNB score: {}".format(clf.score(X_test, Y_test)))
     report_res = classification_report(Y_test, y_pred)
     print(report_res)
-    print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
+    # print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     if plot:
         logging.info('ploting learn curve of MultinomialNB')
         plot_learning_curve(clf, "MultinomialNB", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
         logging.info("finished!")
-    return report_res
+    return clf, report_res
 
-
-
-
-
-
-def test(agent=""):
+def test(agent="", injection=False):
     if not agent:
         normal_data_set, abnormal_data = load_data()
-        normal_data = normal_data_set
-        data = []
-        data.extend(abnormal_data)
-        data.extend(normal_data)
-        random.shuffle(data)
-        commands = [item[0] for item in data]
-        labels = [item[1] for item in data]
-        vectorizer = TfidfVectorizer()
-        X = vectorizer.fit_transform(commands)
-        Y = labels
+        normal_commands = [item[0] for item in normal_data_set]
+        abnormal_commands = [item[0] for item in abnormal_data]
     elif agent == 'agent1':
         logging.info("test for agent1")
         original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
         addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
-        normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent1_dataset_bin))
+        normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent1_dataset_cleaned_bin))
         abnormal_commands = original_abnormal_commands | addition_abnormal_commands
-        commands = list(normal_commands)
-        commands.extend(list(abnormal_commands))
-        labels = [0 for _ in range(len(normal_commands))]
-        labels.extend([1 for _ in range(len(abnormal_commands))])
-        vectorizer = TfidfVectorizer()
-        X = vectorizer.fit_transform(commands)
-        Y = labels
     else:
         logging.info("test for agent2")
         original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
         addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
-        normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent2_dataset_bin))
+        normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent2_dataset_cleaned_bin))
         abnormal_commands = original_abnormal_commands | addition_abnormal_commands
-        commands = list(normal_commands)
-        commands.extend(list(abnormal_commands))
-        labels = [0 for _ in range(len(normal_commands))]
-        labels.extend([1 for _ in range(len(abnormal_commands))])
-        vectorizer = TfidfVectorizer()
-        X = vectorizer.fit_transform(commands)
-        Y = labels
-    plt.figure(figsize=(10, 15))
-    test_knn(X, Y)
+    commands = list(normal_commands)
+    commands.extend(list(abnormal_commands))
+    labels = [0 for _ in range(len(normal_commands))]
+    labels.extend([1 for _ in range(len(abnormal_commands))])
+    vectorizer = TfidfVectorizer()
+    X = vectorizer.fit_transform(commands)
+    Y = labels
+    # plt.figure(figsize=(10, 15))
+    # test_knn(X, Y, plot=False)
     plt.figure(figsize=(12, 8))
-    svm_res = test_svm(X, Y)
+    svm_res = test_svm(X, Y, plot=False)
     plt.show()
     plt.figure(figsize=(12, 8))
-    dt_res = test_decision_tree(X, Y)
+    dt_res = test_decision_tree(X, Y, plot=False)
     # test bayes algorithm
     plt.figure(figsize=(12, 8))
-    bayes_res = test_bayes(X, Y)
+    bayes_res = test_bayes(X, Y, plot=False)
     plt.show()
+
+
+    # test inject attack
+    abnormal_samples = random.sample(abnormal_commands, 100)
+    normal_samples = random.sample(normal_commands, 100)
+    concat_tokens = ['|', '||', '&&', ';']
+    all_commands = []
+    for command in normal_samples:
+        for abnormal_command in abnormal_samples:
+            token = random.choice(concat_tokens)
+            all_commands.append(command + token + abnormal_command)
+    X = vectorizer.transform(all_commands)
+    Y = [1 for _ in range(len(all_commands))]
+    # bayes
+    logging.info("injection report for bayes")
+    pred_y = bayes_res[0].predict(X)
+    print(pred_y)
+    print(classification_report(Y, pred_y))
+
+    logging.info("injection report for svm")
+    pred_y = svm_res[0].predict(X)
+    print(pred_y)
+    print(classification_report(Y, pred_y))
+
+    logging.info("injection report for dt")
+    pred_y = dt_res[0].predict(X)
+    print(pred_y)
+    print(classification_report(Y, pred_y))
+
+
     return {
         'svm': svm_res,
         'dt': dt_res,
         'bayes': bayes_res
     }
 
-def test_agent1():
-    logging.info("test for agent1")
-    original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
-    addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
-    normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent1_dataset_bin))
-    abnormal_commands = original_abnormal_commands | addition_abnormal_commands
-    commands = list(normal_commands)
-    commands.extend(list(abnormal_commands))
-    labels = [0 for _ in range(len(normal_commands))]
-    labels.extend([1 for _ in range(len(abnormal_commands))])
-    vectorizer = TfidfVectorizer()
-    X = vectorizer.fit_transform(commands)
-    Y = labels
-    plt.figure(figsize=(10, 15))
-    test_knn(X, Y, False)
-    plt.figure(figsize=(12, 8))
-    svm_res = test_svm(X, Y, True)
-    plt.show()
-    plt.figure(figsize=(12, 8))
-    decision_tree_res = test_decision_tree(X, Y, True)
-    # test bayes algorithm
-    plt.figure(figsize=(12, 8))
-    bayes_res = test_bayes(X, Y, True)
-    plt.show()
-
-def test_agent2():
-    logging.info("test for agent2")
-    original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
-    addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
-    normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent2_dataset_bin))
-    abnormal_commands = original_abnormal_commands | addition_abnormal_commands
-    commands = list(normal_commands)
-    commands.extend(list(abnormal_commands))
-    labels = [0 for _ in range(len(normal_commands))]
-    labels.extend([1 for _ in range(len(abnormal_commands))])
-    vectorizer = TfidfVectorizer()
-    X = vectorizer.fit_transform(commands)
-    Y = labels
-    plt.figure(figsize=(10, 15))
-    test_knn(X, Y, False)
-    plt.figure(figsize=(12, 8))
-    svm_res = test_svm(X, Y, True)
-    plt.show()
-    plt.figure(figsize=(12, 8))
-    dt_res = test_decision_tree(X, Y, True)
-    # test bayes algorithm
-    plt.figure(figsize=(12, 8))
-    bayes_res = test_bayes(X, Y, True)
-    plt.show()
-
 
 
 
 if __name__ == '__main__':
-    # test()
-    # test_agent2()
-    # test_agent1()
     common_res = test()
-    # agent1_res = test('agent1')
-    # agent2_res = test('agent2')
 
 
