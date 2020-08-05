@@ -171,8 +171,8 @@ def knn(agent=""):
 
     plt.figure(figsize=(15, 20))
     plt.subplot(2, 1, 1)
-    plt.plot(X, normal_recall, color='red', label="normal  recall")
-    plt.plot(X, normal_precision, color="green", label="normal  precision")
+    plt.plot(X, normal_recall, color='red', label="normal  recall", linewidth=2)
+    plt.plot(X, normal_precision, color="green", label="normal  precision", linewidth=2)
     plt.legend()
     plt.grid("on")
     plt.ylim((0.8, 1.05))
