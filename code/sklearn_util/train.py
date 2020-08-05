@@ -59,6 +59,20 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None, n_jobs=1, tr
     logging.info("plot finished at {}".format(datetime.now()))
     return plt
 
+def get_precision_recall(report:str):
+    """
+
+    :param report: returned by sklearn function "classification_report"
+    :return: [normal_precision, normal_recall, abnormal_precision, abnormal_recall]
+    """
+    if not report:
+        return None
+    lines = report.split('\n')
+    normal_res = lines[2].strip()
+    abnormal_res = lines[3].strip()
+    normal_items = normal_res.split()
+    abnormal_items = abnormal_res.split()
+    return [float(normal_items[1]), float(normal_items[2]), float(abnormal_items[1]), float(abnormal_items[2])]
 
 def test_knn(X, Y, plot=True):
     clfs = list()
@@ -78,13 +92,14 @@ def test_knn(X, Y, plot=True):
         Y_pred = model.predict(X_test)
         print("report for {}".format(clf[0]))
         print(cross_val_score(model, X, Y, cv=KFold(n_splits=5)))
-        print(classification_report(Y_test, Y_pred))
+        report_res = classification_report(Y_test, Y_pred)
+        print(report_res)
         if plot:
             plt.subplot(2, 1, index+1)
-
             logging.info("ploting learning curve of {}".format(clf[0]))
             plot_learning_curve(model, clf[0], X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.5, 1])
             logging.info("finished")
+
 
 def test_svm(X, Y, plot=True):
 
@@ -95,12 +110,13 @@ def test_svm(X, Y, plot=True):
     y_pred = clf.predict(X_test)
     logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
-    print(classification_report(Y_test, y_pred))
+    report_res = classification_report(Y_test, y_pred)
+    print(report_res)
     if plot:
         logging.info("ploting learning curve of svm")
         plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1.0])
         logging.info("finished")
-    return clf
+    return report_res
 
 
 def test_decision_tree(X, Y, plot=True):
@@ -111,15 +127,16 @@ def test_decision_tree(X, Y, plot=True):
     estimator = clf
     y_pred = estimator.predict(X_test)
     logging.info("decision tree score: {}".format(clf.score(X_test, Y_test)))
-    print(classification_report(Y_test, y_pred))
+    report_res = classification_report(Y_test, y_pred)
+    print(report_res)
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     if plot:
         logging.info('ploting learn curve of decision tree')
         plot_learning_curve(clf, "decision tree", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
         logging.info("finished!")
-    return estimator
+    return report_res
 
-def test_byes(X, Y, plot=True):
+def test_bayes(X, Y, plot=True):
     logging.info("test byes:")
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
@@ -128,44 +145,75 @@ def test_byes(X, Y, plot=True):
     estimator = clf
     y_pred = estimator.predict(X_test)
     logging.info("MultinomialNB score: {}".format(clf.score(X_test, Y_test)))
-
-    print(classification_report(Y_test, y_pred))
+    report_res = classification_report(Y_test, y_pred)
+    print(report_res)
     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
     if plot:
         logging.info('ploting learn curve of MultinomialNB')
         plot_learning_curve(clf, "MultinomialNB", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0), ylim=[0.8, 1])
         logging.info("finished!")
-    return estimator
+    return report_res
 
 
 
 
 
 
-def test():
-    normal_data_set, abnormal_data = load_data()
-
-    normal_data = normal_data_set
-    data = []
-    data.extend(abnormal_data)
-    data.extend(normal_data)
-    random.shuffle(data)
-    commands = [item[0] for item in data]
-    labels = [item[1] for item in data]
-    vectorizer = TfidfVectorizer()
-    X = vectorizer.fit_transform(commands)
-    Y = labels
+def test(agent=""):
+    if not agent:
+        normal_data_set, abnormal_data = load_data()
+        normal_data = normal_data_set
+        data = []
+        data.extend(abnormal_data)
+        data.extend(normal_data)
+        random.shuffle(data)
+        commands = [item[0] for item in data]
+        labels = [item[1] for item in data]
+        vectorizer = TfidfVectorizer()
+        X = vectorizer.fit_transform(commands)
+        Y = labels
+    elif agent == 'agent1':
+        logging.info("test for agent1")
+        original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
+        addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
+        normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent1_dataset_bin))
+        abnormal_commands = original_abnormal_commands | addition_abnormal_commands
+        commands = list(normal_commands)
+        commands.extend(list(abnormal_commands))
+        labels = [0 for _ in range(len(normal_commands))]
+        labels.extend([1 for _ in range(len(abnormal_commands))])
+        vectorizer = TfidfVectorizer()
+        X = vectorizer.fit_transform(commands)
+        Y = labels
+    else:
+        logging.info("test for agent2")
+        original_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.original_abnormal_dataset))
+        addition_abnormal_commands = load_commands(os.path.join(meta_data_dir, settings.addition_abnormal_dataset))
+        normal_commands = load_commands(os.path.join(meta_data_dir, settings.agent2_dataset_bin))
+        abnormal_commands = original_abnormal_commands | addition_abnormal_commands
+        commands = list(normal_commands)
+        commands.extend(list(abnormal_commands))
+        labels = [0 for _ in range(len(normal_commands))]
+        labels.extend([1 for _ in range(len(abnormal_commands))])
+        vectorizer = TfidfVectorizer()
+        X = vectorizer.fit_transform(commands)
+        Y = labels
     plt.figure(figsize=(10, 15))
     test_knn(X, Y)
     plt.figure(figsize=(12, 8))
-    test_svm(X, Y)
+    svm_res = test_svm(X, Y)
     plt.show()
     plt.figure(figsize=(12, 8))
-    test_decision_tree(X, Y)
+    dt_res = test_decision_tree(X, Y)
     # test bayes algorithm
     plt.figure(figsize=(12, 8))
-    test_byes(X, Y)
+    bayes_res = test_bayes(X, Y)
     plt.show()
+    return {
+        'svm': svm_res,
+        'dt': dt_res,
+        'bayes': bayes_res
+    }
 
 def test_agent1():
     logging.info("test for agent1")
@@ -183,13 +231,13 @@ def test_agent1():
     plt.figure(figsize=(10, 15))
     test_knn(X, Y, False)
     plt.figure(figsize=(12, 8))
-    test_svm(X, Y, False)
+    svm_res = test_svm(X, Y, True)
     plt.show()
     plt.figure(figsize=(12, 8))
-    test_decision_tree(X, Y, False)
+    decision_tree_res = test_decision_tree(X, Y, True)
     # test bayes algorithm
     plt.figure(figsize=(12, 8))
-    test_byes(X, Y, False)
+    bayes_res = test_bayes(X, Y, True)
     plt.show()
 
 def test_agent2():
@@ -208,33 +256,24 @@ def test_agent2():
     plt.figure(figsize=(10, 15))
     test_knn(X, Y, False)
     plt.figure(figsize=(12, 8))
-    test_svm(X, Y, False)
+    svm_res = test_svm(X, Y, True)
     plt.show()
     plt.figure(figsize=(12, 8))
-    test_decision_tree(X, Y, False)
+    dt_res = test_decision_tree(X, Y, True)
     # test bayes algorithm
     plt.figure(figsize=(12, 8))
-    test_byes(X, Y, False)
+    bayes_res = test_bayes(X, Y, True)
     plt.show()
-
-# def final_svm(X, Y):
-#     logging.info('report for svm: ')
-#     clf = svm.SVC(kernel='rbf', gamma=0.22449)
-#     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-#     clf.fit(X_train, Y_train)
-#     plt.subplot(3, 1, 1)
-#     plot_learning_curve(clf, "svm", X, Y, cv=ShuffleSplit(n_splits=10, test_size=0.2, random_state=0))
-#     logging.info("svm score: {}".format(clf.score(X_test, Y_test)))
-#     y_pred = clf.predict(X_test)
-#     print(classification_report(Y_test, y_pred))
-#
-#     print(cross_val_score(clf, X, Y, cv=KFold(n_splits=5)))
 
 
 
 
 if __name__ == '__main__':
     # test()
-    test_agent2()
+    # test_agent2()
+    # test_agent1()
+    common_res = test()
+    # agent1_res = test('agent1')
+    # agent2_res = test('agent2')
 
 

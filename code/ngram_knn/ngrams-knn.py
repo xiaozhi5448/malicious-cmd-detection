@@ -67,9 +67,13 @@ def predict(commands:list, normal_commands:list) -> list:
     return min_distances
 
 
-def knn():
+def knn(agent=""):
     # logging.info("loading data from bin file:{}".format(dataset_bin))
-    normal_commands, abnormal_commands = load_data()
+    if not agent:
+        logging.info("n-gram knn test for all commands")
+        normal_commands, abnormal_commands = load_data()
+    elif agent=='agent1':
+
     logging.info("loading data finished!")
 
     normal_commands = [item[0] for item in normal_commands]
@@ -144,5 +148,5 @@ def knn():
 
 
 if __name__ == '__main__':
-    print(ngram_distance("readlink /proc/235072/exe ".split(), "command: /opt/java8/jre/bin/java -Dnop -DCATALINA_STARTUP_CHECKER_FLAG=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/temp1a0b/HwEoLrLlOd.tcatpid -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Dorg.apache.catalina.security.SecurityListener.UMASK=0077 -Dopenas.catalina.out.log.file.control=off -Dfile.encoding=UTF-8 -Dopenas.accesslog.control=on -Dopenas.tomcat.flow.control=false -Dopenas.tomcat.flow.control.socket.reuseaddr=true -Dopenas.tomcat.flow.control.reject.timeout=1000 -server -XX:+UseParallelGC -XX:ParallelGCThreads=16 -XX:+UseAdaptiveSizePolicy -Xms3072m -Xmx5760m -XX:NewRatio=4 -XX:PermSize=512m -XX:MaxPermSize=1024m -Xloggc:/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/logs/tomcatdump/tomcat_gc_200502144203.log -XX:+PrintGCDetails -XX:ErrorFile=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/logs/tomcatdump/tomcat_error_200502144203.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10M -Djava.security.egd=file:/dev/./urandom -Dsun.rmi.dgc.server.gcInterval=0x7FFFFFFFFFFFFFE -Dsun.rmi.dgc.client.gcInterval=0x7FFFFFFFFFFFFFE -Dopenas.log.close.interval=3600000 -Dopenas.log.debug.level=error -Djava.endorsed.dirs= -classpath /opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/bin/bootstrap.jar:/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/bin/tomcat-juli.jar -Dcatalina.base=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7 -Dcatalina.home=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7 -Djava.io.tmpdir=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/temp org.apache.catalina.startup.Bootstrap start ".split()))
+    # print(ngram_distance("readlink /proc/235072/exe ".split(), "command: /opt/java8/jre/bin/java -Dnop -DCATALINA_STARTUP_CHECKER_FLAG=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/temp1a0b/HwEoLrLlOd.tcatpid -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Dorg.apache.catalina.security.SecurityListener.UMASK=0077 -Dopenas.catalina.out.log.file.control=off -Dfile.encoding=UTF-8 -Dopenas.accesslog.control=on -Dopenas.tomcat.flow.control=false -Dopenas.tomcat.flow.control.socket.reuseaddr=true -Dopenas.tomcat.flow.control.reject.timeout=1000 -server -XX:+UseParallelGC -XX:ParallelGCThreads=16 -XX:+UseAdaptiveSizePolicy -Xms3072m -Xmx5760m -XX:NewRatio=4 -XX:PermSize=512m -XX:MaxPermSize=1024m -Xloggc:/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/logs/tomcatdump/tomcat_gc_200502144203.log -XX:+PrintGCDetails -XX:ErrorFile=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/logs/tomcatdump/tomcat_error_200502144203.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10M -Djava.security.egd=file:/dev/./urandom -Dsun.rmi.dgc.server.gcInterval=0x7FFFFFFFFFFFFFE -Dsun.rmi.dgc.client.gcInterval=0x7FFFFFFFFFFFFFE -Dopenas.log.close.interval=3600000 -Dopenas.log.debug.level=error -Djava.endorsed.dirs= -classpath /opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/bin/bootstrap.jar:/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/bin/tomcat-juli.jar -Dcatalina.base=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7 -Dcatalina.home=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7 -Djava.io.tmpdir=/opt/ecm/app/0010/proc/workspace0/home/FusionGIS/OpenAS_Tomcat7/temp org.apache.catalina.startup.Bootstrap start ".split()))
     knn()
