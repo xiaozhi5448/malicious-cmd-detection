@@ -6,6 +6,7 @@ code/data/abnormal_all
 code/data/normal
 code/data/normal_all
 code/.idea/
+code/.vscode/
 .idea/
 .vscode/
 **/__pycache__
