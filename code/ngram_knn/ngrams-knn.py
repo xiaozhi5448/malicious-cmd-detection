@@ -26,7 +26,7 @@ def ngram_distance(items1: list, items2: list, n: int = 1):
     distance = len(items1) + len(items2) - 2 * len(common_items)
     return distance / (len(items1) + len(items2))
 
-def plot_bar(distances:list):
+def plot_bar(distances:list, color='b'):
     items = Counter(distances)
     data = []
     for item in items.items():
@@ -37,7 +37,35 @@ def plot_bar(distances:list):
     plt.xlim((0., 1.05))
     plt.xlabel("distance")
     plt.ylabel("count")
-    plt.plot(x_labels, y_values)
+    plt.plot(x_labels, y_values, color=color)
+
+def plot_agent_distance(distance1, distance2):
+    fig, ax = plt.subplots()
+    items = Counter(distance1)
+    data = []
+    for item in items.items():
+        data.append((item[0], item[1]))
+    data.sort(key=lambda item: item[0])
+    x_labels = [item[0] for item in data]
+    y_values = [item[1] for item in data]
+    plt.xlim((0., 1.05))
+    plt.xlabel("distance")
+    plt.ylabel("count")
+    line1, = ax.plot(x_labels, y_values, label="normal", color="g")
+
+    items = Counter(distance2)
+    data = []
+    for item in items.items():
+        data.append((item[0], item[1]))
+    data.sort(key=lambda item: item[0])
+    x_labels = [item[0] for item in data]
+    y_values = [item[1] for item in data]
+    # plt.xlim((0., 1.05))
+    # plt.xlabel("distance")
+    # plt.ylabel("count")
+    line2, = ax.plot(x_labels, y_values, label="abnormal", color="r")
+    ax.legend()
+
 
 def get_min_distance(command:list, normal_commands:list):
     """
@@ -81,6 +109,7 @@ def encode(vocabulary, command:list)->list:
         except KeyError as e:
             res.append(-1)
     return res
+
 def build_vocabulary(voca:dict, commands:list):
     vocabulary = voca
     index = max(list(vocabulary.values())) if vocabulary else 0
@@ -129,20 +158,22 @@ def knn(agent=""):
     test_normal_commands_vecs = [encode(vocabulary, line.split(' ')) for line in test_normal_commands]
     logging.info("convert command to vectors finished!")
     plt.figure(figsize=(10, 15))
-    plt.subplot(2, 1, 1)
-    plt.title('normal test set distance distribution')
+    # plt.subplot(2, 1, 1)
+    # plt.title('normal test set distance distribution')
     test_normal_distances = predict(test_normal_commands_vecs, normal_commands_vecs)
     logging.info("computing distance for abnormal commands!")
-    plot_bar(test_normal_distances)
-    plt.subplot(2, 1, 2)
-    plt.title('abnormal test set distance distribution')
+    # plot_bar(test_normal_distances)
+    # plt.subplot(2, 1, 2)
+    # plt.title('abnormal test set distance distribution')
     abnormal_commands_vecs = [encode(vocabulary, line.split(' ')) for line in abnormal_commands]
     test_abnormal_distances = predict(abnormal_commands_vecs, normal_commands_vecs)
-    plot_bar(test_abnormal_distances)
+    # plot_bar(test_abnormal_distances)
     # plt.show()
+    plot_agent_distance(test_normal_distances, test_abnormal_distances)
+    plt.show()
 
     logging.info("computing finished!")
-    logging.info("test for distance bound in [1, 5]")
+    logging.info("test for distance bound in [0.2, 0.7]")
     X = []
     normal_precision = []
     normal_recall = []
