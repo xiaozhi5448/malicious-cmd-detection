@@ -1,0 +1,3086 @@
+history
+whoami
+ifconfig eth0 192.168.2.1/24
+tar ztvf file.tar.gz | grep blah
+/var/adm/
+yum list package
+file blah
+useradd new-user
+tar czf archive.tar.gz files
+init 6
+host -l domain.com nameserver
+df -h
+searchsploit linux 2.6
+lsb_release -a
+nmap -V
+sudo su
+/bin/sh -i
+yum list installed | more
+uname -a
+cat /etc/issue
+yum provides httpd
+ifconfig eth0 hw ether MACADDR
+touch -r ref-file new-file
+bash -p
+lsof -i
+yum install package
+tar cjf archive.tar.bz2 files
+yum erase package
+md5sum file
+ls /home/ > users_home
+id
+zgrep 'blah' /var/log/maillog*.gz
+dos2unix
+find / -perm -4000 2>/dev/null
+vim.tiny /etc/shadow
+watch ss -stplu
+for user in $(cat home_users); do echo $user; cat /home/$user/.bash_history ; echo -e "=====\n" ;done
+ifconfig eth0 mtu 1500
+nmap --interactive
+tar cf archive.tar files
+dig @192.168.2.2 domain.com -t AXFR
+/var/log/
+awk -F: '{ if($3 >= 1000) print $1}' passwd >> users
+ps aux
+/var/log/apache2/access.log
+less /etc/passwd
+/etc/init.d/
+ps xaf
+python -c 'import pty;pty.spawn("/bin/bash")'
+chmod 600 file
+rdesktop X.X.X.X
+/etc/passwd
+find / -user root -perm -4000 -exec ls -ldb {} \;
+gcc -o output.c input.c
+ifconfig eth0:1 192.168.2.3/24
+chown user:group blah
+unset HISTORYFILE
+find / -user root -perm -4000 -print 2>/dev/null
+yum grouplist | more
+rpm -qa
+~/.bash_history
+ip addr add 192.168.2.22/24 dev eth0
+echo "1" > /proc/sys/net/ipv4/ip_forward
+yum deplist package
+zip -r file.zip /dir/*
+yum --exclude=package kernel* update
+/etc/resolv.conf
+!/bin/sh
+tar xvzf archive.tar.gz
+nbtstat -A x.x.x.x
+mount
+searchsploit centos 6
+zipgrep *.txt archive.zip
+vim file.txt.gz
+touch kitsun3sec && find kitsun3sec -exec whoami \;
+rm -rf
+dig -x 192.168.1.1 
+echo os.system('/bin/bash')
+yum groupinstall 'Development Tools'
+echo "user:passwd" | chpasswd
+LinEnu.sh 
+/etc/network/interfaces
+echo "8.8.8.8" > /etc/resolv.conf
+getent passwd
+find kitsun3sec -exec netcat -lvp 5555 -e /bin/sh \;
+dpkg -l
+cat /etc/*-release
+/etc/profile
+cat /etc/debian_version
+base64 < input-file > output-file
+yum info httpd
+zless archive.gz
+base64 -d < input-file > output-file
+tar xjf archive.tar.bz2
+PATH=$PATH:/my/new-path
+unzip archive.zip
+gcc -m32 -o output.c input.c
+passwd username
+cat /etc/redhat-release
+chmod +x LinEnum.sh && ./LinEnum.sh -t
+strings /usr/local/bin/blah
+chown -R user:group blah
+zcat archive.gz
+deluser username
+ssh user@X.X.X.X | cat /dev/null > ~/.bash_history
+~/.ssh/
+host 192.168.1.1 
+netstat -tulpn
+yum update httpd
+/etc/hostname
+yum localinstall blah.rpm
+rpm -q --changelog openvpn
+last
+/etc/fstab
+macchanger -m MACADDR INTR
+find / -perm -u=s -type f 2>/dev/null
+/var/log/httpd/access.log
+tcpkill -9 host google.com
+gzip -d archive.gz
+tar xf archive.tar
+/etc/group
+yum remove package
+gzip file
+upx -9 -o output.exe input.exe
+kill -9 $$
+diff file1 file2
+/etc/shadow
+yum update
+df -h blah
+md5sum -c blah.iso.md5
+nmap> !sh
+uname -ar
+sudo systemctl enable nfs-server.service
+sudo lp -t "blah" -o -f -o -a /etc/motd
+sudo lsblk -S
+sudo rpm -qf /usr/bin/ftptop
+compress FileName
+sudo lvscan
+date +%Y%m%d
+sudo cp /etc/man.config .
+rcp webserver1:/home/root/test2 otherdir/ Enter
+sudo quotacheck -avug -m
+dpkg-divert --divert /usr/bin/example.foo --rename /usr/bin/example
+ifconfig eth0 hw ether 00:AA:BB:CC:dd:EE
+sudo systemctl stop firewalld.service
+sudo killall vi
+sudo readelf -l main
+sudo pkill gaim
+iptables -L -n -v
+setsebool -P use_samba_home_dirs 1
+mktemp tmp.xxxx
+sudo ln -s log2013.log link2013
+chcon -t public_content_rw_t /var/ftp/incoming
+sudo mkswap -c /dev/hdb4 （-c是检查有无坏块）
+sysctl -w net.ipv4.tcp_fin_timeout=30
+sudo jwhois linuxde.net
+sudo chcon -R -t httpd_sys_content_t ~user/public_html
+sort file.txt | uniq -u
+dumpe2fs /dev/hda1
+cp /usr/share/comps/i386/.discinfo rhel4.0/
+ll -Zd /srv/samba
+systemctl restart nfs-server.service
+sudo echo "1. User Management"
+sudo rm server00.log
+sudo setsebool -P allow_ypbind 1
+sudo umount /dev/hdb1
+sudo service smb restart
+awk -f cal.awk score.txt
+sudo rpm -qf `which 程序名`
+sudo iperf -u -s
+bzip2 filename
+sudo ls -l myfile
+test –d File
+who
+sudo gcc test.c
+compress -d man.config.Z
+grpck: the files have been updated
+aptitude install pkgname
+aptitude autoclean
+tput cup 7 15
+objdump -h mytest.o
+sudo rcp -r work webserver1:/home/root/products Enter
+sudo netstat -l
+netstat -ap | grep ssh
+sudo dump -9 -u -f /dev/hda3 /home/frank/
+sudo read -p "text"
+sudo oracle    5912     1  0 Nov12 ?        00:14:56 ora_lgwr_orcl
+test –b File
+colrm 4 6
+sudo gpasswd -a mary users
+pvremove /dev/sdb2
+sudo test –w File
+sudo yum install tftp
+send "bye\r"
+sudo firewall-cmd --add-service=mysql
+sudo firewall-cmd --reload
+cd ..
+sudo dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3
+sudo mkfs -t ext2 /dev/sda7
+sudo cp –r test/ newtest
+sudo sysctl -w net.ipv4.tcp_window_scaling=1
+sudo cat /dev/null
+dpkg -r package
+sudo skill -STOP 1
+sudo firewall-cmd --add-port=443/tcp
+sudo kill -l
+echo "M A I N - M E N U"
+ar -tv libmy2.a
+sudo quota -vg qgroup
+updatedb -U /usr/local/  更新指定命令的slocate数据库
+sudo iptables -I INPUT -s 124.45.0.0/16 -j DROP
+skill -STOP 1
+md5sum -w -c testfile.md5
+sudo dpkg -c package.deb
+sudo setsebool -P nfs_export_all_ro 1
+umount -v /dev/sda1
+sudo find . -type f -name "*.php" ! -perm 644
+sudo last -10
+umount /tmp
+sudo mattrib a:
+sudo mysqldump -u 用户名 -p 数据库名 > 导出的文件名
+sudo grpck /etc/group
+sudo netstat -au
+uniq sort.txt
+getsebool httpd_enable_homedirs
+sudo su -c ls root
+sudo rpm -i your-package.src.rpm
+objdump -d -l mytest.o
+yum clean headers
+sudo builtin alias
+sudo NF]} END {for(i in state) print i,"\t",state[i]}'
+sudo cat /etc/default/rcS
+dpkg-deb -b drcom drcom_1.4.8.2_i386.deb
+sudo man.linuxde.net
+dos2unix oldfile newfile
+sudo lynn:x:500:500::/home/lynn:/sbin/nologin
+sudo ifconfig eth0 -arp
+sudo lpr -P laser1 05.txt 108.txt 12.txt
+sudo chkconfig --list mysqld
+sudo edquota -u quser1
+skill -STOP -c oracle
+sudo cpio –icduv < /opt/etc.cpio
+sudo vgextend vg2000 /dev/sdb2
+sudo read 1987name
+shopt -s cdspell
+getsebool -a
+tcpdump host 210.27.48.1
+sudo tput sgr0
+tail file
+sudo invalid group file entry
+sudo iptables -A FORWARD -j REJECT
+jwhois linuxde.net
+readelf -h libmy.so
+sudo chfn -f jack
+sudo fdisk /dev/sdb
+type -a cd
+ifdown eth0
+sudo dnsdomainname -v
+info info
+objdump -j .text -S mytest.o
+cat cal.awk
+sudo blkid -o list
+printf "hello world"
+sudo which adduser
+skill -STOP rman
+cat /etc/passwd | grep test
+cut -c1-3 test.txt
+sudo mkdir /new
+sudo ls -l *.txt | awk '{sum+=
+declare -ir EUID="0"
+read -p "Enter your choice [1-4] " choice
+sudo netstat -an | grep ':80'
+bzip2: For help, type: `bzip2 --help'.
+sudo readelf -h main
+objdump -V
+sudo iostat -x /dev/sda1
+stty size
+cat testfile1
+nohup command > myout.file 2>&1 &
+sudo aptitude purge pkgname
+who | cut -b 3
+sudo yum check-update
+pgrep -l gaim
+cat /proc/partitions
+history 10
+sudo chcon -t public_content_rw_t /var/ftp/incoming
+sudo httpd-2.2.3-81.el5.centos
+ss -s
+sudo colrm
+sudo chroot newRoot /a.out
+sudo uname -v
+sudo systemctl stop firewalld
+sudo findfs LABEL=/boot
+firewall-cmd --remove-service=http
+sudo date -s "2012-05-23 01:01:01"
+sudo ln -s aquota.user quota.user
+echo check_user:x: >> /etc/group
+wget -r -A.pdf url
+sudo test –g File
+nmap man.linuxde.net &> /dev/null
+mkdir test1
+sudo diff log2014.log log2013.log  -y -W 50
+apt-key update
+ipcalc -n 192.168.2.1 255.255.255.0
+uname -o
+sudo lvdisplay /dev/vg1000/lvol0
+netstat -au
+sudo ls /rootanaconda-ks.cfg
+sudo ulimit -a
+dump -1u -f /tmp/homeback.bak /home
+sudo restore ft /dev/hda3
+tcpdump ip and not net localnet
+sudo mkswap /swapfile1
+Linux
+aptitude show pkgname
+sudo groups linux
+sudo tcpdump
+dpkg-divert --package wibble --divert /usr/bin/example.foo --rename /usr/bin/example
+sudo test –c File
+iperf -c 192.168.1.1  -P 30 -t 60
+sudo mkdir -p /mnt/cdrom
+sudo cd ~
+pidof crond
+sudo test
+bzip2 -d filename.bz2
+sudo test –k File
+atrm 7
+[
+killall test
+sudo dpkg-reconfigure locales
+test –w File
+sudo find . -ctime -20
+sudo /usr/bin/time -f "time: %U" ls
+stty eof "string"
+sudo dos2unix -k file
+sudo gzip -r log.tar
+mdir -/ a:\*
+sudo id -a
+sudo tput rev
+sudo echo check_user:x: >> /etc/group
+sudo firewall-cmd --state
+sudo test –G File
+sudo yum install sharutils
+ifconfig
+date -s "01:01:01 2012-05-23"
+sudo ll -Zd /srv/samba
+sudo mkfs.ext3 /dev/sda4
+sudo userdel -r linuxde
+sudo readelf -S libmy.a
+sudo firewall-cmd --zone=work --remove-service=smtp
+sudo tcpdump ip and not net localnet
+rpm2cpio xxx.rpm | cpio -idmv
+stat -t myfile
+sudo ftp ftp.kernel.org
+systemctl stop firewalld
+sudo find . -type f -size +10k
+sudo apt-key del keyname
+yum groupinsall group1
+sudo OFILE=`basename
+sudo startx
+rpmquery -qf /usr/bin/htpasswd
+sudo iptables -I INPUT -s 123.0.0.0/8 -j DROP
+yes testline
+sort file.txt | uniq
+depmod -b /home/windsome/EMMA3PF-KernelSource-20080626/install_pos -e -F ./boot/System.map -v 2.6.18_pro500-bcm91250-mips2_fp_be -A -a
+make modules_install
+yum install httpd
+sudo rpm -e proftpd-1.2.8-1.i386.rpm
+cp -r aaa/* /bbb
+sudo id www
+whereis ftptop
+sudo userdel linuxde
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+ps -Lf 4551
+sudo setsebool -P nfs_export_all_rw 1
+setsebool -P samba_enable_home_dirs 1
+sudo mktemp tmp.xxxx
+sudo stty olcuc
+sudo free -m
+sudo 11938745            12767265   6.5% /opt/etc.zip
+sudo find . -type f -size 文件大小单元
+netstat -an | grep ':80'
+sudo restorecon -Rv /srv/samba*
+du
+yum install tftp-server
+sudo cp /lib/tls/i686/cmov/libc.so.6 newRoot/lib
+pstree  -a
+sudo iptables -I INPUT -s 123.45.6.0/24 -j DROP
+tail -f wget-log
+sudo filename:  0.119:1, 67.200 bits/byte, -740.00% saved, 5 in, 42 out.
+sudo mysqldump -u linuxde -p smgp_apps_linuxde > linuxde.sql
+cdrecord --dev=0,3,0 --blank=fast
+sudo tee file1 file2
+stty echo
+rpm -qf /usr/share/doc/proftpd-1.2.8/rfc/rfc0959.txt
+sudo tcpreplay -c bt.cache -i eth0 -j eth1 bt.pcap -v –R
+sudo semanage fcontext -l | grep '/srv'
+chcon -R -t public_content_t /var/ftp
+cd /usr/bin
+lsattr -EO -l rmt0
+alias mv='mv -i'
+sudo fold -w 30 testfile
+sudo ll install.log
+tput clear
+sudo gcc gdb-sample.c -o gdb-sample -g
+sudo mount /dev/sdb1 /mnt
+host www.linuxde.net
+semanage fcontext -l | grep '/srv/samba'
+test –c File
+sudo test –L File
+echo "XYX Corp LTD."
+setquota –u / 2000 2500 100 110 bye2000
+sudo tput cup 3 15
+sudo iptables -A OUTPUT -j ACCEPT
+test –g File
+sudo test File1 –ot File2    判断文件1比是否文件2旧
+sudo chgrp -R mengxin /usr/meng
+mount /dev/sdb1 /oracle
+md5sum testfile > testfile.md5
+groupmod --password 123456 cdy
+sudo make
+cat test1/testf.txt
+sudo bzip2: I won't write compressed data to a terminal.
+firewall-cmd --enable service=samba --timeout=600
+sudo uname -n
+sudo ifconfig eth0 del 33ffe:3240:800:1005::2/64
+arp -v
+sudo mpstat 3 10
+sudo find . -type f -atime 7
+gcc testfun.c test.c -o test
+semanage fcontext -a -t public_content_t "/srv/samba(/.*)?"
+pvscan
+sudo expect "ftp>"
+sudo smbclient -c "mkdir share1"
+sudo bzip2 -z filename
+date -d "-1 year" +%Y%m%d
+sudo md5sum testfile -c testfile.md5
+tftp 218.28.188.228
+uncompress FileName.Z
+date -s 20120523
+lp -s myfile
+sudo expr index "sarasara"  a
+sudo shopt
+firewall-cmd --remove-masquerade
+sudo tcpprep -an server -i tftp.pcap -o tftp.cache –v
+sudo tail +20 file
+unzip test.zip
+sudo [
+edquota -u quser1
+sudo rpmbuild -bp your-package.specs
+firewall-cmd --get-services
+gcc -S test.i
+cp file /usr/men/tmp/file1
+sudo passwd -u lynn
+chattr +i /etc/fstab
+pkill gaim
+dd if=/dev/zero bs=100k count=1 of=date.file
+sudo ifconfig eth0 add 33ffe:3240:800:1005::2/64
+sudo info info
+mkswap /swapfile1
+sudo fdisk /dev/sda
+sudo lixi@lixi-desktop:~
+cp vmlinux System.map /home/windsome/EMMA3PF-KernelSource-20080626/install_pos/boot/ -p
+sudo netstat -a
+sudo smb:/>ls
+sysctl -w net.ipv4.tcp_syncookies=1
+sudo Linux C++
+firewall-cmd --add-masquerade
+sudo modprobe vfat
+bzcat man.config.bz2
+sudo dumpe2fs /dev/hda1
+declare -ir UID="0"
+bash   9341  francois  cwd   DIR   8,1   1024    2 /mnt/mymount
+iptables -F
+sudo ar -r libmy.a myfile.o
+firewall-cmd --get-zone-of-interface=eth0
+sudo unset -v mylove
+sudo mv myinitrd.img  myinitrd.img.gz
+iptables -A INPUT -j reject
+ps aux grep syslogd
+firewall-cmd --remove-port=80tcp
+sudo snice +4 -u oracle
+dd if=/dev/zero of=/swapfile1 bs=1024 count=524288
+iptables -L -n --line-numbers
+ftp ftp.kernel.org
+read -t 3
+sudo sort -u sort.txt
+deb [web或ftp地址] [发行版名字] [main/contrib/non-free]
+sudo mkdir newRoot
+sudo ifconfig
+date -s
+sudo gcc -c testfun.c
+sudo md5sum insert.sql
+sudo vi /etc/sysconfig/ip6tables
+sudo firewall-cmd --zone=internal --change-interface=enp03s
+sudo cd /usr/bin
+gcc -O1 test.c -o test
+ethtool -s eth0 speed 100 duplex full
+grep pwrite\(20 lgwr.txt
+sudo ll /proc/.5912/fd/
+Linux C++
+dos2unix -k file1 file2 file3
+sudo rpm -ivh tftp-server-0.48-3.fc9.i386.rpm
+sudo vgconvert -M2 vg1000
+sudo nslookup www.linuxde.net
+compress man.config
+sudo nc 192.168.228.222 1234
+sudo rpmquery -qf /usr/bin/htpasswd
+sudo cat aaa.txt
+sudo firewall-cmd --version
+sudo useradd -m -g qgroup quser2
+pmap -x 5371
+sudo quota -vu quser1 quser2
+sudo ll
+sudo ls -Z /var/www/html/
+sudo patch -p0 testfile1 testfile.patch
+nc -lp 1234 > install.log
+sudo parted /dev/sdb
+uniq -u file.txt
+sudo date -d "+1 month" +%Y%m%d
+grep '/disk2' /etc/mtab
+date -d "+1 month" +%Y%m%d
+netstat -st   显示TCP端口的统计信息
+sudo grpck: the files have been updated
+sudo du log30.tar.gz log31.tar.gz
+sudo objdump -d mytest.o
+{Status}
+pgrep -ln httpd
+sudo cp file /usr/men/tmp/file1
+sudo rpm -qa 讲列出所有安装过的包
+bzip2 -tv filename.bz2
+yum update
+sudo paste file testfile testfile1
+rpm -e proftpd-1.2.8
+sudo firewall-cmd --get-zone-of-interface=eth0
+sudo su -test
+sudo rgrep Hello *
+lsblk -s
+paste -s file
+sudo arp -v
+aptitude dist-upgrade
+sudo find . -path "./sk" -prune -o -name "*.txt" -print
+ethtool -K eth0 rx off
+diff test1 test2 | diffstat
+sudo {Package}
+sudo file -i install.log
+ip route list
+sudo ssh-copy-id user@server
+find .-type f -user root -exec chown tom {} \;
+sudo chsh --list
+sudo basename
+tar -zcvpf log31.tar.gz log2014.log log2015.log log2016.log
+sudo pstree -p
+exit
+sudo rcp root@218.6.132.5:./testfile testfile
+mkdir /web
+sudo tftp 218.28.188.288
+sudo cat xx01
+sudo dd if=/dev/sda | nc 192.168.228.222 1234
+mount /path/to/mountpoint/Partition1 /path/to/someother/mountpoint
+sudo mount -a
+tcpdump udp port 123
+sudo wget --ftp-user=USERNAME --ftp-password=PASSWORD url
+test File1 –ef File2    两个文件是否为同一个文件，可用于硬连接。主要判断两个文件是否指向同一个inode。
+sudo sort testfile1 | uniq -c
+sudo nc -lp 1234 > install.log
+sudo smbclient -c "ls"
+sudo read -p "Enter your choice [1-4] " choice
+split -l 10 date.file
+firewall-cmd --list-services
+sudo rm  test.txt
+sudo netstat -lx
+du log30.tar.gz log31.tar.gz
+dstat --list
+gzip -dr test6
+read -a arrayname
+sudo systool
+sudo objdump -j .text -S mytest.o
+sudo dpkg-query -L capistrano
+test –u File
+sudo gcc test.o -o test
+setsebool -P allow_rsync_anon_write=1
+sudo mkdir newRoot/lib
+find / -type f -size 0 -exec ls -l {} \;
+sudo mkinitrd -v -f myinitrd.img
+sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
+mdel a:autoexec.bat .
+sysctl -w net.ipv4.conf.default.accept_source_route=0
+tar -cvf log.tar log2012.log    仅打包，不压缩！
+sudo firewall-cmd --get-zones
+sudo od -j 2 -c tmp
+sudo mysqldump -u 用户名 -p 数据库名 表名> 导出的文件名
+sudo test –r File
+sudo dos2unix file
+sudo rexec host1 ls -l /home/karen
+ls -lt
+mount -o remount /disk2
+skill -CONT 16514
+sudo chsh -l
+cp -a /mnt/NFS/* /root/Decp -a /mnt/nfs/* /root/Desktop/rhel4.0/&sktop/rhel4.0/&
+usermod -G staff newuser2
+sudo ping www.linuxde.net
+sudo firewall-cmd --query-panic
+sudo setsebool -P use_samba_home_dirs 1
+sudo firewall-cmd --list-all
+lprm -Phpprint 102
+paste file testfile testfile1
+netstat -su   显示UDP端口的统计信息
+cat /etc/group | grep check_user
+stty iuclc
+sudo od -A d -c tmp
+htpasswd -b .passwd Jack 123456
+sudo vgchange -ay vg1000
+sudo pgrep -ln httpd
+sudo cp vmlinux System.map /home/windsome/EMMA3PF-KernelSource-20080626/install_pos/boot/ -p
+lp myfile
+systemctl enable iptables
+sysctl -w net.ipv4.tcp_max_syn_backlog=2048
+sudo firewall-cmd --zone=dmz --list-ports
+sudo getsebool httpd_enable_homedirs
+tail +20 file
+sudo /usr/bin/time -a -o outfile.txt ls
+cut -c-2 test.txt
+sudo firewall-cmd --get-active-zones
+sudo rcp remote_hostname:remote_file local_fileEnter
+sudo tput cup 5 17
+sudo killall test
+sudo bash   9341  francois  cwd   DIR   8,1   1024    2 /mnt/mymount
+lsblk -nl
+sudo ipcalc -h 127.0.0.1
+[rocrocket@localhost ~]
+sudo pvdisplay /dev/sdb1
+sudo chfn
+sysctl -w kernel.core_uses_pid=1
+uname -n
+df -a
+mount -t auto /dev/cdrom /mnt/cdrom
+chkconfig --add httpd
+bg 1
+sudo od -A x -c tmp
+sudo mesg n
+objdump -S mytest.o
+vgdisplay vg1000
+find /etc –type f | cpio –ocvB >/opt/etc.cpio
+man.linuxde.net
+firewall-cmd --enable service=ssh
+readelf -S main.debug
+nfsstat –s
+sudo rpm -e proftpd-1.2.8-1.i386
+sudo ls -1
+sudo cat file | tr -s "\r" "\n" > new_file
+uptime -V
+sudo rpm -ivh xinetd-2.3.14-18.fc9.i386.rpm
+sudo od -w3 -b tmp
+lynn:x:500:500::/home/lynn:/sbin/nologin
+sudo cat /etc/group | grep check_user
+apt-get update
+sudo rsync -vzrtopg --progress -e ssh --delete work@172.16.78.192:/www/* /databack/experiment/rsync
+chfn
+netstat -a
+sudo rpmbuild -bb your-package.specs
+sudo egrep {\|} pgm.c
+passwd
+sudo netstat -c
+ipcalc -pnbm 192.168.2.1 255.255.255.0
+filename:  0.119:1, 67.200 bits/byte, -740.00% saved, 5 in, 42 out.
+chkconfig --del httpd
+cat /etc/passwd|grep ^rocrocket
+uupick-s localhost
+sudo uname -s
+sudo cat /etc/passwd|grep ^rocrocket
+expect eof
+chgrp -R mengxin /usr/meng
+sudo cat /etc/shells
+ifstat -tT
+\cp -r -a aaa/* /bbb
+exec -c echo Linux C++
+expect "password:"
+sudo read
+sudo lpr -P lp man1 man2
+sudo stty -echo
+service sshd start
+/sbin/sysctl -w net.ipv4.route.flush=1
+sudo skill -STOP oracle
+sudo firewall-cmd --list-services
+command echo Linux
+make
+tftp -g -r embedexpert 192.168.1.2
+sudo csplit testfile 2
+rpm -qf /usr/bin/ftptop
+chroot newRoot /a.out
+iperf -u -c 192.168.1.1 -b 100M -t 60
+sudo ss -t -a
+chroot target /bin/sh
+mkdir newRoot
+cd ../..
+type nginx
+stat myfile
+uname
+sudo dpkg-divert --package wibble --divert /usr/bin/example.foo --rename /usr/bin/example
+sudo send "bin\r"
+chcon -R -t httpd_sys_content_t ~user/public_html
+chage -l root
+rcp remote_hostname:remote_file local_fileEnter
+sudo man man | col-b
+mkdir -m 700 /usr/meng/test
+md5sum testfile -c testfile.md5
+sudo sort -t ' ' -k 1.2,1.2 -nrk 3,3 facebook.txt
+sudo env
+sudo lvreduce -L -50M /dev/vg1000/lvol0
+sudo nfsstat –s
+sudo netstat -su   显示UDP端口的统计信息
+mysqldump -u linuxde -p smgp_apps_linuxde > linuxde.sql
+sudo date -d "+1 day" +%Y%m%d
+sudo yum upgrade package1
+test –r File
+rcp -r work webserver1:/home/root/products Enter
+sudo scp -r root@10.10.10.10:/opt/soft/mongodb /opt/soft/
+readelf -l libmy.a
+sudo date -d "-1 day" +%Y%m%d
+sudo hostid
+lvdisplay /dev/vg1000/lvol0
+sudo pstack 4551
+ls -F
+setsebool -P use_nfs_home_dirs 1
+sudo tar czvf – nginx-0.6.34 | nc 192.168.228.222 1234
+yum install iptables-services
+dmesg | head
+sudo hello,this is the content of mail.
+proftpd-1.2.8-1
+sudo test –f File
+sudo ll /disk2
+tcpdump host sundown
+sudo speedtest-cli --list | grep China
+sudo ethtool -s eth0 speed 100 duplex full
+sudo cp -a /mnt/NFS/* /root/Decp -a /mnt/nfs/* /root/Desktop/rhel4.0/&sktop/rhel4.0/&
+edquota -g webterm1
+sudo uuto./testfile localhost/tmp
+yum list package1
+sudo fmt -w 85 testfile
+dpkg -S keyword
+oracle    5912     1  0 Nov12 ?        00:14:56 ora_lgwr_orcl
+sudo chroot target /bin/sh
+startx -m mwm
+sudo alias rm='rm -i'
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+find . -type f -size 10k
+cat file | tr -s "\r" "\n" > new_file
+more -dc file
+sort testfile1 | uniq -c
+sudo du -s scf
+quota -vu quser1 quser2
+hdparm -T /dev/sda
+sudo ip -s link list
+tput cup 8 15
+indent -bs /home/rootlocal/桌面/test.c
+sudo stat -t myfile
+uname -v
+sudo arping www.baidu.com
+awk 'BEGIN{IGNORECASE=1} /this/' log.txt
+sudo rcp –r webserver1:/home/root/work .Enter
+sudo awk -f cal.awk log.txt
+setsebool -P named_write_master_zones 1
+echo "hello,this is the content of mail.welcome to www.linuxde.net" | mail -s "Hello from linuxde.net by pipe" admin@linuxde.net
+sudo read -t 3
+sudo expect eof
+ipcalc -m 192.168.2.1
+sudo bzcat man.config.bz2
+sudo cat testfile | tr a-z A-Z
+sudo tftp -g -r embedexpert 192.168.1.2
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+sudo cat hda-badblocks-list
+sudo head -5 /etc/shadow
+sudo make modules_install
+apt-key add keyname
+tracepath www.58.com
+sudo rpm -qa | grep sql
+sudo scp /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
+sudo ngrep -W byline -d eth0 port 80
+sudo grep -v test *test*
+sudo dpkg-statoverride --force --update --add root sasl 755 /var/spool/postfix/var/run/saslauthd
+tcpprep -an client -i bt.pcap -o bt.cache -C "100M BT Packet" –v
+tcpprep -an client -i ftp.pcap -o ftp.cache –v
+sudo rmmod raid1
+iostat -x /dev/sda1
+sudo rcp test1 webserver1:/home/root/test3
+netstat -r
+nl -b a -n rz log2015.log
+sudo hwclock –systohc
+sudo send "mget *\r"
+sesearch -b httpd_enable_homedirs -a
+lastb | head
+dig www.linuxde.net
+find / -name password
+sudo vgdisplay vg1000
+sudo lsmod | grep raid1
+sudo chattr +i /etc/fstab
+sudo nl log2015.log
+sudo uname -o
+sudo rpm -e proftpd-
+root@Mylinux:/tmp/dir3
+sudo chkconfig --del httpd
+rgrep Hello *
+sudo edquota -p quser1 quser2      ===>  直接复制给quser2
+sudo cut -c1-3 test.txt
+mysqldump -u linuxde -p -d --add-drop-table smgp_apps_linuxde > linuxde_db.sql
+sudo semanage fcontext -l
+hwclock –systohc
+unset -v mylove
+sudo chcon -t samba_share_t /directory
+date -s 01:01:01
+sudo lha -xiw=agis abc
+sudo sysctl -w net.ipv4.conf.default.accept_redirects=0
+quota -vg qgroup
+route del -net 224.0.0.0 netmask 240.0.0.0 reject
+useradd -m -g qgroup quser2
+cdrecord -scanbus
+sudo ipcalc -pnbm 192.168.2.1 255.255.255.0
+stty -igncr
+at now + 10 minutes
+sudo startx -x .xinitrc
+sudo lvresize -L +200M /dev/vg1000/lvol0
+dpkg-split -s foo.deb
+mount /dev/sda4 /data
+sudo umount -vl /mnt/mymount/     执行延迟卸载
+umask
+firewall-cmd --reload
+date -s "2012-05-23 01:01:01"
+sudo firewall-cmd --add-forward-port=port=80:proto=tcp:toport=8080
+passwd -u lynn
+sudo firewall-cmd --direct -add-rule ipv4 filter INPUT 0 -p tcp --dport 9000 -j accept
+sudo yum groupremove group1
+sudo setsebool -P allow_rsync_anon_write=1
+lspci
+nc -lp 1234
+sudo cat testfile1
+sudo sort -t ' ' -k 1.2 facebook.txt
+dpkg-deb -c demo.deb
+sudo tcpdump net ucb-ether
+sudo yum install nmap
+sudo quotacheck -avug
+ethool eth0
+mtools
+ls -ltr
+sudo date -s 01:01:01
+sudo zip -q -r html.zip *
+alias ls='ls --color=tty'
+sudo sort sort.txt
+ls -t
+sudo df test
+cat /dev/null
+sudo systemctl disable firewalld
+tput cup 5 17
+netsat -a --numeric-users
+objdump -t mytest.o
+apt-get autoclean apt
+sudo umask
+yum install nmap
+sudo fuser -k -x -u -c /dev/hd1  或者  fuser -kxuc /home
+vgreduce vg2000 /dev/sdb2
+sudo 1288 test
+shutdown -h now
+tee file1 file2
+sudo swapoff /dev/sdb2
+sudo groupadd -g 344 linuxde
+yum install
+strace -c ./test  2>test.txt
+sudo md5sum testfile > testfile.md5
+reboot -w
+sudo setpci -s 00:02.0 F4.B=CC
+echo "work:abc123" > /etc/rsyncd.passwd
+cd /usr/meng/test
+sudo firewall-cmd --list-ports
+scp -r /opt/soft/mongodb root@10.10.10.10:/opt/soft/scptest
+lprm 1011
+sudo finger
+strace -c -o test.txt ./test
+sudo du
+sudo sysctl -w net.ipv4.conf.default.accept_source_route=0
+firewall-cmd --zone=public --list-all
+sudo mkdir -p a/b && cp x a/b/c
+cd /tmp
+sudo lp myfile
+sudo grep '/disk2' /etc/mtab
+sudo scp root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/
+find rhel4.0/ -name TRANS.TBL -exec rm {} \;
+sudo test File1 –ef File2    两个文件是否为同一个文件，可用于硬连接。主要判断两个文件是否指向同一个inode。
+sudo sysctl -w kernel.sysrq=0
+readelf -S main
+sudo shutdown +5 "System will shutdown after 5 minutes"
+sudo gzip –d /opt/etc.zip.gz
+ls /root
+g++ -shared -fPCI -o libmy.so myfile.o
+sudo yum groupinfo group1
+ls -l *.txt | awk '{sum+=
+vi index.html
+sudo lastb | head
+sudo cut -c-2 test.txt
+quotacheck -avug -m
+sudo mail -s "Hello from linuxde.net by shell" admin@linuxde.net
+restorecon -Rv /srv/samba*
+sudo command echo Linux
+sudo 1,
+startx -w
+sudo Filename                                type            Size    Used    Priority
+sudo firewall-cmd --get-services
+mmove autorun.bat test
+sudo wget -o download.log URL
+sudo uniq -u file.txt
+dos2unix file1 file2 file3
+find . -type f -size 文件大小单元
+sudo tcpreplay -c ftp.cache -i eth0 -j eth1 ftp.pcap -R –v
+sudo compress man.config
+sudo tcpdump host 210.27.48.1
+sudo test='my'
+mkfs -t ext3 /dev/sda6
+sudo fsck -y /dev/hda2
+sudo sysctl -w net.ipv4.tcp_sack=1
+sudo od -N 2 -j 2 -c tmp
+sudo setsebool -P ftpd_disable_trans 1
+unzip -v test.zip
+sudo find . -type f -newer file.log
+nl mytest.cpp
+od -w2 -c tmp
+wc testfile testfile_1 testfile_2
+sudo yum deplist package1
+modinfo sg
+rpm -ql 包名
+mpstat
+tput sgr0
+sudo dpkg-divert --package wibble --rename --remove /usr/bin/example
+sudo rpm2cpio xxx.rpm | cpio -idmv
+sudo sar -o temp 60 10
+sudo /sbin/service xinetd start
+sudo ethtool -K eth0 rx off
+service xinetd restart
+sudo chgrp --reference=log2012.log log2013.log
+sudo stty -igncr
+cat xx00
+sudo grep test test*
+sudo ip6tables -nl --line-numbers
+sudo iperf -c 192.168.1.1  -d -t 60
+vgchange -ay vg1000
+tcpprep -an server -i tftp.pcap -o tftp.cache –v
+tcpreplay -c ftp.cache -i eth0 -j eth1 ftp.pcap -R –v
+sudo firewall-cmd --remove-masquerade
+uname -p
+/dev/hda1
+sudo ls -l
+fuser /etc/passwd
+startx; kill -9
+sudo systemctl restart nfs-server.service
+sudo firewall-cmd --add-port=3306/tcp
+sudo dpkg -S keyword
+setsebool -P httpd_enable_cgi 1
+chkconfig --list
+sudo kill –HUP PID
+ed
+sudo split -6 README
+sudo cat readme.text
+pgrep httpd
+finger
+passwd quser2
+sudo welcome to www.linuxde.net
+echo Linux C++
+sudo rpmbuild -ba 'spec文件路径'
+dpkg -P package
+declare -ir PPID="31436"
+wget -Q5m -i filelist.txt
+mii-tool -v eth0
+ln -s aquota.group quota.group
+sudo fc -l -10
+sudo echo "work:abc123" > /etc/rsyncd.passwd
+sudo cut -f2 -d";" test2.txt
+kill -l
+sort testfile
+yum clean packages
+sudo useradd -m -g qgroup quser1
+sudo readelf -l libmy.so
+sudo root@Mylinux:/tmp/dir2
+sudo bg 1
+netstat -a | grep tftp
+sudo ./configure
+test –h File
+uname --version
+ftpshut -d 3 -1 5 1100 "Server will be shutdown at 23:00:00"
+cat /etc/group | grep cdy
+vgcreate vg1000 /dev/sdb1 /dev/sdb2
+sudo nc -v -w 1 192.168.228.222 -z 1-1000
+sudo bzip2 -9vk /opt/etc.zip /opt/var.zip /opt/backup.zip
+readelf -h main
+sudo updatedb -U /usr/local/  更新指定命令的slocate数据库
+sudo firewall-cmd --add-masquerade
+apt-key del keyname
+sudo nfsstat -c
+date -s "01:01:01 20120523"
+sudo stat myfile
+gpasswd -a mary users
+sudo smbclient -L 198.168.0.1 -U username%password
+swapon /dev/sdb2
+sudo uname
+lvcreate -L 200M vg1000
+sudo find . -type f -size -10k
+sudo setsebool -P rsync_disable_trans 1
+strace -T ./test
+seq -w 98 101
+jobs -l
+sudo find . -type f -size 10k
+wget http:
+sudo sort file.txt | uniq -u
+ifconfig eth0 up
+sudo lprm -Phpprint 102
+sudo chattr +i /etc/resolv.conf
+mattrib a:
+lvremove /dev/vg1000/lvol0
+sudo tcpdump -i eth1
+cat test.txt
+sudo iperf -c 192.168.1.1 -t 60
+sudo expr 14 % 9
+sudo ldd a.out
+sudo apt-get clean
+tput rc
+hdparm -m
+sudo useradd –g sales jack –G company,employees
+apt-key list
+pstree -p
+apt-get remove packagename
+ethtool –S eth0
+sudo cat /proc/partitions
+sudo chkconfig --list
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+sudo firewall-cmd --disable service=ssh
+domainname
+sudo lvremove /dev/vg1000/lvol0
+sudo setsebool -P httpd_tty_comm 1
+sudo comm aaa.txt bbb.txt -1 -2
+nc -l -p 80 -q 1 < somepage.html;
+sudo iptables -X
+ll -d nginx-0.6.34
+sudo route add default gw 192.168.120.240
+sudo date -s "01:01:01 20120523"
+sudo mv aaa bbb
+echo "3. Process Management"
+sudo gunzip /opt/etc.zip.gz
+read
+mtoolstest
+sudo tracepath www.58.com
+sudo tcpprep -an client -i ftp.pcap -o ftp.cache –v
+sudo od -w2 -c tmp
+sudo firewall-cmd --zone=dmz --add-port=8080/tcp
+sudo type cd
+sudo dpkg -P package
+uucico-r1
+sudo find . -empty
+sudo nohup command > myout.file 2>&1 &
+sudo exec -c echo Linux C++
+rpm -ivh your-package.rpm
+cpio  -icdvt < /dev/st0 > /tmp/st_content
+sudo edquota -t
+mv /usr/student/*  .
+route del default gw 192.168.120.240
+sudo pgrep -l httpd
+sudo tmpwatch 24 /tmp/
+chattr +i /etc/resolv.conf
+sudo firewall-cmd --panic-on
+readelf -S libmy.a
+dpkg-preconfigure /var/cache/apt/archives/mysql-server-5.5*.deb
+rcp root@218.6.132.5:./testfile testfile
+dos2unix -o file1 file2 file3
+cp ../mary/homework/assign .
+read 1987name
+sudo mkdir test1
+sudo umount -v /mnt/mymount/
+passwd -l linuxde
+sudo usermod -U newuser1
+ss -l
+sudo iptables -A INPUT -p tcp --dport 20 -j ACCEPT
+sudo netsat -a --numeric-users
+rcp webserver1:/home/root/test2 otherdir/otherfile Enter
+sudo cd /usr/src/redhat/BUILD/your-package/
+sudo uname -p
+sudo df
+df test
+sudo pvscan
+rpm -qa 讲列出所有安装过的包
+shutdown +5 "System will shutdown after 5 minutes"
+sudo batch
+sudo firewall-cmd --add-forward-port=port=80:proto=tcp:toaddr=192.168.0.1
+sudo declare test='man.linuxde.net'
+ps -ef|grep lgwr
+sudo ifconfig eth0 up
+sudo {Status}
+sudo ss -pl | grep 3306
+readonly test='ok'
+tput setaf 3
+sudo look L testfile
+sudo ethtool -i eth0
+umount /dev/hdb1
+setsebool -P named_disable_trans 1
+cp aaa/* /bbb
+echo "4. Backup"
+sudo netstat -a | grep tftp
+sudo grep -v test*
+rcp -r local_dir remote_hostname:remote_dir Enter
+sudo host www.linuxde.net
+sudo fuser -d /usr文件
+sudo cat sort.txt
+/dev/hda5                               partition       506008 96      -1
+gzip -l /opt/etc.zip.gz
+sudo traceroute www.58.com
+sudo Amanda, ftp, Samba和tftp等最重要的服务已经被FirewallD提供相应的服务，可以使用如下命令查看：
+sudo netstat -st   显示TCP端口的统计信息
+mesg y
+/dev/hdb4                               partition       489972 0       -2
+sudo mesg y
+sudo systemctl list -units --type=service
+sudo find rhel4.0/ -name boot.cat | xargs rm
+sudo nc -l -p 1234 | dd of=/dev/sda
+sort -u file.txt
+spawn ftp
+which pwd
+usermod -L newuser1
+sudo setpci -s 00:02.0 F4.B=FF
+lp -c -m -n30 -dlp0:lpd0 /etc/motd
+/dev/sdb2 swap swap defaults 0 0
+sudo readelf -S main
+rexec host1 ls -l /home/karen
+netstat -lx
+sudo tput rc
+sudo tar -ztvf log.tar.gz
+sudo vgscan
+rexec -nhost1 date
+invalid group file entry
+sudo startx -m mwm
+sudo fuser -u /etc/filesystems
+git
+sudo umount -v /dev/sda1
+sudo /dev/sda:
+alias l.='ls -d .* --color=tty'
+iptables -A OUTPUT -j ACCEPT
+sudo lpq
+iptables -I INPUT -s 123.45.6.7 -j DROP
+sudo htpasswd -nb Jack 123456
+sudo mount -t auto /dev/cdrom /mnt/cdrom
+diff log2014.log log2013.log  -y -W 50
+sudo \cp -r -a aaa/* /bbb
+fmt testfile
+which adduser
+sudo rpm -e proftpd-1.2.8
+sudo lsblk -b /dev/sda
+sudo dpkg -l
+cat /etc/shells
+chsh -s /bin/bash
+dpkg -i package.deb
+sudo wget --spider URL
+wget -o download.log URL
+sudo lprm 101
+sudo modinfo sg
+groupadd -g 344 linuxde
+sudo tput cup 10 15
+uniq file.txt
+netstat -at
+sudo readelf -h libmy.a
+sudo ed
+fg 1
+modprobe -l
+sudo readelf -l libmy.a
+/etc/init.d/xinetd restart
+mkdir newRoot/lib
+sudo uuencode test.txt test | mail -s "hello,see the attachement" admin@linuxde.net<mail.txt
+split -b 10k date.file
+Kernel quota version: 6.5.1
+cd /home/windsome/EMMA3PF-KernelSource-20080626/install_pos
+prog.o.bak prog.o differ: char 4, line 1
+sudo mattrib -r -/ a:*.*
+sudo passwd
+sudo netstat -r
+sudo service sshd start
+fmt -w 85 testfile
+sudo netsat -a --numeric-ports
+sudo nm -s mytest.o
+sudo lvcreate -L 200M vg1000
+sudo dos2unix -k -o file1 file2 file3
+enable -a
+systemctl status nfs-server.service
+sudo dpkg-preconfigure /var/cache/apt/archives/mysql-server-5.5*.deb
+sudo apt-get remove packagename
+test –s File
+find . -name "*.c"
+sudo awk -f cal.awk score.txt
+sudo touch ex2
+sudo make install
+sudo awk 'BEGIN{printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n","FILENAME","ARGC","FNR","FS","NF","NR","OFS","ORS","RS";printf "---------------------------------------------\n"} {printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n",FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS}'  log.txt
+stty igncr
+sudo unzip test.zip
+htpasswd -D .passwd Jack
+chsh -s /bin/zsh
+sudo ifconfig eth0 down
+sudo gcc -c test.s
+su linuxde
+sudo ftpshut -d 3 -1 5 1100 "Server will be shutdown at 23:00:00"
+od -A x -c tmp
+sudo setsebool -P named_disable_trans 1
+mkfs.ext3 /dev/sda4
+md5sum insert.sql
+rsync -avz --progress /databack/experiment/rsync/ work@172.16.78.192::www
+sudo pwunconv
+dmidecode -t processor
+find . -type f -name "*.php" ! -perm 644
+users
+sudo aptitude clean
+vi /etc/passwd
+sudo cat /etc/gshadow | grep cdy
+dpkg -L package
+send "
+basename
+sudo read -t 10 varname
+sudo mysqldump -u linuxde -p -d --add-drop-table smgp_apps_linuxde > linuxde_db.sql
+firewall-cmd --get-zones
+service network status
+sudo dos2unix -k -n oldfile newfile
+sudo find .-type f -user root -exec chown tom {} \;
+sudo service named restart
+type if
+help shopt
+sudo lha -a abc2 /home/hnlinux
+sudo find . -type f -name "*.txt" -exec cat {} \;> all.txt
+dpkg -l package
+sudo bzip2 filename
+service mysqld status
+sudo ls
+sudo ps -Lf 4551
+hdparm -g /dev/sda
+sudo root@localhost ~]
+sudo fg 1
+yum install sharutils
+sudo wget http:
+yum info package1
+mv index.html /var/www/html/
+sudo edquota -p lanf -u Jack Tom Chen
+sudo find /var/log -type f -mtime +7 -ok rm {} \;
+uucp -d -R temp localhost ~/Public/
+sudo compress FileName
+sudo aptitude install pkgname
+sudo tput cup 12 15
+stty -echo
+dpkg-query -L capistrano
+jed -2 mysource.c
+sudo dpkg --configure package
+echo
+firewall-cmd --add-service=mysql
+cat /etc/shadow | grep test
+find . -type f -mtime +30 -name "*.log" -exec cp {} old \;
+seq -s"`echo -e "/t"`" 9 11
+sudo strace -c ./test  2>test.txt
+sudo dmesg | head
+sudo id -G
+compressed        uncompressed ratio uncompressed_name
+sudo swapon -v /dev/hdb4
+lprm 101
+sudo nc -lp 1234
+sudo dpkg-query -s capistrano
+gzip -rv test6
+sudo compress -c man.config > man.config.back.Z
+sudo route
+ping www.linuxde.net
+fsck -y /dev/hda2
+lha -a abc2 /home/hnlinux
+comm aaa.txt bbb.txt -1 -2
+mkbootdisk --device /dev/fd0 `uname -r`
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+df -h
+find . -type f -group sunk
+1,
+file -i install.log
+mkinitrd -v -f myinitrd.img
+dpkg-query -S file1
+expr index "sarasara"  a
+aptitude search string
+sudo dpkg-deb -x drcom-pum_1.0-0ubuntu1~ppa1~jaunty1_i386.deb drcom
+sort file.txt | uniq -d
+ipcalc -p 192.168.2.1 255.255.255.0
+sudo dpkg-query -l
+sudo tcpdump ip host ace and not helios
+sudo /sbin/lilo -v -v
+sudo wc testfile
+sudo file -L /var/spool/mail
+dpkg --unpack package.deb
+sudo strace ./test
+sudo tftp 192.168.1.2
+time ls
+sudo yum clean oldheaders
+sudo usermod -G staff newuser2
+iptables -A FORWARD -j REJECT
+cdrecord -v -eject speed=4 dev=0,3,0 backup.iso
+sort -nrk 3 -t: sort.txt
+sudo cat /dev/fd0
+sysctl -w kernel.sysrq=0
+sudo ls -R
+ifconfig eth0 192.168.2.10
+sudo ss -u -a
+sudo e2label  /dev/sda4 /data
+stty -iuclc
+df -i
+sudo cd /home/windsome/EMMA3PF-KernelSource-20080626/install_pos
+sudo ls -lt
+mkdir /new
+sudo vi /etc/syslog.conf
+sudo 5}' | cut -d: -f1 | awk '{++ip[
+sudo stty size
+aptitude upgrade
+sudo cat iptables.bak
+sudo cut -f 1 test.txt
+seq -s" " -f"str%03g" 9 11
+sudo objdump --section=.text -s mytest.o
+sudo wait %1
+sudo ss -pl
+sudo hdparm -m
+sudo ssh-add ~/.ssh/id_dsa
+rpm -e proftpd-
+tmpwatch 24 /tmp/
+sudo uptime -V
+sudo mkdir /srv/samba
+lvreduce -L -50M /dev/vg1000/lvol0
+find . -type f -size -10k
+sudo geometry = 19457［柱面数］/255［磁头数］/63［扇区数］, sectors = 312581808［总扇区数］, start = 0［起始扇区数］
+fgrep strcpy *.c
+cp -i /usr/men m*.c /usr/zh
+sudo apt-key list
+sudo insmod /lib/modules/2.6.
+ip neigh list
+read -p "text"
+wget --spider URL
+firewall-cmd --permanent --zone=internal --change-interface=enp03s
+sudo cat /etc/selinux/targeted/contexts/files/file_contexts.local
+sudo cp -i /usr/men m*.c /usr/zh
+sudo ngrep '[a-zA-Z]' -t -W byline -d any tcp port 18080
+sudo wget -O wordpress.zip http:
+sudo hdparm -m /dev/sda
+sudo ssh-agent
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+modprobe -c
+declare -r SHELLOPTS="braceexpand:emacs:hashall:histexpand:history:interactive-comments:monitor"
+sudo setsebool -P httpd_disable_trans 1
+sudo hdparm -C /dev/sda
+sudo rhmask code.txt demo.txt
+sudo sort  testfile1 | uniq
+cdspell on
+sudo restore rf /dev/hda3 /home/frank
+chage -I 5 root
+cat /proc/swaps
+sudo chsh -s /bin/bash
+shopt
+smbclient
+send "exit\r"
+sudo chpasswd < user.txt
+sudo setsebool -P samba_enable_home_dirs 1
+firewall-cmd --zone=work --remove-service=smtp
+sudo cp -r /usr/men /usr/zh
+firewall-cmd --enable ports=8080/tcp
+sudo firewall-cmd --permanent --add-port=3690/tcp
+sudo ip route list
+sudo pvdisplay
+ss -u -a
+sudo date -d "-1 month" +%Y%m%d
+sudo compressed        uncompressed ratio uncompressed_name
+sudo netsat -a --numeric-hosts
+zip -q -r html.zip /home/Blinux/html
+sudo sysctl -w net.ipv4.tcp_synack_retries=2
+wget --user-agent="Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.204 Safari/534.16" http:
+find . -type f -name "*.txt" -delete
+install -D x a/b/c
+sudo df --total
+kill 3268
+stty olcuc
+systool
+pstree -p work | grep ad
+sudo echo Linux C++
+firewall-cmd --list-ports
+sudo chroot target /bin/ls
+lsblk -m
+lp /etc/motd
+sudo test –u File
+sudo lpc
+nc -l -p 1234 | dd of=/dev/sda
+killall vi
+split -6 README
+modprobe vfat
+sudo lpr -P mailroom report
+cat main.cpp
+sudo root@Mylinux:/tmp/dir4
+sudo ipcalc -m 192.168.2.1
+sudo split -b 10k date.file -d -a 3 split_file
+find . -type f -newer file.log
+type cd
+sort testfile1 | uniq -d
+setsebool -P nfs_export_all_rw 1
+cp /lib/tls/i686/cmov/libc.so.6 newRoot/lib
+sudo find . -type f -group sunk
+split -b 10k date.file -d -a 3 split_file
+restorecon -R /var/www/html/
+ngrep -W byline -d lo port 18080
+sudo test –t FD
+sudo export
+sudo echo "3. Process Management"
+sudo rpm -i you-package.src.rpm
+ls -l testfile
+sudo wc testfile testfile_1 testfile_2
+ln -s aquota.user quota.user
+sudo yum install iptables-services
+seq -s"`echo -e "\n"`" 9 11
+tar -jcvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
+sudo groupdel damon
+sudo setsebool -P smbd_disable_trans 1
+ssh-add -l
+sudo type which
+rcp –r remote_hostname:remote_dir local_dir Enter
+sudo chkconfig --add httpd
+sort -nk 2 -t: sort.txt
+sudo grpck /etc/group /etc/gshadow
+sudo netstat -an
+mkfs -V -t msdos -c /dev/hda5
+csplit testfile 2
+sudo mount /dev/sdb6 /web
+gzip -r log.tar
+sudo firewall-cmd --enable service=samba --timeout=600
+sudo losetup /dev/loop1 floppy.img
+sudo ./mycommand.sh
+sudo od -b tmp
+sudo firewall-cmd --zone=work --add-service=smtp
+groupadd qgroup
+sudo echo "2. service Management"
+hwclock --systohc –-utc
+sort -u sort.txt
+objdump -t -C mytest.o
+iptables -I INPUT -s 124.45.0.0/16 -j DROP
+sudo shutdown -h now
+sudo expr length “this is a test”
+setsebool -P ftp_home_dir 1
+drwxr-xr-x  root root system_u:object_r:public_content_t /srv/samba/
+swapon /swapfile1
+sudo uupick-s localhost
+sudo rpm -ivh your-package.rpm
+whoami
+sudo quotaon -avug
+sudo type mysql
+lpr -P lp man1 man2
+smb:/>ls
+(tput setaf 2; tput setab 0; tput bold)'background color show'
+mv info/ logs
+last -10
+sort  testfile1 | uniq
+read -p "输入密码：" pwd
+sudo test –h File
+sudo id
+sudo mkbootdisk --device /dev/fd0 `uname -r`
+sudo mkfs.ext2 /dev/sdb1
+dos2unix -k -n oldfile newfile
+sudo vi index.html
+setsebool -P rsync_disable_trans 1
+firewall-cmd --add-forward-port=port=80:proto=tcp:toaddr=192.168.0.1
+sudo wget -i filelist.txt
+sudo uname -m
+setsebool -P smbd_disable_trans 1
+unalias cc
+sudo ssh-add -d ~/.ssh/id_xxx.pub
+sudo tcpdump host helios and \( hot or ace \)
+sudo dstat -tsp --socket --fs --output /tmp/ds.csv
+hdparm -m /dev/sda
+gzip –d /opt/etc.zip.gz
+sudo ls -m
+sudo setsebool -P httpd_enable_homedirs 1
+echo "2. service Management"
+cp /etc/man.config .
+sudo gpasswd -A peter users
+sudo poweroff
+sudo netstat --verbose
+sudo wget -r -A.pdf url
+sudo read -d ":" var
+(tput setaf 2; tput bold)'color show\n\n'
+file -L /var/spool/mail
+gcc -c testfun.c
+sudo consoletype
+sudo startx; kill -9
+sudo firewall-cmd --permanent --zone=internal --add-service=http
+ftptop: /usr/bin/ftptop /usr/share/man/man1/ftptop.1.gz
+cut -f2,3 test.txt
+sudo tcpdump host 210.27.48.1 and \ (210.27.48.2 or 210.27.48.3 \)
+iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
+sudo aptitude search string
+chage -M 60 root
+sudo hexdump -e '16/1 "%02X " "  |  "' -e '16/1 "%_p" "\n"' test
+sudo su root -f
+sudo ip neigh list
+sudo cat file | tr -d "\r" > new_file
+hexdump -e '16/1 "%02X " "  |  "' -e '16/1 "%_p" "\n"' test
+ps -ef | grep vim
+root@localhost ~]
+sudo gcc -O1 test.c -o test
+{Package}
+sudo du scf
+ls
+sudo route add -net 224.0.0.0 netmask 240.0.0.0 reject
+sudo domainname -v
+dir -l /home/cc/Ruijie
+sudo rcp -r local_dir remote_hostname:remote_dir Enter
+zip -q -r html.zip html
+firewall-cmd --state
+uuto ./testfile localhost/tmp
+sudo blkid -s TYPE
+sudo touch /var/log/sudo
+sudo seq -s" " -f"str%03g" 9 11
+sudo chcon -t public_content_t /directories
+mkdir -p /mnt/cdrom
+sudo dig www.linuxde.net
+sudo aptitude update
+sudo echo "hello,this is the content of mail.welcome to www.linuxde.net" | mail -s "Hello from linuxde.net by pipe" admin@linuxde.net
+sudo ipcalc -p 192.168.2.1 255.255.255.0
+sudo setsebool -P allow_kerberos 1
+fgrep -l strcpy *.c
+alias -p
+testfile | 2 +-
+sudo (dirname
+firewall-cmd --zone=internal --change-interface=enp03s
+vgscan
+sudo arpd -b /var/tmp/arpd.db
+sudo setquota –u / 2000 2500 100 110 bye2000
+lha -xiw=agis abc
+tar -N "2012/11/13" -zcvf log17.tar.gz test
+sudo mread a:\* ./
+sudo fdisk -l
+aptitude remove pkgname
+sudo grep test *file
+sudo iptables -I INPUT -p tcp --dport 22 -j accept
+sudo mpstat -P ALL 2 3
+sudo rsync -avz --progress --delete work@172.16.78.192::www /databack/experiment/rsync
+sudo help shopt
+sudo alias mv='mv -i'
+sudo netstat -s   显示所有端口的统计信息
+sudo passwd -S linuxde
+sudo expect "password:"
+mkdir -p-m 750 bin/os_1
+sudo od -c tmp
+sudo yum groupupdate group1
+sudo nfsstat -r
+ngrep -d3 -N -q \.flv
+builtin alias
+ll install.log
+sudo groupmod --password 123456 cdy
+chgrp --reference=log2012.log log2013.log
+dirs
+sudo dpkg-split -s foo.deb
+sudo tail -c 10 file
+sudo yum install tftp-server
+sudo ethtool -A tx off eth0
+iptables -X
+sudo readelf -S main.debug
+sudo cd ..
+trap "rm -f tmpfile; echo Bye." EXIT
+fold -w 30 testfile
+setsebool -P httpd_enable_homedirs 1
+sudo tcpdump 'gateway snup and (port ftp or ftp-data)'
+sudo touch file
+useradd –g sales jack –G company,employees
+sudo mail -s "Hello from linuxde.net by file" admin@linuxde.net < mail.txt
+rpm -qf `which 程序名`
+sudo apropos who
+sudo rpm -ql 包名
+sudo find / -name password &
+sudo /swapfile1 swap swap defaults 0 0
+sudo printf "hello world"
+sudo stty -olcuc
+sudo htpasswd -D .passwd Jack
+test –G File
+dstat -tsp --socket --fs
+sudo rpm -qf /usr/share/doc/proftpd-1.2.8/rfc/rfc0959.txt
+host -a www.linuxde.net
+sudo iperf -u -c 192.168.1.1 -b 100M -d -t 60
+setsebool -P httpd_enable_homedirs=0
+firewall-cmd --add-port=443/tcp
+ls /etc/shadow
+sudo lsblk
+sudo ln -s aquota.group quota.group
+sudo find . -name "*.c"
+find . -type f -size +10k
+sudo nl -b a log2015.log
+sudo cdy:123456:1000:
+sudo apt-get install packagename
+rpm -e proftpd-1.2.8-1
+mkswap -c /dev/hdb4 （-c是检查有无坏块）
+passwd -l lynn
+sudo wget ftp-url
+cat readme.text
+sudo yum install firewalld firewall-config
+compress -c man.config > man.config.back.Z
+sudo reboot -w
+netstat -pt
+fuser -u /etc/filesystems
+sudo /etc/init.d/xinetd restart
+sudo atrm 7
+sudo declare -ir EUID="0"
+sudo locate runoob.txt
+mysqldump -u 用户名 -p 数据库名 > 导出的文件名
+dpkg -c package.deb
+sudo cat test2/testf.txt
+semanage fcontext -l | grep '/srv'
+cat xx01
+sudo stty -iuclc
+sudo halt -p
+umask -s
+sudo ls /root
+mread a:\* ./
+rpm -qlf `which 程序名`
+sudo ps aux grep syslogd
+sudo dirs
+sudo apt-key update
+sudo gcc -S test.i
+5}' | cut -d: -f1 | awk '{++ip[
+nmap www.linuxde.net
+sudo date -s "20120523 01:01:01"
+systemctl start  firewalld
+yum deplist package1
+find . -type f -name "*.txt" -exec cat {} \;> all.txt
+sudo quota -u lanf
+sudo chmod 600 /etc/rsyncd.passwd
+dos2unix -k file
+readelf -l main
+tput bold
+parted /dev/sdb
+sudo ethtool -s eth0 speed 100
+sudo su
+file -b -i install.log
+gzip -d myinitrd.img.gz
+sudo lsattr -EO -l rmt0
+file /var/spool/mail
+sh -x check_ssh_login.sh
+ssh-add ~/.ssh/id_dsa
+firewall-cmd --permanent --add-port=3690/tcp
+sudo lsblk -s
+sudo systemctl start  firewalld
+sudo firewall-cmd --permanent --zone=internal --change-interface=enp03s
+sudo chattr +a /var/log/messages
+sudo vgchange -an vg1000
+rpm -q mysql
+test
+sudo fsck.ext3 -l /tmp/hda-badblock-list.final /dev/hda1
+hostname
+sudo readelf -S myfile.o
+sudo su linuxde
+sudo pstree -p work | grep ad
+mkfs.ext3 /dev/
+sudo ncftp ftp.kernel.org
+declare test='man.linuxde.net'
+sudo semanage fcontext -l | grep '/srv/samba'
+wget --tries=40 URL
+sudo cp aaa/* /bbb
+sudo systemctl start iptables
+sudo /usr/bin/time -o outfile.txt ls
+sudo iptables -F
+lp -t "blah" -o -f -o -a /etc/motd
+sudo expect "username:"
+sudo umount /tmp
+rpmbuild -bp your-package.specs
+ngrep -W byline -d eth0 port 80
+sudo grpck
+firewall-cmd --zone=work --add-service=smtp
+sudo gzip -l *
+sudo cd /usr/src/redhat/SPECS
+sudo objdump -h mytest.o
+ftpwho
+sudo mke2fs -q /dev/hda1
+sudo echo "XYX Corp LTD."
+/usr/bin/time -o outfile.txt ls
+ethtool -i eth0
+sudo blkid -o device
+sudo usermod -l newuser1 newuser
+test –e File
+sudo ifconfig eth0 mtu 1500
+sudo cdspell on
+awk -f cal.awk log.txt
+iperf -u -c 192.168.1.1 -b 100M -d -t 60
+tar -zxvf /opt/soft/test/log30.tar.gz log2013.log
+cat -n textfile1
+grep test test*
+sudo yum clean packages
+sudo apt-get upgrade
+sudo rpm -qif `which 程序名`
+sudo md5sum -w -c testfile.md5
+snice +4 -u oracle
+poweroff
+cat test2.txt
+sudo lsblk --bytes /dev/sda
+sudo firewall-cmd --help
+colrm
+passwd quser1
+Amanda, ftp, Samba和tftp等最重要的服务已经被FirewallD提供相应的服务，可以使用如下命令查看：
+cdy:123456:1000:
+124; erase package1
+rpm2cpio ../libstdc++-4.3.0-8.i386.rpm | cpio -idv
+sudo cut -c5- test.txt
+sudo rcp webserver1:/home/root/test2 otherdir/ Enter
+type ls
+sudo iperf -u -c 192.168.1.1 -b 5M -P 30 -t 60
+sudo iptables-restor < iptables.bak
+sudo slocate fdisk
+sudo uucico-r1
+lpq
+sudo cat testfile
+sudo pwd
+sudo cd /usr/meng/test
+readelf -S libmy.so
+sudo passwd -l lynn
+convertquota -u /data
+sudo gcc -o testfun.o test.o -o test
+sudo unalias cc
+expr 14 % 9
+sudo apt-get autoclean apt
+sudo firewall-cmd --remove-service=http
+netstat -anpo | grep "php-cgi" | wc -l
+cat 1.img &
+sudo strace -T ./test
+bzip2 -- -myfilename
+nl log2015.log
+sudo send "prompt\r"
+sudo tput cup 8 15
+sudo gcc test.c -o test
+mail -s "Hello from linuxde.net by shell" admin@linuxde.net
+sudo test –o File
+umount -vl /mnt/mymount/     执行延迟卸载
+id www
+netstat -lt
+sudo route del -net 224.0.0.0 netmask 240.0.0.0 reject
+sudo swapon -s
+/usr/local/ncftp/bin/ncftpput -u koumm -p koumm -P 21 -m -R 192.168.162.137  flv/games/ /etc/*
+mkdir -p a/b && cp x a/b/c
+sudo cat cal.awk
+fdisk /dev/sdb
+find
+lsof | grep mymount         查找mymount分区里打开的文件
+chsh -l
+sudo bzip2 -c filename
+nc -w 1 192.168.228.222 1234 < install.log
+sudo du -s test
+hdparm -C /dev/sda
+11938745            12767265   6.5% /opt/etc.zip
+sudo cat server.log
+netsat -a --numeric-ports
+expr length “this is a test”
+gcc -c test.c
+sudo exit
+sudo nmap www.linuxde.net
+htpasswd -bc .passwd www.linuxde.net php
+sudo file install.log
+uniq testfile
+tcpdump ip host 210.27.48.1 and ! 210.27.48.2
+cd /usr/src/redhat/BUILD/your-package/
+sudo colrm 4
+dpkg-deb -x drcom-pum_1.0-0ubuntu1~ppa1~jaunty1_i386.deb drcom
+sudo uniq -c testfile
+ipcalc -h 127.0.0.1
+sudo filename.bz2: ok
+ll /disk2
+jed main.c
+ifconfig eth0 del 33ffe:3240:800:1005::2/64
+sudo service mysqld restart
+ls -R
+sudo tput bold
+sudo gcc main.c
+ln log2013.log ln2013
+ethtool -A tx off eth0
+sudo dos2unix oldfile newfile
+sudo uname --version
+netstat -lu
+sudo ifstat -tT
+sudo cut -f2 --complement test.txt
+sudo rpm -q mysql
+sudo iptables -D INPUT 8
+sudo tput cup 9 15
+ipcs -a
+sudo [rocrocket@localhost ~]
+find . -empty
+find . -type f -perm 777
+bzip2 -z filename
+grep -v test*
+sudo firewall-cmd --set-default-zone=home
+sar -r
+fdisk /dev/sda
+sudo alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+sudo iptables -A INPUT -j reject
+iptables -D INPUT 8
+sudo ll -d nginx-0.6.34
+sudo find / -print | cpio -covB > /dev/st0
+file -b install.log
+grpconv
+sudo /etc/init.d/xinetd start
+vi /etc/xinetd.d/rsync
+sudo swapon /swapfile1
+cat regular_express.txt
+wget ftp-url
+sudo type nginx
+ln -s log2013.log link2013
+sudo cat /etc/group  | grep check_user
+zip -q -r html.zip *
+sudo ls *.txt | pr -3 | lp
+du -h test
+sudo uniq sort.txt
+alias cp='cp -i'
+readelf -h libmy.a
+id -un
+sudo dpkg -r package
+sudo date -d "-1 year" +%Y%m%d
+find . -path "./sk" -prune -o -name "*.txt" -print
+sudo setsebool -P named_write_master_zones 1
+rcp –r webserver1:/home/root/work .Enter
+pico testfile
+tcpdump -i eth0 dst host hostname
+declare -ar BASH_VERSINFO='([0]="3" [1]="2" [2]="25" [3]="1" [4]="release" [5]="i686-redhat-linux-gnu")'
+hostid
+sudo test –p File
+sudo bzip2 -- -myfilename
+egrep Linux *
+sudo id -un
+sudo lp -c -m -n30 -dlp0:lpd0 /etc/motd
+sudo ls -l /var/mail
+sudo modprobe -l
+wget -i filelist.txt
+sudo dpkg -i package.deb
+sudo cat /etc/gshadow
+test –t FD
+sudo blkid -s LABEL /dev/sda5
+ifconfig eth0 add 33ffe:3240:800:1005::2/64
+route add -net 224.0.0.0 netmask 240.0.0.0 reject
+mkswap /dev/sdb2
+chown -R liu /usr/meng
+bzip2: I won't write compressed data to a terminal.
+sudo readelf -l myfile.o
+mount /dev/loop0 /tmp
+lsattr /etc/resolv.conf
+curl -I http:
+vgchange -an vg1000
+vi /etc/rsyncd.conf
+sudo iptables -L -n --line-numbers
+sudo seinfo -b | grep httpd
+sudo dpkg-divert --rename --remove /usr/bin/example
+sudo iperf -u -c 192.168.1.1 -b 100M -t 60
+g++ -g main.cpp -o main.debug
+sesearch -s httpd_t -t httpd_* -a
+wget --ftp-user=USERNAME --ftp-password=PASSWORD url
+route add default gw 192.168.120.240
+sudo grep pwrite\(20 lgwr.txt
+sudo echo "HELLO WORLD" | tr 'A-Z' 'a-z'
+uname -m
+sudo netstat -i
+sudo comm aaa.txt bbb.txt
+alias rm='rm -i'
+/swapfile1 swap swap defaults 0 0
+sudo netstat -ap | grep ssh
+wget -c http:
+systemctl disable nfs-server.service
+sudo type ls
+find . -type f
+gcc -c test.s
+sudo yes testline
+service httpd restart
+sudo scp -r /opt/soft/mongodb root@10.10.10.10:/opt/soft/scptest
+smbclient -c "ls"
+cksum testfile1
+chkconfig mysqld on
+aptitude clean
+sudo chage -l root
+sudo chkconfig --level httpd 2345 on
+Filename                                type            Size    Used    Priority
+sudo mount -t nfs 10.0.2.2:/linuxos/rhel4.0_update3/ /mnt/nfs/
+objdump -d mytest.o
+ss -t -a
+sudo unzip -v test.zip
+e2fsck -a -y /dev/sda1
+uname -i
+sudo uncompress FileName.Z
+sudo netstat -lu
+sudo who
+sudo pwck /etc/passwd
+sudo type -a cd
+sudo cat main.cpp
+date -d "+1 year" +%Y%m%d
+sudo echo aa.,a 1 b
+rpmbuild -ba 'spec文件路径'
+sudo htpasswd -bc .passwd www.linuxde.net php
+sysctl -w net.ipv4.tcp_sack=1
+sudo service httpd restart
+su
+g++ -c -g mytest.cpp
+sudo file /var/spool/mail
+ip link list
+sudo echo "M A I N - M E N U"
+unzip -n test.zip -d /tmp
+sudo at 5pm+3 days
+sudo echo abcdef g
+sudo dpkg-statoverride --remove /usr/bin/wall
+sudo ifconfig eth0 hw ether 00:AA:BB:CC:dd:EE
+apropos who
+sudo ipcs -a
+sort -t ' ' -k 1.2,1.2 -nrk 3,3 facebook.txt
+comm aaa.txt bbb.txt -3 | sed 's/^\t
+sudo tail -f wget-log
+sudo tcpdump tcp port 23 host 210.27.48.1
+cd ~
+sudo find /etc –type f | cpio –ocvB >/opt/etc.cpio
+sudo objdump -i
+sudo sysctl -w kernel.core_uses_pid=1
+cat IMG_FILE
+sudo uniq file.txt
+sudo bzip2 -k filename
+sudo firewall-cmd --zone=public --list-all
+yum install package1
+userdel -r linuxde
+mcopy -/ A:\*
+stty -echo;read;stty echo;read
+insmod /lib/modules/2.6.
+sudo cd /tmp
+gzip -l *
+cp /lib/ld-linux.so.2 newRoot/lib
+mkfs.ext3 -c /dev/hda1
+rpm -e proftpd-1.2.8-1.i386
+showkey -a
+sudo blkid -s LABEL
+test File1 –ot File2    判断文件1比是否文件2旧
+sudo seq -w 98 101
+sudo split -b 10k date.file
+sudo paste -s file
+sudo pidof init
+sudo mv /usr/student/*  .
+netstat --verbose
+sudo users
+sudo more -c -10 file
+od -j 2 -c tmp
+yum list
+sar -o temp 60 10
+sudo prog.o.bak prog.o differ: char 4, line 1
+sudo useradd caojh -u 544
+setsebool -P httpd_tty_comm 1
+sudo /usr/local/ncftp/bin/ncftpput -u koumm -p koumm -P 21 -m -R 192.168.162.137  flv/games/ /etc/*
+firewall-cmd --add-forward-port=port=80:proto=tcp:toaddr=192.168.0.1:toport=8080
+sort file.txt | uniq -c
+sudo dos2unix -o file1 file2 file3
+rpm -e proftpd-1.2
+sudo mdir -/ a:\*
+rpm2cpio xxx.rpm | cpio --extract --make-directories
+sudo cp -r -a aaa/* /bbb
+sudo objdump -a libmy2.a
+hello,this is the content of mail.
+sudo split -b 10k date.file -d -a 3
+cat: /etc/gshadow: 没有那个文件或目录
+sudo edquota -g webterm1
+sudo rpm2cpio ../libstdc++-4.3.0-8.i386.rpm | cpio -idv
+yum upgrade package1
+chattr +a /var/log/messages
+strace -c ./test
+iperf -u -s
+du -s scf
+reboot
+sudo gpasswd -a allen users
+sudo service network status
+sudo rsync -avz --progress /databack/experiment/rsync/ work@172.16.78.192::www
+sudo sar -r
+sudo iptables -L -n -v
+service named restart
+mkfs.ext3 /dev/sdb1
+echo "hello 123 world 456" | tr -d '0-9'
+sudo awk 'BEGIN{IGNORECASE=1} /this/' log.txt
+env
+od -N 2 -j 2 -c tmp
+sudo tar -zcvf log.tar.gz log2012.log   打包后，以 gzip 压缩
+sudo pidof nginx
+sudo zip –r /opt/etc.zip /etc
+dpkg-query -l
+comm aaa.txt bbb.txt -1 -3
+g++ -c myfile.cpp
+sudo mmove autorun.bat test
+sudo dos2unix file1 file2 file3
+file install.log
+at 5pm+3 days
+sudo mailq -v
+id -g
+route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
+sudo pgrep -l gaim
+cp a.out newRoot
+date -d "-1 day" +%Y%m%d
+sudo vgcreate vg1000 /dev/sdb1 /dev/sdb2
+sudo skill -STOP -c oracle
+gitview -c /home/rootlocal/demo.txt
+ispell -b testfile
+sudo nl mytest.cpp
+sudo mkbootdisk --device /dev/fd0 2.2.18
+sudo ll man.config*
+-exec ./text.sh {} \;
+sudo pico testfile
+arpd -b /var/tmp/arpd.db
+sudo ispell -b testfile
+sudo test –s File
+find rhel4.0/ -name boot.cat | xargs rm
+nfsstat -cn
+sudo cat /etc/passwd | grep test
+ifconfig eth0 mtu 1500
+sudo rm  -r  *
+cat iptables.bak
+sudo alias cp='cp -i'
+sudo hdparm -T /dev/sda
+sudo /sbin/sysctl -w net.ipv4.route.flush=1
+sudo egrep Linux *
+sudo jobs -l
+sudo test –b file
+skill -STOP oracle
+uniq -c testfile
+gcc -E test.c -o test.i
+sudo tar -zxvf /opt/soft/test/log.tar.gz
+sudo csplit server.log /SERVER/ -n2 -s {*} -f server -b "%02d.log"; rm server00.log
+sudo apropos -a emacs vi
+firewall-cmd --set-default-zone=home
+sudo date -d "+1 year" +%Y%m%d
+locate -u
+gcc test.c
+sudo rpm -e proftpd
+df --total
+firewall-cmd --help
+sudo e2fsck -a -y /dev/sda1
+sysctl -w net.ipv4.tcp_window_scaling=1
+sudo getsebool -a
+chgrp -v bin log2012.log
+pidof nginx
+sudo vgremove vg1000
+sudo strace -tt -s 10 -o lgwr.txt -p 5912
+sudo vi /etc/rsyncd.conf
+echo "1. User Management"
+sudo wget -b http:
+rpm2cpio xxx.rpm | cpio -vi
+arpd -l -b /var/tmp/arpd.db
+sed -i 's/\.
+cat server.log
+scp root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/
+[1] + 1903 运行中          find / -name password &
+mysqldump -u 用户名 -p 数据库名 表名> 导出的文件名
+ifconfig eth0 192.168.2.10 netmask 255.255.255.0 broadcast 192.168.2.255
+cat testfile
+cat file | tr -d "\r" > new_file
+test –b file
+edquota -t
+pgrep -lo httpd
+g++ main.cpp -o main
+/usr/bin/time -a -o outfile.txt ls
+ls -m
+iptables-save -t filter > iptables.bak
+mii-tool -F 100baseTx-FD
+sudo arpd -l -b /var/tmp/arpd.db
+apt-get upgrade
+setsebool -P nfs_export_all_ro 1
+sudo sudo systemctl status firewalld.service
+sudo ssh-add -l
+userdel linuxde
+mount -a
+speedtest-cli --server=3633 --share
+tar --exclude scf/service -zcvf scf.tar.gz scf/*
+sudo trap "rm -f tmpfile; echo Bye." EXIT
+kill –HUP PID
+ssh-add -d ~/.ssh/id_xxx.pub
+fdisk -l
+du scf
+objdump --section=.text -s mytest.o
+firewall-cmd --add-forward-port=port=80:proto=tcp:toport=8080
+passwd -d linuxde
+mount /dev/sdb1 /mnt
+sudo type date
+sudo /etc/init.d/iptables stop
+stty -olcuc
+sudo alias -p
+chpasswd < user.txt
+chkconfig --level 35 mysqld on
+sudo umask -s
+type date
+ifconfig eth0 arp
+tcpdump host 210.27.48.1 and \ (210.27.48.2 or 210.27.48.3 \)
+sudo type if
+sudo expr substr “this is a test” 3 5
+sudo ifdown eth0
+sudo nl -b a -n rz log2015.log
+ip -s link list
+patch -p0 testfile1 testfile.patch
+chroot target /bin/ls
+sudo iperf -c 192.168.1.1  -P 30 -t 60
+sudo wget --mirror -p --convert-links -P ./LOCAL URL
+read -r line
+sesearch -a -t httpd_sys_content_t
+sudo mtype dos.txt
+sudo date -s "01:01:01 2012-05-23"
+chsh --list
+sudo ethtool –S eth0
+firewall-cmd --zone=dmz --add-port=8080/tcp
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+read -n 2 var
+‍dump -0u -f /tmp/homeback.bak /home
+sudo pgrep -lo httpd
+sudo yum install xinetd
+sudo wget --spider url
+touch /var/log/btmp
+quota -u lanf
+sudo a.out lib/
+sudo tcpdump -i eth0 src host hostname
+sudo halt -d
+sudo yum info package1
+sudo dstat -tsp --socket --fs
+aptitude update
+iptables-restor < iptables.bak
+free -m
+sudo hostname
+vi /etc/syslog.conf
+sudo mtoolstest
+usermod -U newuser1
+lpr -P laser1 05.txt 108.txt 12.txt
+sudo spawn ftp
+systemctl start nfs-server.service
+sudo awk 'length
+cut -c5- test.txt
+rpmbuild -bb your-package.specs
+sudo test –b File
+sudo mkisofs -R -J -T -v -no-emul-boot -boot-load-size 4 -boot-info-table -V RHEL4ASDVD -b isolinux/isolinux.bin -c isolinux/boot.cat -o /RHEL4AS.iso rhel4.0/
+tcpdump ip host ace and not helios
+sudo skill -CONT 16514
+sudo /sbin/sysctl -p
+tar -zxvf /opt/soft/test/log.tar.gz
+sudo gzip *
+iperf -c 192.168.1.1 -t 60
+grpck /etc/group /etc/gshadow
+sudo cdrecord --dev=0,3,0 --blank=fast
+1288 test
+du log2012.log
+yum clean oldheaders
+sudo cut -f2,3 test.txt
+grep -r update /etc/acpi
+test –L File
+firewall-cmd --permanent --zone=internal --add-service=http
+halt -d
+du -s test
+sudo gpasswd groupname
+sudo systemctl status firewalld
+mkisofs -R -J -T -v -no-emul-boot -boot-load-size 4 -boot-info-table -V RHEL4ASDVD -b isolinux/isolinux.bin -c isolinux/boot.cat -o /RHEL4AS.iso rhel4.0/
+sudo send "bye\r"
+sudo at -c 8
+readelf -l libmy.so
+firewall-cmd --version
+sudo vim /etc/fstab
+rpm -e proftpd-1.2.8-1.i386.rpm
+sudo chcon -R -t public_content_t /var/ftp
+sudo history 10
+sudo indent -bs /home/rootlocal/桌面/test.c
+sudo tar --exclude scf/service -zcvf scf.tar.gz scf/*
+sudo rexec -nhost1 date
+sudo lsattr /etc/resolv.conf
+mpstat 3 10
+grpck /etc/group
+sudo find . -type f
+findfs LABEL=/boot
+sudo bzip2 -d filename.bz2
+type which
+fsck.ext3 -l /tmp/hda-badblock-list.final /dev/hda1
+sudo sort -nrk 3 -t: sort.txt
+yum update package1
+send "bin\r"
+tail -c 10 file
+objdump -a libmy2.a
+sudo g++ -g main.cpp -o main.debug
+sudo tar -zcvpf log31.tar.gz log2014.log log2015.log log2016.log
+ll
+sudo bzip2 -tv filename.bz2
+rpm -e proftpd
+batch
+find . -type f -atime +7
+sudo sort file.txt | uniq -c
+sudo ispell testfile
+sudo gitview -c /home/rootlocal/demo.txt
+firewall-cmd --disable service=ssh
+cd /disk2
+vmstat 3
+spawn telnet
+sudo drwxr-xr-x  root root system_u:object_r:public_content_t /srv/samba/
+ngrep '[a-zA-Z]' -t -W byline -d any tcp port 18080
+swapon -s
+sudo mii-tool -v eth0
+sudo find . -type f -name "*.txt" -exec printf "File: %s\n" {} \;
+sudo mcopy -/ A:\*
+sudo kill 3268
+iptables -I INPUT -s 123.0.0.0/8 -j DROP
+sudo ifconfig eth0 192.168.2.10 netmask 255.255.255.0 broadcast 192.168.2.255
+sudo firewall-cmd --query-masquerade
+sudo rpm -e proftpd-1.2.8-1
+sudo strace -c -o test.txt ./test
+sudo wget --tries=40 URL
+apt-get clean
+sudo dpkg-deb -b drcom drcom_1.4.8.2_i386.deb
+sudo man -k who
+sudo cd ../..
+ethtool -p eth0 10
+iptables -A INPUT -p tcp --dport 20 -j ACCEPT
+systemctl status firewalld
+sudo split -l 10 date.file
+sudo -exec ./text.sh {} \;
+sudo zip -q -r html.zip html
+systemctl disable firewalld
+ls -l myfile
+test –p File
+wc testfile
+sudo passwd -d linuxde
+lsblk -S
+sudo sudo systemctl disable firewalld.service
+nl -b a log2015.log
+sudo netstat -lt
+sort sort.txt
+sudo tcpdump ip host 210.27.48.1 and ! 210.27.48.2
+sudo nc -l -p 80 -q 1 < somepage.html;
+NF]} END {for(i in state) print i,"\t",state[i]}'
+tcpdump host helios and \( hot or ace \)
+tcpdump -i eth1
+edquota -g qgroup
+sudo pvremove /dev/sdb2
+gcc test.c -o test
+ll man.config*
+chkconfig --list mysqld
+sudo od -w1 -c tmp
+pwd
+sudo vi /etc/passwd
+sudo rexec host1 date
+grep test *file
+ulimit -a
+nslookup www.linuxde.net
+sudo grep -r update /etc/acpi
+sudo convertquota -u /data
+sudo rcp –r remote_hostname:remote_dir local_dir Enter
+sudo readonly test='ok'
+sudo systemctl disable firewalld.service
+firewall-cmd --query-masquerade
+sudo ll /mnt/cdrom
+pgrep -l httpd
+/sbin/sysctl -p
+sudo cat /etc/group |  grep cdy
+mattrib -r -/ a:*.*
+sudo find rhel4.0/ -name TRANS.TBL -exec rm {} \;
+which bash
+gcc main.c
+cp –r test/ newtest
+sudo ftpcount
+sudo fsck
+uuto./testfile localhost/tmp
+firewall-cmd --query-panic
+firewall-cmd --zone=dmz --list-ports
+sudo lsblk -nl
+mysqldump -u linuxde -p smgp_apps_linuxde users > linuxde_users.sql
+lvscan
+chattr +a /data1/user_act.log
+sudo find / -type f -size 0 -exec ls -l {} \;
+sudo bzip2: For help, type: `bzip2 --help'.
+yum install xinetd
+sudo read v1 v3
+zip –r /opt/etc.zip /etc
+sudo wget --reject=gif ur
+tftp 218.28.188.288
+yum install firewalld firewall-config
+sudo file -b -i install.log
+sudo chage -M 60 root
+sudo file myinitrd.img
+nc -l 1234 | tar xzvf -
+sudo sh -x check_ssh_login.sh
+renice 1 987 -u daemon root -p 32
+sudo locate -u
+chkconfig --level httpd 2345 on
+send "prompt\r"
+sudo passwd -l linuxde
+sudo chown -R liu /usr/meng
+vgextend vg2000 /dev/sdb2
+sudo who | cut -b 3
+sudo apt-get update
+tcpdump net ucb-ether
+sudo echo "4. Backup"
+sudo od -t d1 tmp
+sudo tail file
+sudo mkdir -p-m 750 bin/os_1
+useradd caojh -u 544
+sudo hwclock --systohc –-utc
+find . -type f -atime 7
+sudo tar -jcvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
+sudo firewall-cmd --panic-off
+sudo cat score.txt
+uptime
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo aptitude upgrade
+sudo showkey -a
+od -A d -c tmp
+sudo cat /etc/shadow | grep test
+sudo route del default gw 192.168.120.240
+sudo eject /dev/cdrom      卸载并弹出CD
+sudo ethool eth0
+sudo Linux
+sudo tcpdump host sundown
+gcc -o testfun.o test.o -o test
+sudo gpasswd -a user_name group_name
+wget -O wordpress.zip http:
+sudo ar -tv libmy2.a
+sudo fgrep -l strcpy *.c
+grep -v test *test*
+setsebool -P allow_ypbind 1
+sudo test –x File
+sudo aptitude dist-upgrade
+sudo read first last
+sudo host -a www.linuxde.net
+su -c ls root
+touch /etc/nologin
+mkfs -t ext2 /dev/sda7
+sudo nc -l 1234 | tar xzvf -
+sudo hdparm -g /dev/sda
+firewall-cmd --get-active-zones
+cat aaa.txt
+sudo joe main.c
+sudo cmd@hdd-desktop:~
+pvchange -x n /dev/sdb1
+sudo du log2012.log
+vgremove vg1000
+pwunconv
+sudo lp /etc/motd
+sudo date +%Y%m%d
+sudo startx -w
+ss -pl | grep 3306
+lpc
+sudo df -i
+quotacheck -avug
+sudo firewall-cmd --zone=public --add-interface=eth0
+iptables -I INPUT -p tcp --dport 22 -j accept
+sudo htpasswd -b .passwd Jack 123456
+sudo gzip -l /opt/etc.zip.gz
+sudo objdump -t -C mytest.o
+type -a grep
+sudo sesearch -a -t httpd_sys_content_t
+sudo du -h test
+type mysql
+bunzip2 filename.bz2
+bzip2 -c filename
+sudo nfsstat -cn
+sudo lprm -Phpprinter 1123
+sudo dir -l /home/cc/Ruijie
+sudo lsmod | head -5cache
+sudo ls -n
+sudo mount /dev/sdb1 /oracle
+sudo yum groupinsall group1
+sudo tput cup 7 15
+ifup eth0
+firewall-cmd --set-default-zone=public
+sudo yum list package1
+swapoff /dev/sdb2
+grpck
+readelf -l myfile.o
+sudo uname -r
+sudo cat 1.img &
+sudo partprobe
+sudo stty iuclc
+sudo find . -type f -atime +7
+sudo vmstat 3
+sudo sysctl -w net.ipv4.conf.default.rp_filter=1
+sudo at now + 10 minutes
+df
+edquota -p quser1 quser2      ===>  直接复制给quser2
+sysctl -w net.ipv4.conf.default.accept_redirects=0
+firewall-cmd --direct -add-rule ipv4 filter INPUT 0 -p tcp --dport 9000 -j accept
+read first last
+sudo dd if=/dev/zero of=/swapfile1 bs=1024 count=524288
+csplit server.log /SERVER/ -n2 -s {*} -f server -b "%02d.log"; rm server00.log
+sudo iptables -Z
+sudo stty echo
+cp -r /usr/men /usr/zh
+lixi@lixi-desktop:~
+firewall-cmd --list-all
+sudo dd if=/dev/zero bs=100k count=1 of=date.file
+apropos -a emacs vi
+sudo proftpd-1.2.8-1
+sudo restorecon -R /var/www/html/
+hwclock
+at 17:20 tomorrow
+sudo stat -f myfile
+nm -s mytest.o
+netstat -i
+cat score.txt
+sudo yum update package1
+traceroute www.58.com
+ll /proc/.5912/fd/
+sudo systemctl status nfs-server.service
+sudo dump -1u -f /tmp/homeback.bak /home
+sudo file -b install.log
+sudo systemctl disable nfs-server.service
+tcpdump 'gateway snup and (port ftp or ftp-data)'
+sudo alias ls='ls --color=tty'
+sudo dpkg-split -j "foo*"
+sudo apt-get dist-upgrade
+rpm -qif `which 程序名`
+sudo gcc -c test.c
+cd /usr/src/redhat/SPECS
+route del -net 224.0.0.0 netmask 240.0.0.0
+speedtest-cli --list | grep China
+sudo ip link list
+sudo delete line 'check_user:x:'? y
+sudo ngrep -d3 -N -q \.flv
+sudo seq -s"`echo -e "/t"`" 9 11
+fuser -d /usr文件
+mpstat -P ALL 2 3
+sudo testfile | 2 +-
+sudo cat regular_express.txt
+at -c 8
+sudo bunzip2 filename.bz2
+sudo semanage fcontext -a -t public_content_t "/srv/samba(/.*)?"
+gzip -dv *
+sudo hdparm -T /dev/xvda
+sudo echo "hello 123 world 456" | tr -d '0-9'
+lsblk -a
+sudo fgrep strcpy *.c
+sudo cat /etc/shadow > /dev/null
+yum check-update
+tcpdump tcp port 23 host 210.27.48.1
+halt -p
+sudo shopt -s cdspell
+gcc gdb-sample.c -o gdb-sample -g
+sudo mpstat
+sudo stty igncr
+sudo blkid -s UUID
+date -d "-1 month" +%Y%m%d
+sudo ngrep -W byline -d lo port 18080
+lsmod | head -5cache
+sudo cat IMG_FILE
+iptables -Z
+sudo find . -type f -name "*.txt" -delete
+sudo df -h
+sudo ls /root > /etc/shadowbash: /etc/shadow: 权限不够
+find / -print | cpio -covB > /dev/st0
+sudo ‍dump -0u -f /tmp/homeback.bak /home
+sudo jed -2 mysource.c
+uupick -s localhost
+sudo sort -nk 2 -t: sort.txt
+date -s "20120523 01:01:01"
+sudo declare -ir PPID="31436"
+sudo netstat -anpo | grep "php-cgi" | wc -l
+ls -lh
+test –o File
+httpd-2.2.3-81.el5.centos
+mtype dos.txt
+sudo depmod -b /home/windsome/EMMA3PF-KernelSource-20080626/install_pos -e -F ./boot/System.map -v 2.6.18_pro500-bcm91250-mips2_fp_be -A -a
+cat -b textfile1 textfile2
+send "mget *\r"
+sudo at 17:20 tomorrow
+delete line 'check_user:x:'? y
+sudo send "exit\r"
+echo abcdef g
+sudo firewall-cmd --complete-reload
+scp -r root@10.10.10.10:/opt/soft/mongodb /opt/soft/
+sudo lha -a abc.lhz a.b
+cat /etc/default/rcS
+netstat -s   显示所有端口的统计信息
+sudo mount /dev/sda4 /data
+sudo setsebool -P ftpd_is_daemon 1
+passwd linuxde
+sudo read -a arrayname
+rm  -r  *
+firewall-cmd --get-zone-of-interface=enp03s
+strace ./test
+test –f File
+sudo colrm 4 6
+sudo yum clean headers
+test='my'
+scp /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
+sudo seq -s"`echo -e "\n"`" 9 11
+sudo tar -cvf log.tar log2012.log    仅打包，不压缩！
+mkbootdisk --device /dev/fd0 2.2.18
+sudo setsebool -P httpd_enable_homedirs=0
+netsat -a --numeric-hosts
+wget -b http:
+ls --color=auto
+touch file
+sudo objdump -t mytest.o
+sudo dpkg -L package
+/etc/init.d/xinetd start
+sudo ls /etc/shadow
+su root -f
+tar czvf – nginx-0.6.34 | nc 192.168.228.222 1234
+cat /etc/selinux/targeted/contexts/files/file_contexts.local
+sudo sysctl -w net.ipv4.tcp_keepalive_time=3600
+readelf -h myfile.o
+cat /var/log/sudoJul 28 22:52:54 localhost sudo:   foobar :
+sudo aptitude remove pkgname
+dump -9 -u -f /dev/hda3 /home/frank/
+setsebool -P allow_smbd_anon_write=1
+sudo pidof crond
+sudo mtools
+dpkg -l
+sudo [1] + 1903 运行中          find / -name password &
+rpm -ivh tftp-server-0.48-3.fc9.i386.rpm
+swapon -v /dev/hdb4
+pvdisplay /dev/sdb1
+sudo read -r line
+tput cup 12 15
+sudo set results
+dos2unix -k -o file1 file2 file3
+sudo ls -l testfile
+rpm -ivh xinetd-2.3.14-18.fc9.i386.rpm
+sudo find . -type f -perm 644 -exec ls -l {} \;
+rpm -qa | grep sql
+alias ll='ls -l --color=tty'
+yum groupremove group1
+sudo mii-tool -F 100baseTx-FD
+tar -zcvf log.tar.gz log2012.log   打包后，以 gzip 压缩
+ssh-agent
+sudo curl -I http:
+man man | col-b
+sudo sort file.txt | uniq
+tput cup 10 15
+semanage fcontext -l
+sudo test –e File
+cmp prog.o.bak prog.o
+lsblk -b /dev/sda
+sudo setsebool -P ftp_home_dir 1
+sudo sesearch -s httpd_t -t httpd_* -a
+sudo read -n 2 var
+sudo /dev/sdb2 swap swap defaults 0 0
+egrep {\|} pgm.c
+sudo cdrecord -v -eject speed=4 dev=0,3,0 backup.iso
+sudo cp ../mary/homework/assign .
+tload -d 1
+unzip -o test.zip -d tmp/
+sudo cat test1/testf.txt
+sudo iptables -I INPUT -s 123.45.6.7 -j DROP
+restore rf /dev/hda3 /home/frank
+bzip2 -dc filename.bz2
+sudo gcc -E test.c -o test.i
+fc -l -10
+touch testfile
+ls -i -l anaconda-ks.cfg install.log
+find . -type f -amin +10
+setsebool -P httpd_disable_trans 1
+vi /etc/sysconfig/ip6tables
+sudo /dev/hdb4                               partition       489972 0       -2
+sudo ps -ef|grep lgwr
+stat -f myfile
+mkdir /srv/samba
+sudo tar -zxvf /opt/soft/test/log30.tar.gz log2013.log
+lsblk
+useradd -m -g qgroup quser1
+sudo setsebool -P use_nfs_home_dirs 1
+vim /etc/fstab
+sudo readelf -S libmy.so
+sudo seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i
+sudo dmidecode -t processor
+sudo badblocks -b 4096 -c 1 /dev/hda1 -o hda-badblocks-list.1 63000 51000
+tcpdump
+od -w3 -b tmp
+lvresize -L +200M /dev/vg1000/lvol0
+sudo touch /var/log/btmp
+gunzip /opt/etc.zip.gz
+ftpcount
+test –x File
+awk 'length
+find . -type f -user tom
+sudo cmp prog.o.bak prog.o
+dpkg --configure package
+sudo deb [web或ftp地址] [发行版名字] [main/contrib/non-free]
+mkdir /data
+sudo whoami
+find . -type f -name "*.txt" -exec printf "File: %s\n" {} \;
+sudo aptitude show pkgname
+dpkg-deb -e drcom-pum_1.0-0ubuntu1~ppa1~jaunty1_i386.deb drcom/DEBIAN
+su -test
+sudo vdfuse -f /path/to/file.vdi /path/to/mountpoint
+groupdel damon
+sudo dpkg -l package
+htpasswd -nb Jack 123456
+edquota -p lanf -u Jack Tom Chen
+sudo time ls
+sudo date -s
+sudo mkfs.ext3 /dev/
+arping www.baidu.com
+sudo ssh-copy-id -i ~/.ssh/id_rsa.pub user@server
+e2label  /dev/sda4 /data
+sudo chage -I 5 root
+sudo dpkg-divert --divert /usr/bin/example.foo --rename /usr/bin/example
+sudo sysctl -w net.ipv4.tcp_max_syn_backlog=2048
+gpasswd -a user_name group_name
+uuencode test.txt test | mail -s "hello,see the attachement" admin@linuxde.net<mail.txt
+chmod 600 /etc/rsyncd.passwd
+root@Mylinux:/tmp/dir2
+lha -a abc.lhz a.b
+cat hda-badblocks-list
+sudo cat /var/log/sudoJul 28 22:52:54 localhost sudo:   foobar :
+sudo sort testfile
+sudo ls --color=auto
+id
+iperf -u -c 192.168.1.1 -b 5M -P 30 -t 60
+date -d "+1 day" +%Y%m%d
+sudo uniq testfile
+rsync -vzrtopg --progress -e ssh --delete work@172.16.78.192:/www/* /databack/experiment/rsync
+sudo sort testfile1 | uniq -d
+ssh-copy-id -i ~/.ssh/id_rsa.pub user@server
+vgconvert -M2 vg1000
+sudo passwd linuxde
+mv myinitrd.img  myinitrd.img.gz
+nc 192.168.228.222 1234
+sudo cat /proc/swaps
+sudo ifup eth0
+ls *.txt | pr -3 | lp
+sudo setsebool -P allow_ftpd_anon_write=1
+ss -pl
+yum groupinfo group1
+firewall-cmd --panic-on
+systemctl list -units --type=service
+sudo iptables-save -t filter > iptables.bak
+sudo sesearch -b httpd_enable_homedirs -a
+sudo pmap -x 5371
+mattrib -h -s -r a:msdos.sys
+sudo lp -s myfile
+expect "%"
+sudo pvck -v /dev/sdb1
+rcp webserver1:/home/root/test2 .Enter
+aptitude purge pkgname
+wait %1
+/sbin/lilo -v -v
+dpkg-divert --rename --remove /usr/bin/example
+sudo smbclient
+echo aa.,a 1 b
+vi /etc/fstab
+setsebool -P allow_ftpd_anon_write=1
+sudo lsblk -m
+sudo diff test1 test2 | diffstat
+gzip *
+sudo ipcalc -n 192.168.2.1 255.255.255.0
+partprobe
+/usr/bin/time -f "time: %U" ls
+sudo unzip -o test.zip -d tmp/
+sudo uupick -s localhost
+test –k File
+awk 'BEGIN{printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n","FILENAME","ARGC","FNR","FS","NF","NR","OFS","ORS","RS";printf "---------------------------------------------\n"} {printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n",FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS}'  log.txt
+cut -f2 --complement test.txt
+groups linux
+sudo lsblk -a
+chcon -t samba_share_t /directory
+sudo fmt testfile
+sudo nl -b a -n rz -w 3 log2015.log
+quotaon -avug
+sudo gzip -rv test6
+mount /dev/sdb6 /web
+sudo whereis ftptop
+ifconfig eth0 down
+sudo declare -ar BASH_VERSINFO='([0]="3" [1]="2" [2]="25" [3]="1" [4]="release" [5]="i686-redhat-linux-gnu")'
+pvck -v /dev/sdb1
+dd if=/dev/sda | nc 192.168.228.222 1234
+apt-get dist-upgrade
+sudo pvchange -x n /dev/sdb1
+sudo ftpwho
+mkfs.ext2 /dev/sdb1
+sudo read -p "输入密码：" pwd
+yum groupupdate group1
+sudo cp -r aaa/* /bbb
+readelf -S myfile.o
+sudo uptime
+cat testfile | tr a-z A-Z
+nc -v -w 1 192.168.228.222 -z 1-1000
+pwck /etc/passwd
+sudo repquota -a
+sudo bye
+sudo firewall-cmd --add-forward-port=port=80:proto=tcp:toaddr=192.168.0.1:toport=8080
+sudo mdel a:autoexec.bat .
+sudo readelf -h myfile.o
+(dirname
+strace -tt -s 10 -o lgwr.txt -p 5912
+sysctl -w net.ipv4.tcp_synack_retries=2
+sudo uuto ./testfile localhost/tmp
+read -t 10 varname
+tput rev
+setsebool -P ftpd_disable_trans 1
+systemctl enable nfs-server.service
+sudo passwd quser2
+sudo ... is needed by ...
+read -d ":" var
+split -b 10k date.file -d -a 3
+lprm -Phpprinter 1123
+expect "ftp>"
+uname -r
+sudo tcpdump udp port 123
+sudo rpm -e proftpd-1.2
+sudo tput setaf 3
+mv aaa bbb
+cat tmp
+sudo wget --limit-rate=300k http:
+dpkg-query -s capistrano
+firewall-cmd --zone=public --add-interface=eth0
+bzip2 -9vk /opt/etc.zip /opt/var.zip /opt/backup.zip
+od -c tmp
+sudo wget -c http:
+sudo tftp 218.28.188.228
+file -L /var/mail
+sudo firewall-cmd --add-port=233/udp
+sudo gzip -d myinitrd.img.gz
+gpasswd groupname
+ifconfig eth0 192.168.2.10 netmask 255.255.255.0
+sudo wget -Q5m -i filelist.txt
+groupadd damon
+sudo mkfs -t ext3 /dev/sda6
+iperf -s
+firewall-cmd --add-port=3306/tcp
+usermod -l newuser1 newuser
+sudo sed -i 's/\.
+sudo type -a grep
+sudo tput clear
+sudo firewall-cmd --enable service=ssh
+nl -b a -n rz -w 3 log2015.log
+sudo mail -s "Hello from linuxde.net with sender" admin@linuxde.net -- -f user@linuxde.net<mail.txt
+dpkg-split -j "foo*"
+sudo install -D x a/b/c
+sudo find . -type f -mtime +30 -name "*.log" -exec cp {} old \;
+sudo firewall-cmd --get-zone-of-interface=enp03s
+rm  test.txt
+sudo cp /usr/share/comps/i386/.discinfo rhel4.0/
+sudo yum install httpd
+./mycommand.sh
+sudo dpkg-deb -c demo.deb
+mailq -v
+sudo mkdir /data
+filename.bz2: ok
+file myinitrd.img
+bye
+cat /etc/group  | grep check_user
+sudo (tput setaf 2; tput bold)'color show\n\n'
+man -k who
+apt-get autoclean
+gpasswd -A peter users
+rexec host1 date
+colrm 4
+ifconfig eth0 -arp
+sudo gcc testfun.c test.c -o test
+cmd@hdd-desktop:~
+sudo rpm -ivh tftp-0.48-3.fc9.i386.rpm
+OFILE=`basename
+sudo chkconfig --level 35 mysqld on
+cat sort.txt
+firewall-cmd --complete-reload
+sudo apt-get autoclean
+sudo mcopy a:autoexec.bat .
+lvextend -L +100M /dev/vg1000/lvol0
+sudo g++ -c -g mytest.cpp
+service smb restart
+sudo objdump -d -l mytest.o
+dos2unix file
+badblocks -b 4096 -c 1 /dev/hda1 -o hda-badblocks-list.1 63000 51000
+find /var/log -type f -mtime +7 -ok rm {} \;
+... is needed by ...
+dstat -tsp --socket --fs --output /tmp/ds.csv
+firewall-cmd --panic-off
+cat test2/testf.txt
+sudo sysctl -w net.ipv4.tcp_fin_timeout=30
+tcpdump -i eth0 src host hostname
+sudo mount /path/to/mountpoint/Partition1 /path/to/someother/mountpoint
+sudo expect "%"
+sudo netstat -pt
+sudo firewall-cmd --set-default-zone=public
+/dev/sda:
+sudo mkfs -V -t msdos -c /dev/hda5
+dpkg-divert --package wibble --rename --remove /usr/bin/example
+sudo ls -i -l anaconda-ks.cfg install.log
+touch ex2
+joe main.c
+sudo touch testfile
+sudo objdump -S mytest.o
+sudo uucp -d -R temp localhost ~/Public/
+sudo atq
+sudo nmap man.linuxde.net &> /dev/null
+sudo nc -w 1 192.168.228.222 1234 < install.log
+mke2fs -q /dev/hda1
+sudo atrm 2
+sudo tar -N "2012/11/13" -zcvf log17.tar.gz test
+sudo cat test.txt
+hdparm -T /dev/xvda
+comm aaa.txt bbb.txt -2 -3
+sudo spell testfile
+sudo cat: /etc/gshadow: 没有那个文件或目录
+od -b tmp
+sudo modprobe -c
+sudo which mysql
+ethtool -s eth0 speed 100
+sudo g++ main.cpp -o main
+echo "thissss is      a text linnnnnnne." | tr -s ' sn'
+sudo rpm -qlf `which 程序名`
+sudo find / -name password
+lsmod | grep raid1
+geometry = 19457［柱面数］/255［磁头数］/63［扇区数］, sectors = 312581808［总扇区数］, start = 0［起始扇区数］
+sudo strace -c ./test
+sudo ls -t
+objdump -i
+mount -t nfs 10.0.2.2:/linuxos/rhel4.0_update3/ /mnt/nfs/
+sudo losetup -d /dev/loop1
+touch /var/log/sudo
+sudo mattrib -h -s -r a:msdos.sys
+sudo comm aaa.txt bbb.txt -2 -3
+sudo spawn telnet
+od -w1 -c tmp
+domainname -v
+sudo groupadd damon
+slocate fdisk
+sudo pgrep httpd
+ls -l
+look L testfile
+sudo uname -i
+setsebool -P ftpd_is_daemon 1
+sudo dpkg-deb -e drcom-pum_1.0-0ubuntu1~ppa1~jaunty1_i386.deb drcom/DEBIAN
+more -c -10 file
+yum install tftp
+route
+lpr -P mailroom report
+sudo sudo systemctl stop firewalld.service
+read v1 v3
+sudo systemctl start nfs-server.service
+fuser -k -x -u -c /dev/hd1  或者  fuser -kxuc /home
+od -t d1 tmp
+export
+sudo file /var/mail
+read -e -p "输入文件名:" str
+sudo read -e -p "输入文件名:" str
+pidof init
+sudo rpm2cpio xxx.rpm | cpio --extract --make-directories
+sudo file -L /var/mail
+sudo setsebool -P httpd_enable_cgi 1
+sudo sort file.txt | uniq -d
+sudo fgrep -c 『{』pgm.cfgrep -c 『}』pgm.c
+ncftp ftp.kernel.org
+service mysqld restart
+sudo alias l.='ls -d .* --color=tty'
+atrm 2
+sudo 124; erase package1
+tput cup 3 15
+id -G
+pstack 4551
+sudo find . -type f -amin +10
+locate runoob.txt
+fsck
+sudo df -a
+firewall-cmd --add-port=233/udp
+netstat -l
+sudo zip -q -r html.zip /home/Blinux/html
+sudo mv info/ logs
+sudo iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
+expr substr “this is a test” 3 5
+sysctl -w net.ipv4.conf.default.rp_filter=1
+ls -n
+apt-get –purge remove packagename
+ls -1
+sudo ls -lh
+sudo declare -ir UID="0"
+sudo g++ -shared -fPCI -o libmy.so myfile.o
+mail -s "Hello from linuxde.net with sender" admin@linuxde.net -- -f user@linuxde.net<mail.txt
+sudo domainname
+sudo vi /etc/fstab
+sudo tcpreplay -c tftp.cache -i eth0 -j eth1 tftp.pcap –v
+ip6tables -nl --line-numbers
+sudo wget --user-agent="Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.204 Safari/534.16" http:
+sudo groupadd qgroup
+sudo alias ll='ls -l --color=tty'
+sudo which pwd
+test File1 –nt File2    判断文件1是否比文件2新
+rpm -ivh tftp-0.48-3.fc9.i386.rpm
+sysctl -w net.ipv4.tcp_keepalive_time=3600
+sudo ethtool -p eth0 10
+sudo unzip -n test.zip -d /tmp
+route -n
+sudo gzip -dv *
+sudo yum list
+startx
+sudo reboot
+sudo ls /rootanaconda-ks.cfg Desktop install.log
+sudo tload -d 1
+sudo skill -STOP rman
+sudo rpm -e proftpd-1
+sudo yum update
+sudo id -g
+ll /mnt/cdrom
+sudo enable -a
+sudo /dev/hda5                               partition       506008 96      -1
+sudo dpkg --unpack package.deb
+spell testfile
+atq
+sudo lsof | grep mymount         查找mymount分区里打开的文件
+tar -ztvf log.tar.gz
+sudo cat test2.txt
+bzip2 -v filename
+sudo ifconfig eth0 192.168.2.10 netmask 255.255.255.0
+sudo chgrp -v bin log2012.log
+sudo lsattr -E -l rmt0 -H
+sudo edquota -g qgroup
+pvdisplay
+chfn -f jack
+sudo iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+ssh-copy-id user@server
+sudo cat tmp
+sudo ifconfig eth0 192.168.2.10
+cat /etc/gshadow | grep cdy
+sudo compress -d man.config.Z
+nfsstat -c
+rpm -i your-package.src.rpm
+sudo declare -r SHELLOPTS="braceexpand:emacs:hashall:histexpand:history:interactive-comments:monitor"
+repquota -a
+sudo comm aaa.txt bbb.txt -1 -3
+cut -f2 -d";" test2.txt
+sudo dpkg-query -S file1
+rhmask code.txt demo.txt
+sudo cdrecord -scanbus
+sudo ss -l
+sudo tcpdump -i eth0 dst host hostname
+sudo mkfs.ext3 -c /dev/hda1
+fgrep -c 『{』pgm.cfgrep -c 『}』pgm.c
+comm aaa.txt bbb.txt
+/etc/init.d/iptables stop
+tftp 192.168.1.2
+restore ft /dev/hda3
+sudo ln log2013.log ln2013
+sudo date -s 20120523
+sudo /sbin/ifconfigeth0
+startx -x .xinitrc
+setsebool -P allow_kerberos 1
+passwd -S linuxde
+sudo lprm 1011
+cpio –icduv < /opt/etc.cpio
+sudo netstat -at
+sudo yum install
+sudo swapon /dev/sdb2
+rm server00.log
+gpasswd -a allen users
+wget --limit-rate=300k http:
+sudo cd /disk2
+tput cup 9 15
+sudo lvextend -L +100M /dev/vg1000/lvol0
+sudo fuser /etc/passwd
+netstat -c
+seinfo -b | grep httpd
+sudo readelf -h libmy.so
+sudo find
+sudo cat -b textfile1 textfile2
+sudo cat -n textfile1
+tcpreplay -c tftp.cache -i eth0 -j eth1 tftp.pcap –v
+sudo objdump -V
+cp -r -a aaa/* /bbb
+a.out lib/
+sudo rcp webserver1:/home/root/test2 .Enter
+cat /etc/gshadow
+nfsstat -r
+sudo mount -o remount /disk2
+sudo cat xx00
+ls -Z /var/www/html/
+sudo test –d File
+sudo rpm2cpio xxx.rpm | cpio -vi
+sudo cpio  -icdvt < /dev/st0 > /tmp/st_content
+mesg n
+cat /dev/fd0
+sudo service xinetd restart
+sudo find . -type f -user tom
+sudo test File1 –nt File2    判断文件1是否比文件2新
+sudo vgreduce vg2000 /dev/sdb2
+iptables -I INPUT -s 123.45.6.0/24 -j DROP
+./configure
+sudo iperf -s
+sudo ss -s
+sudo route -n
+sudo aptitude autoclean
+sudo Kernel quota version: 6.5.1
+ar -r libmy.a myfile.o
+root@Mylinux:/tmp/dir4
+rsync -avz --progress --delete work@172.16.78.192::www /databack/experiment/rsync
+seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i
+losetup /dev/loop1 floppy.img
+smbclient -L 198.168.0.1 -U username%password
+eject /dev/cdrom      卸载并弹出CD
+sudo pstree  -a
+sudo dstat --list
+sudo mv index.html /var/www/html/
+chcon -t public_content_t /directories
+sudo hwclock
+sudo which bash
+sudo mysqldump -u linuxde -p smgp_apps_linuxde users > linuxde_users.sql
+sudo cksum testfile1
+sudo gzip -dr test6
+ldd a.out
+find . -ctime -20
+sudo root@Mylinux:/tmp/dir3
+uname -s
+sudo firewall-cmd --remove-port=80tcp
+sudo chkconfig mysqld on
+sudo mkfs.ext3 /dev/sdb1
+sudo mkdir /web
+sudo mount /dev/loop0 /tmp
+wget --spider url
+sudo /dev/hda1
+smbclient -c "mkdir share1"
+sudo passwd quser1
+dnsdomainname -v
+sudo mkdir -m 700 /usr/meng/test
+sudo systemctl enable iptables
+sudo sort -u file.txt
+sudo g++ -c myfile.cpp
+sudo stty -echo;read;stty echo;read
+gzip -9v /opt/etc.zip
+sudo sysctl -w net.ipv4.tcp_syncookies=1
+make install
+netstat -an
+sudo ls -F
+lsattr -E -l rmt0 -H
+sudo setsebool -P allow_smbd_anon_write=1
+umount -v /mnt/mymount/
+sudo apt-get –purge remove packagename
+sudo ifconfig eth0 arp
+sudo bzip2 -dc filename.bz2
+sudo dos2unix -k file1 file2 file3
+sudo vi /etc/xinetd.d/rsync
+sudo ps -ef | grep vim
+find . -type f -perm 644 -exec ls -l {} \;
+sudo route del -net 224.0.0.0 netmask 240.0.0.0
+tcpreplay -c bt.cache -i eth0 -j eth1 bt.pcap -v –R
+sudo service mysqld status
+sudo speedtest-cli --server=3633 --share
+expect "username:"
+sudo chsh -s /bin/zsh
+sudo cp /lib/ld-linux.so.2 newRoot/lib
+rpm -i you-package.src.rpm
+apt-get install packagename
+sudo systemctl status firewalld.service
+mcopy a:autoexec.bat .
+sudo chattr +a /data1/user_act.log
+cat /etc/group |  grep cdy
+mail -s "Hello from linuxde.net by file" admin@linuxde.net < mail.txt
+sudo mkswap /dev/sdb2
+ispell testfile
+wget --reject=gif ur
+sudo ftptop: /usr/bin/ftptop /usr/share/man/man1/ftptop.1.gz
+echo "HELLO WORLD" | tr 'A-Z' 'a-z'
+sudo gzip -9v /opt/etc.zip
+sudo bzip2 -v filename
+which mysql
+lsblk --bytes /dev/sda
+sudo jed main.c
+sudo more -dc file
+sudo comm aaa.txt bbb.txt -3 | sed 's/^\t
+sudo usermod -L newuser1
+sudo firewall-cmd --enable ports=8080/tcp
+uucico -r1
+sudo find . -type f -perm 777
+sudo git
+sudo stty eof "string"
+iperf -c 192.168.1.1  -d -t 60
+find / -name password &
+wget --mirror -p --convert-links -P ./LOCAL URL
+sudo touch /etc/nologin
+systemctl start iptables
+id -a
+sudo lspci
+sudo tcpprep -an client -i bt.pcap -o bt.cache -C "100M BT Packet" –v
+bzip2 -k filename
+file /var/mail
+sudo rcp webserver1:/home/root/test2 otherdir/otherfile Enter
+sudo uucico -r1
+set results
+rcp test1 webserver1:/home/root/test3
+sudo cat /etc/group | grep cdy
+sudo echo "thissss is      a text linnnnnnne." | tr -s ' sn'
+sudo grpconv
+sudo cp a.out newRoot
+consoletype
+cut -f 1 test.txt
+sudo yum install package1
+gcc test.o -o test
+sudo apt-key add keyname
+sort -t ' ' -k 1.2 facebook.txt
+sudo send "
+ls -l /var/mail
+sudo echo
+sudo renice 1 987 -u daemon root -p 32
+sudo ls -ltr
+rpm -e proftpd-1
+sudo (tput setaf 2; tput setab 0; tput bold)'background color show'
+rmmod raid1
+welcome to www.linuxde.net
+losetup -d /dev/loop1

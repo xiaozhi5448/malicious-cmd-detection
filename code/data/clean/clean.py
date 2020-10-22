@@ -208,11 +208,27 @@ def strip_command():
         pkl.dump(all_data, outfp)
     logging.info("done")
 
+def dump_commands():
+    normal_commands = []
+    with open(os.path.join(settings.meta_data_dir, settings.agent1_dataset_cleaned_bin), 'rb') as infp:
+        normal_commands.extend(list(pkl.load(infp)))
+    with open(os.path.join(settings.meta_data_dir, settings.agent2_dataset_cleaned_bin), 'rb') as infp:
+        normal_commands.extend(list(pkl.load(infp)))
 
+    abnormal_commands = []
+    with open(os.path.join(settings.meta_data_dir, settings.original_abnormal_dataset), 'rb') as infp:
+        abnormal_commands.extend(list(pkl.load(infp)))
+    with open(os.path.join(settings.meta_data_dir, settings.addition_abnormal_dataset), 'rb') as infp:
+        abnormal_commands.extend(list(pkl.load(infp)))
+    with open(os.path.join(meta_data_dir, 'real_normal_commands.txt'), 'w', encoding='utf-8') as oufp:
+        oufp.write(os.linesep.join(normal_commands))
+
+    with  open(os.path.join(meta_data_dir, 'real_abnormal_commands.txt'), 'w', encoding='utf-8') as outfp:
+        outfp.write(os.linesep.join(abnormal_commands))
+    logging.info("done")
 
 
 
 
 if __name__ == '__main__':
-    clean('data/meta_data/agent1_dataset_bin.pkl')
-    clean('data/meta_data/agent2_dataset_bin.pkl')
+    dump_commands()
