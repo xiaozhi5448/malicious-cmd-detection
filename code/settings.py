@@ -1,5 +1,5 @@
-normal_dirs = ['data/normal/Agent1', 'data/normal/Agent2']
-normal_output_dirs = ['data/normal_all/Agent1', 'data/normal_all/Agent2']
+normal_dirs = ['data/normal/Agent1']
+normal_output_dirs = ['data/normal_all/Agent1']
 abnormal_dirs = ['data/abnormal']
 abnormal_output_dirs = ['data/abnormal_all']
 meta_data_dir = 'data/meta_data'

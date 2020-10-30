@@ -65,9 +65,7 @@ optional arguments:
 
 ```
 
-
-
-## 程序执行
+## 预测
 
 源码目录位于/root/malicious-cmd-spark/
 
@@ -116,7 +114,7 @@ python kafkaproducer.py
 yarn app -kill application_1603780034235_0049
 ```
 
-## 程序输出
+### 程序输出
 
 使用yarn查看程序日志
 
@@ -124,7 +122,7 @@ yarn app -kill application_1603780034235_0049
 yarn logs -applicationId application_1603780034235_0049 > /tmp/log
 ```
 
-## 白名单
+### 白名单
 
 将白名单文件上传至/tmp/malicious/exceptions/中，程序会自动加载，程序做预测时会先将这些指令排除在外。在未上传白名单文件时，加载白名单质量数量为0
 
@@ -138,7 +136,7 @@ yarn logs -applicationId application_1603780034235_0049 > /tmp/log
 
 这些指令不再参与分析过程
 
-## 告警抖动控制
+### 告警抖动控制
 
 在测试日志文件中共300条指令其中大部分都是恶意的，IP地址由程序随机选择，由于刚开始只有default一个模型，所以碰到其余IP地址，会给出警告，并使用默认模型预测该IP数据
 
@@ -151,4 +149,37 @@ yarn logs -applicationId application_1603780034235_0049 > /tmp/log
 告警抖动控制
 
 ![image-20201030114739585](web进程链异常检测调测报告.assets/image-20201030114739585.png)
+
+## 训练
+
+训练过程需要日志文件体积较大，示例中上传了三个示例日志文件演示训练过程
+
+![image-20201030152742687](web进程链异常检测调测报告.assets/image-20201030152742687.png)
+
+训练模型时需要指定日志文件路径，模型输出路径，并且指明是训练过程，程序需要用到的恶意指令文件，硬编码在代码中，位于n-gram-knn文件第42行
+
+![image-20201030152918410](web进程链异常检测调测报告.assets/image-20201030152918410.png)
+
+该文件在源码目录的meta_data目录下，使用时需要将该文件上传到图中所示的指定路径
+
+使用spark-submit提交训练任务
+
+```bash
+/opt/client/Spark/spark/bin/spark-submit --conf spark.yarn.appMasterEnv.PYSPARK_DRIVER_PYTHON=/opt/Bigdata/anaconda/envs/mlpy_env/bin/python --conf spark.yarn.appMasterEnv.PYSPARK_PYTHON=/opt/Bigdata/anaconda/envs/mlpy_env/bin/python --py-files /root/malicious-cmd-spark/util.zip --master yarn-cluster --jars spark-streaming-kafka-0-8-assembly_2.11-2.3.2.jar /root/malicious-cmd-spark/n-gram-knn.py --stage train --model-path /tmp/malicious/models2 --normal-data-dir /tmp/malicious/logs
+
+```
+
+同训练过程一样，我们使用yarn获取该任务日志，使用less查看日志文件，看到程序输出
+
+![image-20201030153936494](web进程链异常检测调测报告.assets/image-20201030153936494.png)
+
+模型生成
+
+![image-20201030153523681](web进程链异常检测调测报告.assets/image-20201030153523681.png)
+
+随后我们使用predict阶段验证模型加载
+
+![image-20201030153818315](web进程链异常检测调测报告.assets/image-20201030153818315.png)
+
+
 

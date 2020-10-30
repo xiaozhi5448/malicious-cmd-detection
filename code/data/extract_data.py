@@ -43,7 +43,7 @@ def uncompress_data():
         for file in find_specific_file(normal_data_dir, ['*.rar', "*.gz"], []):
             id += 1
             print('process {}'.format(file))
-            dest_file = os.path.join(normal_data_output, 'data-{}.txt'.format(id))
+            dest_file = os.path.join(normal_data_output, 'data-{}.log'.format(id))
             if file.endswith('gz'):
 
                 fp = gzip.open(file)
@@ -101,5 +101,5 @@ def get_cmdline():
     print("total data size: {}MB".format(round(total_size / (1024*1024), 2)))
 
 if __name__ == '__main__':
-    # uncompress_data()
-    get_cmdline()
+    uncompress_data()
+    # get_cmdline()
